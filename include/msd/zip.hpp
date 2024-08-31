@@ -13,9 +13,11 @@ namespace msd {
 template <typename... Iterators>
 class zip_iterator {
    public:
+    using value_type = std::tuple<typename std::iterator_traits<Iterators>::reference...>;
+
     explicit zip_iterator(Iterators... iterators) : iterators_{iterators...} {}
 
-    auto operator*() const { return dereference(std::index_sequence_for<Iterators...>{}); }
+    value_type operator*() const { return dereference(std::index_sequence_for<Iterators...>{}); }
 
     bool operator==(const zip_iterator& other) const { return equal(std::index_sequence_for<Iterators...>{}, other); }
 
@@ -42,7 +44,7 @@ class zip_iterator {
 
    private:
     template <std::size_t... I>
-    auto dereference(std::index_sequence<I...> /*unused*/) const
+    value_type dereference(std::index_sequence<I...> /*unused*/) const
     {
         return std::tie(*std::get<I>(iterators_)...);
     }
@@ -67,11 +69,13 @@ class zip {
    public:
     static_assert(sizeof...(Containers) > 1, "zip requires at least 2 containers");
 
-    explicit zip(Containers&... containers) : containers_{containers...} {}
-
     using iterator =
         zip_iterator<typename std::conditional_t<std::is_const_v<Containers>, typename Containers::const_iterator,
                                                  typename Containers::iterator>...>;
+
+    using value_type = typename iterator::value_type;
+
+    explicit zip(Containers&... containers) : containers_{containers...} {}
 
     iterator begin() const { return begin_impl(std::index_sequence_for<Containers...>{}); }
     iterator end() const { return end_impl(std::index_sequence_for<Containers...>{}); }
@@ -86,31 +90,31 @@ class zip {
     constexpr explicit operator bool() { return !empty(); }
     constexpr explicit operator bool() const { return !empty(); }
 
-    auto front()
+    value_type front()
     {
         assert(!empty());
         return *begin();
     }
 
-    auto front() const
+    value_type front() const
     {
         assert(!empty());
         return *begin();
     }
 
-    auto back()
+    value_type back()
     {
         assert(!empty());
         return *std::prev(begin() + size());
     }
 
-    auto back() const
+    value_type back() const
     {
         assert(!empty());
         return *std::prev(begin() + size());
     }
 
-    constexpr auto operator[](std::size_t offset)
+    constexpr value_type operator[](std::size_t offset)
     {
         assert(offset < size());
         return *std::next(begin(), offset);
