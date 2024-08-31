@@ -215,7 +215,7 @@ TEST(ZipTest, ContainersAndAlgorithms)
     auto zip = msd::zip(vector, deque, list, forward_list, array, string, set, multiset, map, multimap, unordered_set,
                         unordered_multiset, unordered_map, unordered_multimap);
 
-    const int sum = std::accumulate(zip.begin(), zip.end(), 0, [](int acc, auto tuple) {
+    const int sum = std::accumulate(zip.begin(), zip.end(), 0, [](int acc, auto&& tuple) {
         auto [vec, deq, li, fwd, arr, str, s, mset, mp, mm, uset, umset, umap, umm] = tuple;
 
         return acc + vec + deq + li + fwd + arr + str + s + mset + mp.second + mm.second;
@@ -258,8 +258,8 @@ TEST(ZipTest, API)
 
     const std::array<int, 5> input_arr{1, 2, 3};
     std::vector<int> output_vec;
-    for (auto [in, out] : msd::zip(input_arr, output_vec)) {
-        output_vec.push_back(in);
+    for (std::tuple<const int&, int>&& tuple : msd::zip(input_arr, output_vec)) {
+        output_vec.push_back(std::get<0>(tuple));
     }
 
     EXPECT_TRUE(output_vec.empty());
