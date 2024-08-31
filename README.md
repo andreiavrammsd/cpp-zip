@@ -25,12 +25,20 @@ Integrate with CMake or just copy the [header file](include/msd/zip.hpp).
 ```c++
 #include <msd/zip.hpp>
 
+#include <algorithm>
 #include <cassert>
 #include <vector>
 
 int main() {
     std::vector actual_numbers = {1, 2, 3};
     std::vector expected_numbers = {1, 2, 3};
+
+    const std::size_t size = std::min(actual_numbers.size(), expected_numbers.size());
+    for (std::size_t i = 0; i < size; ++i) {
+        assert(actual_numbers[i] == expected_numbers[i]);
+    }
+
+    // vs
 
     for (auto [actual, expected] : msd::zip(actual_numbers, expected_numbers)) {
         assert(actual == expected);
