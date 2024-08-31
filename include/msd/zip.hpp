@@ -65,7 +65,7 @@ class zip_iterator {
 template <typename... Containers>
 class zip {
    public:
-    static_assert(sizeof...(Containers) > 1);
+    static_assert(sizeof...(Containers) > 1, "zip requires at least 2 containers");
 
     explicit zip(Containers&... containers) : containers_{containers...} {}
 
