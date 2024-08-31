@@ -5,21 +5,23 @@ on:
   push:
     branches:
       - master
-    paths-ignore:
-      - '.vscode/**'
-      - '.clang-format'
-      - '.clang-tidy'
-      - '.gitignore'
-      - 'LICENSE'
-      - 'README.md'
+    paths:
+      - '**'
+      - '!.vscode/**'
+      - '!.clang-format'
+      - '!.clang-tidy'
+      - '!.gitignore'
+      - '!LICENSE'
+      - '!README.md'
   pull_request:
-    paths-ignore:
-      - '.vscode/**'
-      - '.clang-format'
-      - '.clang-tidy'
-      - '.gitignore'
-      - 'LICENSE'
-      - 'README.md'
+    paths:
+      - '**'
+      - '!.vscode/**'
+      - '!.clang-format'
+      - '!.clang-tidy'
+      - '!.gitignore'
+      - '!LICENSE'
+      - '!README.md'
   workflow_dispatch:
 
 jobs:
