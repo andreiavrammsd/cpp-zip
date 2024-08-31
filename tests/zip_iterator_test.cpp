@@ -87,6 +87,11 @@ TEST_F(ZipIteratorTest, OperatorPreDecrement)
     std::advance(iterator, -2);
 
     EXPECT_EQ(iterator, iterator_);
+
+    auto [a, b, c] = *iterator;
+    EXPECT_EQ(a, 2);
+    EXPECT_EQ(b, 4);
+    EXPECT_EQ(c, 8);
 }
 
 TEST_F(ZipIteratorTest, OperatorPlusOffset)
