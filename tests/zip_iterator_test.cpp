@@ -84,7 +84,7 @@ TEST_F(ZipIteratorTest, OperatorPreDecrement)
 {
     msd::zip_iterator iterator{arr_three_.end(), vector_two_.end(), vector_four_.end()};
 
-    std::advance(iterator, -2);
+    iterator = std::prev(iterator, 2);
 
     EXPECT_EQ(iterator, iterator_);
 
@@ -101,4 +101,18 @@ TEST_F(ZipIteratorTest, OperatorPlusOffset)
     const auto end = std::next(iterator_, 2);
 
     EXPECT_EQ(end, iterator);
+}
+
+TEST_F(ZipIteratorTest, OperatorPlus)
+{
+    const auto iterator = iterator_ + 1;
+
+    auto [a, b, c] = *iterator;
+    EXPECT_EQ(a, 2);
+    EXPECT_EQ(b, 5);
+    EXPECT_EQ(c, 7);
+
+    const auto end = iterator_ + 3;
+    msd::zip_iterator expected_end{arr_three_.end(), vector_two_.end(), vector_four_.end()};
+    EXPECT_EQ(end, expected_end);
 }
