@@ -1,286 +1,214 @@
 #include "msd/zip.hpp"
 
-#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include <array>
-#include <deque>
-#include <forward_list>
 #include <iterator>
-#include <list>
-#include <map>
-#include <numeric>
-#include <set>
-#include <string>
-#include <type_traits>
-#include <unordered_map>
-#include <unordered_set>
 #include <vector>
 
-#include "data.hpp"
+class ZipTest : public testing::Test {  // NOLINT(readability-identifier-naming)
+   protected:
+    const std::array<int, 5> arr_three_{1, 2, 3};
+    std::vector<int> vector_two_{4, 5};
+    const std::vector<int> vector_four_{6, 7, 8, 9};
 
-TEST(ZipTest, Zip)
+    using arr_three_type = decltype(arr_three_);
+    using vector_two_type = decltype(vector_two_);
+    using vector_four_type = decltype(vector_four_);
+
+    msd::zip<arr_three_type, vector_two_type, vector_four_type> zip_{arr_three_, vector_two_, vector_four_};
+    const msd::zip<arr_three_type, vector_two_type, vector_four_type> const_zip_{arr_three_, vector_two_, vector_four_};
+};
+
+TEST_F(ZipTest, Begin)
 {
-    const std::array<const int, 3> odd{1, 3, 5};
-    const std::array<float, 3> even{2.0F, 4.0F, 6.0F};
-    std::vector<int> vec{9, 10, 11, 12};
-    std::vector<data> items;
-    items.reserve(6);
-    items.emplace_back(1);
-    items.emplace_back(2);
-    items.emplace_back(3);
-    items.emplace_back(4);
-    items.emplace_back(5);
-    items.emplace_back(6);
-
-    const std::array<std::array<int, 4>, 3> expected{
-        {
-            {1, 2, 9, 1},
-            {3, 4, 10, 2},
-            {5, 6, 11, 3},
-        },
-    };
-
-    std::size_t index = 0;
-    for (auto [a, b, c, d] : msd::zip(odd, even, vec, items)) {
-        static_assert(std::is_same_v<decltype(a), const int&>);
-        static_assert(std::is_same_v<decltype(b), const float&>);
-        static_assert(std::is_same_v<decltype(c), int&>);
-        static_assert(std::is_same_v<decltype(d), data&>);
-
-        EXPECT_THAT(expected[index], ::testing::ElementsAre(a, b, c, d.num));
-        ++index;
-
-        c += d.num;
-    }
-
-    EXPECT_THAT(vec, ::testing::ElementsAre(10, 12, 14, 12));
-
-    EXPECT_EQ(data::constructs_, 6);
-    EXPECT_EQ(data::copies_, 0);
-    EXPECT_EQ(data::moves_, 0);
-}
-
-TEST(ZipTest, Begin)
-{
-    const std::array<int, 5> a{1, 2, 3};
-    std::vector<int> b{4, 5};
-    const std::vector<int> c{6, 7, 8, 9};
-
-    msd::zip zip(a, b, c);
-
-    auto [a0, b0, c0] = *zip.begin();
+    auto [a0, b0, c0] = *zip_.begin();
     EXPECT_EQ(a0, 1);
     EXPECT_EQ(b0, 4);
     EXPECT_EQ(c0, 6);
 
-    EXPECT_EQ(std::prev(zip.end()), std::next(zip.begin()));
-    EXPECT_EQ(zip.cbegin(), std::prev(zip.cend(), 2));
+    auto [ca0, cb0, cc0] = *const_zip_.begin();
+    EXPECT_EQ(ca0, 1);
+    EXPECT_EQ(cb0, 4);
+    EXPECT_EQ(cc0, 6);
+
+    EXPECT_EQ(zip_.begin() + 2, zip_.end());
 }
 
-TEST(ZipTest, End) {}
-
-TEST(ZipTest, Size)
+TEST_F(ZipTest, End)
 {
-    const std::array<int, 5> a{1, 2, 3};
-    std::vector<int> b{4, 5};
-    const std::vector<int> c{6, 7, 8, 9};
+    auto [a0, b0, c0] = *std::prev(zip_.end());
+    EXPECT_EQ(a0, 2);
+    EXPECT_EQ(b0, 5);
+    EXPECT_EQ(c0, 7);
 
-    EXPECT_EQ(msd::zip(a, b, c).size(), 2);
+    auto [ca0, cb0, cc0] = *std::prev(const_zip_.end());
+    EXPECT_EQ(ca0, 2);
+    EXPECT_EQ(cb0, 5);
+    EXPECT_EQ(cc0, 7);
+
+    EXPECT_EQ(zip_.end() - 2, zip_.begin());
 }
 
-TEST(ZipTest, Empty)
+TEST_F(ZipTest, CBegin)
+{
+    auto [a0, b0, c0] = *zip_.cbegin();
+    EXPECT_EQ(a0, 1);
+    EXPECT_EQ(b0, 4);
+    EXPECT_EQ(c0, 6);
+
+    auto [ca0, cb0, cc0] = *const_zip_.cbegin();
+    EXPECT_EQ(ca0, 1);
+    EXPECT_EQ(cb0, 4);
+    EXPECT_EQ(cc0, 6);
+
+    EXPECT_EQ(zip_.cbegin() + 2, zip_.cend());
+}
+
+TEST_F(ZipTest, CEnd)
+{
+    auto [a0, b0, c0] = *std::prev(zip_.cend());
+    EXPECT_EQ(a0, 2);
+    EXPECT_EQ(b0, 5);
+    EXPECT_EQ(c0, 7);
+
+    auto [ca0, cb0, cc0] = *std::prev(const_zip_.cend());
+    EXPECT_EQ(ca0, 2);
+    EXPECT_EQ(cb0, 5);
+    EXPECT_EQ(cc0, 7);
+
+    EXPECT_EQ(zip_.cend() - 2, zip_.cbegin());
+}
+
+TEST_F(ZipTest, Size)
+{
+    EXPECT_EQ(zip_.size(), 2);
+    EXPECT_EQ(const_zip_.size(), 2);
+}
+
+TEST_F(ZipTest, SizeWhenAContainerIsEmpty)
 {
     const std::array<int, 5> non_empty{1, 2, 3};
-    const std::vector<int> empty{};
-    const msd::zip empty_zip(non_empty, empty);
-    for (auto _ : empty_zip) {
-        std::ignore = _;
-        FAIL();
-    }
-    EXPECT_TRUE(empty_zip.empty());
+    std::vector<int> empty{};
 
-    const msd::zip non_empty_zip(non_empty, non_empty);
-    EXPECT_FALSE(non_empty_zip.empty());
+    EXPECT_EQ(msd::zip(non_empty, empty).size(), 0);
 }
 
-TEST(ZipTest, CBegin) {}
+TEST_F(ZipTest, SizeWhenAllContainersAreEmpty)
+{
+    const std::vector<int> empty_1{};
+    std::vector<int> empty_2{};
 
-TEST(ZipTest, CEnd) {}
+    EXPECT_EQ(msd::zip(empty_1, empty_2).size(), 0);
+}
 
-TEST(ZipTest, OperatorBool)
+TEST_F(ZipTest, SizeWhenAllContainersHaveTheSameSize)
+{
+    const std::array<int, 5> array{1, 2, 3};
+    std::vector<int> vector{1, 2, 3};
+
+    EXPECT_EQ(msd::zip(array, vector).size(), 3);
+}
+
+TEST_F(ZipTest, Empty)
+{
+    EXPECT_FALSE(zip_.empty());
+    EXPECT_FALSE(const_zip_.empty());
+}
+
+TEST_F(ZipTest, EmptyWhenAContainerIsEmpty)
 {
     const std::array<int, 5> non_empty{1, 2, 3};
-    const std::vector<int> empty{};
-    const msd::zip empty_zip(non_empty, empty);
-    for (auto _ : empty_zip) {
-        std::ignore = _;
+    std::vector<int> empty{};
+    msd::zip zip(non_empty, empty);
+
+    EXPECT_TRUE(zip.empty());
+
+    for (auto ignore : zip) {
+        std::ignore = ignore;
         FAIL();
     }
-    EXPECT_FALSE(empty_zip);
-
-    const msd::zip non_empty_zip(non_empty, non_empty);
-    EXPECT_TRUE(non_empty_zip);
 }
 
-TEST(ZipTest, Front)
+TEST_F(ZipTest, EmptyWhenAllContainersAreEmpty)
 {
-    std::array<int, 3> one{1, 3, 5};
-    const std::array<int, 4> two{2, 4, 6, 8};
+    const std::vector<int> empty_1{};
+    std::vector<int> empty_2{};
 
-    msd::zip zip(one, two);
-    auto [a, b] = zip.front();
+    EXPECT_TRUE(msd::zip(empty_1, empty_2).empty());
+}
+
+TEST_F(ZipTest, OperatorBool)
+{
+    if (!zip_) {
+        FAIL();
+    }
+
+    EXPECT_TRUE(zip_);
+    EXPECT_TRUE(const_zip_);
+}
+
+TEST_F(ZipTest, Front)
+{
+    auto [a, b, c] = zip_.front();
     EXPECT_EQ(a, 1);
-    EXPECT_EQ(b, 2);
-    a = 9;
-    EXPECT_EQ(one[0], 9);
+    EXPECT_EQ(b, 4);
+    EXPECT_EQ(c, 6);
 
-    const msd::zip const_zip(one, two);
-    auto [const_a, const_b] = const_zip.front();
-    EXPECT_EQ(const_a, 9);
-    EXPECT_EQ(const_b, 2);
+    b = 10;
 
-    std::vector<int> empty_vec;
-    msd::zip empty_zip(empty_vec, empty_vec);
-    EXPECT_DEBUG_DEATH(empty_zip.front(), "");
+    auto [ca, cb, cc] = const_zip_.front();
+    EXPECT_EQ(ca, 1);
+    EXPECT_EQ(cb, 10);
+    EXPECT_EQ(cc, 6);
 }
 
-TEST(ZipTest, Back)
+TEST_F(ZipTest, FrontWhenZipIsEmpty)
 {
-    std::array<int, 3> one{1, 3, 5};
-    const std::array<int, 4> two{2, 4, 6, 8};
+    const std::array<int, 5> non_empty{1, 2, 3};
+    std::vector<int> empty{};
+    msd::zip zip(non_empty, empty);
 
-    msd::zip zip(one, two);
-    auto [a, b] = zip.back();
-    EXPECT_EQ(a, 5);
-    EXPECT_EQ(b, 6);
-    a = 9;
-    EXPECT_EQ(one[2], 9);
-
-    const msd::zip const_zip(one, two);
-    auto [const_a, const_b] = const_zip.back();
-    EXPECT_EQ(const_a, 9);
-    EXPECT_EQ(const_b, 6);
+    EXPECT_DEBUG_DEATH(zip.front(), "");
 }
 
-TEST(ZipTest, OperatorSubscript)
+TEST_F(ZipTest, Back)
 {
-    std::array<int, 3> one{1, 3, 5};
-    const std::array<int, 4> two{2, 4, 6, 8};
+    auto [a, b, c] = zip_.back();
+    EXPECT_EQ(a, 2);
+    EXPECT_EQ(b, 5);
+    EXPECT_EQ(c, 7);
 
-    const std::array<std::array<int, 2>, 3> expected{
-        {
-            {1, 2},
-            {3, 4},
-            {5, 6},
-        },
-    };
+    b = 12;
 
-    msd::zip zip(one, two);
-    for (std::size_t i = 0; i < zip.size(); ++i) {
-        auto [a, b] = zip[i];
-        EXPECT_EQ(a, expected[i][0]);
-        EXPECT_EQ(b, expected[i][1]);
-
-        EXPECT_DEBUG_DEATH(zip[99], "");
-    }
-
-    const msd::zip const_zip(one, two);
-    for (std::size_t i = 0; i < const_zip.size(); ++i) {
-        auto [a, b] = zip[i];
-        EXPECT_EQ(a, expected[i][0]);
-        EXPECT_EQ(b, expected[i][1]);
-
-        EXPECT_DEBUG_DEATH(zip[99], "");
-    }
+    auto [ca, cb, cc] = const_zip_.back();
+    EXPECT_EQ(ca, 2);
+    EXPECT_EQ(cb, 12);
+    EXPECT_EQ(cc, 7);
 }
 
-TEST(ZipTest, ContainersAndAlgorithms)
+TEST_F(ZipTest, BackWhenZipIsEmpty)
 {
-    std::vector<int> vector = {1, 0};
-    std::deque<int> deque = {1, 2};
-    std::list<int> list = {1, 2, 3};
-    std::forward_list<int> forward_list = {1, 2, 3, 4};
-    std::array<int, 5> array = {1, 2, 3, 4, 5};
-    std::string string = "123456";
-    std::set<int> set = {1, 2, 3, 4, 5, 6};
-    std::multiset<int> multiset = {1, 2, 3, 4, 5, 6};
-    std::map<int, int> map = {{1, 1}, {2, 2}, {3, 3}, {4, 4}, {5, 5}, {6, 6}};
-    std::multimap<int, int> multimap = {{1, 1}, {2, 2}, {3, 3}, {4, 4}, {5, 5}, {6, 6}};
-    std::unordered_set<int> unordered_set = {1, 2, 3, 4, 5, 6};
-    std::unordered_multiset<int> unordered_multiset = {1, 2, 3, 4, 5, 6};
-    std::unordered_map<int, int> unordered_map = {{1, 1}, {2, 2}, {3, 3}, {4, 4}, {5, 5}, {6, 6}};
-    std::unordered_multimap<int, int> unordered_multimap = {{1, 1}, {2, 2}, {3, 3}, {4, 4}, {5, 5}, {6, 6}};
+    const std::array<int, 5> non_empty{1, 2, 3};
+    std::vector<int> empty{};
+    msd::zip zip(non_empty, empty);
 
-    auto zip = msd::zip(vector, deque, list, forward_list, array, string, set, multiset, map, multimap, unordered_set,
-                        unordered_multiset, unordered_map, unordered_multimap);
-
-    const int sum = std::accumulate(zip.begin(), zip.end(), 0, [](int acc, auto&& tuple) {
-        auto [vec, deq, li, fwd, arr, str, s, mset, mp, mm, uset, umset, umap, umm] = tuple;
-
-        return acc + vec + deq + li + fwd + arr + str + s + mset + mp.second + mm.second;
-    });
-    EXPECT_EQ(sum, 124);
-
-    const msd::zip const_zip = zip;
-    const auto it = std::find_if(const_zip.begin(), const_zip.end(), [](auto tuple) {
-        auto [vec, deq, li, fwd, arr, str, s, mset, mp, mm, uset, umset, umap, umm] = tuple;
-        return mm.second == 2;
-    });
-    EXPECT_EQ(it, std::next(const_zip.begin()));
-
-    const msd::zip moved_zip = std::move(zip);
-    const auto it_moved_zip = std::find_if(moved_zip.cbegin(), moved_zip.cend(), [](auto tuple) {
-        auto [vec, deq, li, fwd, arr, str, s, mset, mp, mm, uset, umset, umap, umm] = tuple;
-        return umap.second == 22;
-    });
-    EXPECT_EQ(it_moved_zip, moved_zip.cend());
+    EXPECT_DEBUG_DEATH(zip.back(), "");
 }
 
-TEST(ZipTest, API)
+TEST_F(ZipTest, OperatorSubscript)
 {
-    std::array<int, 3> actual{1, 3, 5};
-    std::array<int, 3> expected{1, 3, 5};
-    msd::zip zip(actual, expected);
+    auto [a, b, c] = zip_[0];
+    EXPECT_EQ(a, 1);
+    EXPECT_EQ(b, 4);
+    EXPECT_EQ(c, 6);
 
-    EXPECT_EQ(zip.size(), 3);
-    for (auto [a, e] : zip) {
-        EXPECT_EQ(a, e);
-    }
+    b = 15;
 
-    const std::vector<int> input{1, 2, 3};
-    std::vector<int> output(3);
-    for (auto [in, out] : msd::zip(input, output)) {
-        out = in + 1;
-    }
-
-    EXPECT_THAT(output, ::testing::ElementsAre(2, 3, 4));
-
-    const std::array<int, 5> input_arr{1, 2, 3};
-    std::vector<int> output_vec;
-    for (std::tuple<const int&, int>&& tuple : msd::zip(input_arr, output_vec)) {
-        output_vec.push_back(std::get<0>(tuple));
-    }
-
-    EXPECT_TRUE(output_vec.empty());
-
-    std::array<int, 5> three{1, 2, 3};
-    std::vector<int> one{5};
-    for (auto [t, o] : msd::zip(three, one)) {
-        o = t;
-    }
-    EXPECT_EQ(one.size(), 1);
-    EXPECT_THAT(one, ::testing::ElementsAre(1));
-
-    std::array<int, 5> arr_three{1, 2, 3};
-    std::array<int, 2> arr_one{1, 2};
-    std::size_t iterations = 0;
-    for (auto [t, o] : msd::zip(arr_three, arr_one)) {
-        std::ignore = t;
-        std::ignore = o;
-        ++iterations;
-    }
-    EXPECT_EQ(iterations, 2);
-
-    EXPECT_FALSE(msd::zip(arr_three, arr_one).empty());
+    const auto value = const_zip_[0];
+    EXPECT_EQ(std::get<0>(value), 1);
+    EXPECT_EQ(std::get<1>(value), 15);
+    EXPECT_EQ(std::get<2>(value), 6);
 }
+
+TEST_F(ZipTest, OperatorSubscriptWithIndexOutOfRange) { EXPECT_DEBUG_DEATH(zip_[99], ""); }

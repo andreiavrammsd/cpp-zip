@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 
 #include <array>
+#include <iterator>
 #include <type_traits>
 #include <vector>
 
@@ -17,12 +18,15 @@ class ZipIteratorTest : public testing::Test {  // NOLINT(readability-identifier
     using vector_four_type = decltype(vector_four_);
 
     msd::zip_iterator<arr_three_type::const_iterator, vector_two_type::iterator, vector_four_type::const_iterator>
-        iterator_{arr_three_.begin(), vector_two_.begin(), vector_four_.begin()};
+        begin_iterator_{arr_three_.begin(), vector_two_.begin(), vector_four_.begin()};
+
+    msd::zip_iterator<arr_three_type::const_iterator, vector_two_type::iterator, vector_four_type::const_iterator>
+        end_iterator_{arr_three_.end(), vector_two_.end(), vector_four_.end()};
 };
 
 TEST_F(ZipIteratorTest, IteratorTraits)
 {
-    using iterator_type = decltype(iterator_);
+    using iterator_type = decltype(begin_iterator_);
 
     static_assert(std::is_same_v<iterator_type::iterator_category, std::bidirectional_iterator_tag>);
     static_assert(std::is_same_v<iterator_type::difference_type, std::ptrdiff_t>);
@@ -39,19 +43,19 @@ TEST_F(ZipIteratorTest, IteratorTraits)
 
 TEST_F(ZipIteratorTest, OperatorDereference)
 {
-    std::tuple<const int&, int&, const int&> value = *iterator_;
+    std::tuple<const int&, int&, const int&> value = *begin_iterator_;
     EXPECT_EQ(std::get<0>(value), 1);
     EXPECT_EQ(std::get<1>(value), 4);
     EXPECT_EQ(std::get<2>(value), 6);
 
     std::get<1>(value) += 1;
 
-    std::tuple<const int&, int&, const int&> updated_value = *iterator_;
+    std::tuple<const int&, int&, const int&> updated_value = *begin_iterator_;
     EXPECT_EQ(std::get<0>(updated_value), 1);
     EXPECT_EQ(std::get<1>(updated_value), 5);
     EXPECT_EQ(std::get<2>(updated_value), 6);
 
-    const std::tuple<const int&, int&, const int&> const_update_value = *iterator_;
+    const std::tuple<const int&, int&, const int&> const_update_value = *begin_iterator_;
     EXPECT_EQ(std::get<0>(const_update_value), 1);
     EXPECT_EQ(std::get<1>(const_update_value), 5);
     EXPECT_EQ(std::get<2>(const_update_value), 6);
@@ -59,34 +63,25 @@ TEST_F(ZipIteratorTest, OperatorDereference)
 
 TEST_F(ZipIteratorTest, OperatorEqual)
 {
-    const auto copy = iterator_;
-    EXPECT_EQ(copy, iterator_);
+    const auto copy = begin_iterator_;
+    EXPECT_EQ(copy, begin_iterator_);
 }
 
-TEST_F(ZipIteratorTest, OperatorNotEqual)
-{
-    msd::zip_iterator end_iterator{arr_three_.end(), vector_two_.end(), vector_four_.end()};
-
-    EXPECT_NE(end_iterator, iterator_);
-}
+TEST_F(ZipIteratorTest, OperatorNotEqual) { EXPECT_NE(end_iterator_, begin_iterator_); }
 
 TEST_F(ZipIteratorTest, OperatorPreIncrement)
 {
-    msd::zip_iterator iterator{arr_three_.end(), vector_two_.end(), vector_four_.end()};
+    ++begin_iterator_;
+    ++begin_iterator_;
 
-    ++iterator_;
-    ++iterator_;
-
-    EXPECT_EQ(iterator_, iterator);
+    EXPECT_EQ(begin_iterator_, end_iterator_);
 }
 
 TEST_F(ZipIteratorTest, OperatorPreDecrement)
 {
-    msd::zip_iterator iterator{arr_three_.end(), vector_two_.end(), vector_four_.end()};
+    auto iterator = std::prev(end_iterator_, 2);
 
-    iterator = std::prev(iterator, 2);
-
-    EXPECT_EQ(iterator, iterator_);
+    EXPECT_EQ(iterator, begin_iterator_);
 
     auto [a, b, c] = *iterator;
     EXPECT_EQ(a, 2);
@@ -96,23 +91,33 @@ TEST_F(ZipIteratorTest, OperatorPreDecrement)
 
 TEST_F(ZipIteratorTest, OperatorPlusOffset)
 {
-    msd::zip_iterator iterator{arr_three_.end(), vector_two_.end(), vector_four_.end()};
+    const auto end = std::next(begin_iterator_, 2);
 
-    const auto end = std::next(iterator_, 2);
-
-    EXPECT_EQ(end, iterator);
+    EXPECT_EQ(end, end_iterator_);
 }
 
 TEST_F(ZipIteratorTest, OperatorPlus)
 {
-    const auto iterator = iterator_ + 1;
+    const auto iterator = begin_iterator_ + 1;
 
     auto [a, b, c] = *iterator;
     EXPECT_EQ(a, 2);
     EXPECT_EQ(b, 5);
     EXPECT_EQ(c, 7);
 
-    const auto end = iterator_ + 3;
-    msd::zip_iterator expected_end{arr_three_.end(), vector_two_.end(), vector_four_.end()};
-    EXPECT_EQ(end, expected_end);
+    const auto end = begin_iterator_ + 3;
+    EXPECT_EQ(end, end_iterator_);
+}
+
+TEST_F(ZipIteratorTest, OperatorMinus)
+{
+    const auto iterator = end_iterator_ - 1;
+
+    auto [a, b, c] = *iterator;
+    EXPECT_EQ(a, 3);
+    EXPECT_EQ(b, 5);
+    EXPECT_EQ(c, 9);
+
+    const auto begin = end_iterator_ - 2;
+    EXPECT_EQ(begin, begin_iterator_);
 }

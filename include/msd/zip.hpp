@@ -46,6 +46,13 @@ class zip_iterator {
         return iterator;
     }
 
+    zip_iterator operator-(const int offset) const noexcept
+    {
+        auto iterator = *this;
+        iterator.advance(std::index_sequence_for<Iterators...>{}, -offset);
+        return iterator;
+    }
+
    private:
     template <std::size_t... I>
     value_type dereference(std::index_sequence<I...>) const
@@ -91,7 +98,6 @@ class zip {
 
     [[nodiscard]] bool empty() const noexcept { return begin() == end(); }
 
-    constexpr explicit operator bool() { return !empty(); }
     constexpr explicit operator bool() const { return !empty(); }
 
     value_type front()
@@ -118,7 +124,7 @@ class zip {
         return *std::prev(begin() + size());
     }
 
-    constexpr value_type operator[](std::size_t offset)
+    constexpr value_type operator[](const std::size_t offset) const
     {
         assert(offset < size());
         return *std::next(begin(), offset);
@@ -134,7 +140,7 @@ class zip {
     template <std::size_t... I>
     iterator end_impl(std::index_sequence<I...>) const
     {
-        return iterator{std::get<I>(containers_).end()...};
+        return iterator{std::get<I>(containers_).begin() + size()...};
     }
 
     template <std::size_t... I>
