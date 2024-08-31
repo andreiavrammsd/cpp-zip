@@ -60,6 +60,7 @@ See [tests](tests/zip_test.cpp).
 * See if tuple by reference would needed:
     * std::accumulate(zip.begin(), zip.end(), 0, [](int acc, auto& tuple) {});
     * for (auto& tuple : zip){}
+* Revisit std API
 * Test
     * 100% coverage
     * Finish tests
