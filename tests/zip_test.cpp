@@ -192,8 +192,10 @@ TEST_F(ZipTest, BackWhenZipIsEmpty)
     const std::array<int, 5> non_empty{1, 2, 3};
     std::vector<int> empty{};
     msd::zip zip(non_empty, empty);
+    const msd::zip const_zip(non_empty, empty);
 
     EXPECT_DEBUG_DEATH(zip.back(), "");
+    EXPECT_DEBUG_DEATH(const_zip.back(), "");
 }
 
 TEST_F(ZipTest, OperatorSubscript)
