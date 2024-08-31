@@ -101,22 +101,19 @@ class zip {
     auto back()
     {
         assert(!empty());
-        auto it = begin() + (size() - 1);
-        return *it;
+        return *std::prev(begin() + size());
     }
 
     auto back() const
     {
         assert(!empty());
-        auto it = begin() + (size() - 1);
-        return *it;
+        return *std::prev(begin() + size());
     }
 
     constexpr auto operator[](std::size_t offset)
     {
         assert(offset < size());
-        auto it = begin() + offset;
-        return *it;
+        return *std::next(begin(), offset);
     }
 
    private:
