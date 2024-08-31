@@ -54,7 +54,7 @@ class zip_iterator {
     }
 
     template <std::size_t... I>
-    void advance(std::index_sequence<I...> /*unused*/, std::size_t offset)
+    void advance(std::index_sequence<I...> /*unused*/, int offset)
     {
         ((std::advance(std::get<I>(iterators_), offset)), ...);
     }
@@ -65,7 +65,7 @@ class zip_iterator {
 template <typename... Containers>
 class zip {
    public:
-    static_assert(sizeof...(Containers) > 1);
+    static_assert(sizeof...(Containers) > 1, "zip requires at least 2 containers");
 
     explicit zip(Containers&... containers) : containers_{containers...} {}
 
@@ -101,22 +101,19 @@ class zip {
     auto back()
     {
         assert(!empty());
-        auto it = begin() + (size() - 1);
-        return *it;
+        return *std::prev(begin() + size());
     }
 
     auto back() const
     {
         assert(!empty());
-        auto it = begin() + (size() - 1);
-        return *it;
+        return *std::prev(begin() + size());
     }
 
     constexpr auto operator[](std::size_t offset)
     {
         assert(offset < size());
-        auto it = begin() + offset;
-        return *it;
+        return *std::next(begin(), offset);
     }
 
    private:

@@ -25,12 +25,20 @@ Integrate with CMake or just copy the [header file](include/msd/zip.hpp).
 ```c++
 #include <msd/zip.hpp>
 
+#include <algorithm>
 #include <cassert>
 #include <vector>
 
 int main() {
     std::vector actual_numbers = {1, 2, 3};
     std::vector expected_numbers = {1, 2, 3};
+
+    const std::size_t size = std::min(actual_numbers.size(), expected_numbers.size());
+    for (std::size_t i = 0; i < size; ++i) {
+        assert(actual_numbers[i] == expected_numbers[i]);
+    }
+
+    // vs
 
     for (auto [actual, expected] : msd::zip(actual_numbers, expected_numbers)) {
         assert(actual == expected);
@@ -41,7 +49,7 @@ int main() {
 
 See [tests](tests/zip_test.cpp).
 
-# TODO
+## TODO
 
 * Write size() as end() - begin()
 * Exception guarantees
@@ -52,12 +60,13 @@ See [tests](tests/zip_test.cpp).
 * See if tuple by reference would needed:
     * std::accumulate(zip.begin(), zip.end(), 0, [](int acc, auto& tuple) {});
     * for (auto& tuple : zip){}
+* Revisit std API
 * Test
     * 100% coverage
     * Finish tests
     * With std algorithms
     * Entire API in non-const and const context
-    * iterator operations: +, -, +=, -=, ++, --, std::prev/next/advance, etc.
+    * iterator operations: +, -, +=, -=, ++ pre/post, --pre/post, std::prev/next/advance, begin() + size() - begin(), etc.
     * Empty container
     * Two arrays of different sizes
     * Two vectors of different sizes
