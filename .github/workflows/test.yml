@@ -5,23 +5,7 @@ on:
   push:
     branches:
       - master
-    paths:
-      - '**'
-      - '!.vscode/**'
-      - '!.clang-format'
-      - '!.clang-tidy'
-      - '!.gitignore'
-      - '!LICENSE'
-      - '!README.md'
   pull_request:
-    paths:
-      - '**'
-      - '!.vscode/**'
-      - '!.clang-format'
-      - '!.clang-tidy'
-      - '!.gitignore'
-      - '!LICENSE'
-      - '!README.md'
   workflow_dispatch:
 
 jobs:
