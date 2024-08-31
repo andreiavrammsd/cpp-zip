@@ -57,10 +57,6 @@ See [tests](tests/zip_test.cpp).
 * constexpr
 * Write benchmarks
 * ContainersAndAlgorithms test fails at `EXPECT_EQ(it, std::prev(const_zip.end()));` for std::list
-* See if tuple by reference would needed:
-    * std::accumulate(zip.begin(), zip.end(), 0, [](int acc, auto& tuple) {});
-    * for (auto& tuple : zip){}
-* Revisit std API
 * Test
     * 100% coverage
     * Finish tests
