@@ -17,7 +17,7 @@
     "editor.defaultFormatter": "xaver.clang-format",
     "files.insertFinalNewline": true,
     "files.trimFinalNewlines": true,
-    "coverage-gutters.coverageBaseDir": "**",
+    "coverage-gutters.coverageBaseDir": "build",
     "coverage-gutters.coverageFileNames": [
         "coverage.info",
         "lcov.info",
