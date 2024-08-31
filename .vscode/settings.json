@@ -2,7 +2,7 @@
     "cmake.configureArgs": [
         "-DENABLE_TESTS=ON",
         "-DENABLE_BENCHMARKS=OFF",
-        "-DENABLE_COVERAGE=ON",
+        "-DENABLE_COVERAGE=OFF",
         "-DENABLE_ASAN=OFF",
     ],
     "cmake.configureOnOpen": true,
@@ -100,6 +100,7 @@
         "thread": "cpp",
         "cinttypes": "cpp",
         "typeinfo": "cpp",
-        "semaphore": "cpp"
+        "semaphore": "cpp",
+        "iostream": "cpp"
     }
 }
