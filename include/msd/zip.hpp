@@ -13,7 +13,11 @@ namespace msd {
 template <typename... Iterators>
 class zip_iterator {
    public:
+    using iterator_category = std::bidirectional_iterator_tag;
+    using difference_type = std::ptrdiff_t;
     using value_type = std::tuple<typename std::iterator_traits<Iterators>::reference...>;
+    using pointer = std::tuple<typename std::iterator_traits<Iterators>::pointer...>;
+    using reference = std::tuple<typename std::iterator_traits<Iterators>::reference...>;
 
     explicit zip_iterator(Iterators... iterators) : iterators_{iterators...} {}
 
@@ -143,11 +147,5 @@ class zip {
 };
 
 }  // namespace msd
-
-template <typename... Iterators>
-struct std::iterator_traits<msd::zip_iterator<Iterators...>> {
-    using difference_type = std::ptrdiff_t;
-    using iterator_category = std::bidirectional_iterator_tag;
-};
 
 #endif  // MSD_ZIP_ZIP_HPP

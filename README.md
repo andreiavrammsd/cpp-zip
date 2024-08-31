@@ -53,7 +53,6 @@ See [tests](tests/zip_test.cpp).
 
 * Write size() as end() - begin()
 * Exception guarantees
-* Set container and iterator traits
 * constexpr
 * Write benchmarks
 * ContainersAndAlgorithms test fails at `EXPECT_EQ(it, std::prev(const_zip.end()));` for std::list
