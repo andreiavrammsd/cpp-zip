@@ -66,7 +66,7 @@ See [tests](tests/zip_test.cpp).
     * Finish tests
     * With std algorithms
     * Entire API in non-const and const context
-    * iterator operations: +, -, +=, -=, ++ pre/post, --pre/post, std::prev/next/advance, etc.
+    * iterator operations: +, -, +=, -=, ++ pre/post, --pre/post, std::prev/next/advance, begin() + size() - begin(), etc.
     * Empty container
     * Two arrays of different sizes
     * Two vectors of different sizes
