@@ -54,7 +54,7 @@ class zip_iterator {
     }
 
     template <std::size_t... I>
-    void advance(std::index_sequence<I...> /*unused*/, std::size_t offset)
+    void advance(std::index_sequence<I...> /*unused*/, int offset)
     {
         ((std::advance(std::get<I>(iterators_), offset)), ...);
     }
