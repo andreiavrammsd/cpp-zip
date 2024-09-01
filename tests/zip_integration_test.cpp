@@ -15,16 +15,16 @@
 
 TEST(ZipIntegrationTest, ContainersAndAlgorithms)
 {
-    std::vector<int> vector = {1, 0};
-    std::deque<int> deque = {1, 2};
-    std::vector<int> list = {1, 2, 3};
-    std::forward_list<int> forward_list = {1, 2, 3, 4};
-    std::array<int, 5> array = {1, 2, 3, 4, 5};
-    std::string string = "123456";
-    std::vector<int> set = {1, 2, 3, 4, 5, 6};
-    std::vector<int> multiset = {1, 2, 3, 4, 5, 6};
-    std::map<int, int> map = {{1, 1}, {2, 2}, {3, 3}, {4, 4}, {5, 5}, {6, 6}};
-    std::multimap<int, int> multimap = {{1, 1}, {2, 2}, {3, 3}, {4, 4}, {5, 5}, {6, 6}};
+    std::vector<int> vector{1, 0};
+    std::deque<int> deque{1, 2};
+    std::list<int> list{1, 2, 3};
+    std::forward_list<int> forward_list{1, 2, 3, 4};
+    std::array<int, 5> array{1, 2, 3, 4, 5};
+    std::string string{"123456"};
+    std::set<int> set{1, 2, 3, 4, 5, 6};
+    std::multiset<int> multiset{1, 2, 3, 4, 5, 6};
+    std::map<int, int> map{{1, 1}, {2, 2}, {3, 3}, {4, 4}, {5, 5}, {6, 6}};
+    std::multimap<int, int> multimap{{1, 1}, {2, 2}, {3, 3}, {4, 4}, {5, 5}, {6, 6}};
     const auto zip = msd::zip(vector, deque, list, forward_list, array, string, set, multiset, map, multimap);
 
     const int sum = std::accumulate(zip.begin(), zip.end(), 0, [](int acc, auto&& tuple) {
@@ -38,4 +38,28 @@ TEST(ZipIntegrationTest, ContainersAndAlgorithms)
         return li == 4;
     });
     EXPECT_EQ(iterator_find, zip.cend());
+
+    std::unordered_set<int> unordered_set{1, 9, -3};
+    std::unordered_multiset<int> unordered_multiset{1, 2, 3, 4, 5, 6};
+    std::unordered_map<int, int> unordered_map{{1, 1}, {2, 2}, {3, 3}, {45, 49}, {5, 5}, {6, 6}};
+    std::unordered_multimap<int, int> unordered_multimap{{1, 1}, {2, 2}, {3, 3}, {4, 4}};
+
+    const msd::zip unordered_zip(unordered_set, unordered_multiset, unordered_map, unordered_multimap);
+    const bool any_is_negative = std::any_of(unordered_zip.begin(), unordered_zip.cend(), [](auto tuple) {
+        auto [uset, umset, umap, umm] = tuple;
+        return uset < 0 || umset < 0 || umap.second < 0 || umm.second < 0;
+    });
+    EXPECT_TRUE(any_is_negative);
+
+    msd::zip adjacent_zip(list, forward_list);
+    const auto adjacent_iterator =
+        std::adjacent_find(adjacent_zip.begin(), adjacent_zip.end(), [](auto&& current, auto&& next) {
+            auto&& [current_l, current_f] = current;
+            auto&& [next_l, next_f] = next;
+
+            std::cout << current_l << ", " << current_f << " vs " << next_l << ", " << next_f << "\n\n";
+
+            return current_l + current_f + next_l + next_f == 6;
+        });
+    EXPECT_EQ(adjacent_iterator, adjacent_zip.begin());
 }
