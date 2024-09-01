@@ -24,6 +24,7 @@ jobs:
             enable_tests: "ON",
             enable_coverage: "OFF",
             enable_asan: "OFF",
+            code_quality: false,
           }
           - {
             name: "Ubuntu 22.04 GCC (Debug)",
@@ -32,6 +33,7 @@ jobs:
             enable_tests: "ON",
             enable_coverage: "ON",
             enable_asan: "ON",
+            code_quality: true,
           }
           - {
             name: "macOS Latest Clang (Release)",
@@ -40,6 +42,7 @@ jobs:
             enable_tests: "ON",
             enable_coverage: "OFF",
             enable_asan: "OFF",
+            code_quality: false,
           }
           - {
             name: "Windows Latest (Release)",
@@ -48,6 +51,7 @@ jobs:
             enable_tests: "ON",
             enable_coverage: "OFF",
             enable_asan: "OFF",
+            code_quality: false,
           }
 
     steps:
@@ -64,6 +68,12 @@ jobs:
         # Some projects don't allow in-source building, so create a separate build directory
         # We'll use this as our working directory for all subsequent commands
         run: cmake -E make_directory ${{github.workspace}}/build
+
+      - name: Code Quality
+        run: |
+          ./code-quality.sh ${{ github.event.repository.default_branch }} ${{github.workspace}} \
+            ${{github.workspace}}/build ${{ matrix.config.build_type }} tests
+        if: matrix.config.code_quality == true
 
       - name: Configure CMake
         # Use a bash shell so we can use the same syntax for environment variable
