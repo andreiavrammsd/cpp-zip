@@ -48,7 +48,8 @@ fi | grep '\.*pp$')
 echo
 
 if [ ! -z "${files}" ]; then
-    echo Format and tidy $(echo "${files}" | wc -w) file(s)
+    file_count=$(echo "${files}" | wc -w)
+    echo "Format and tidy ${file_count} file(s)"
     clang-format -i $files
     git diff --exit-code
     clang-tidy -p ${build_path} $files
