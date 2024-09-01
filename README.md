@@ -54,8 +54,11 @@ See [tests](tests/zip_test.cpp).
 * Write size() as end() - begin()
 * Exception guarantees
 * constexpr
+* const correctness
 * Write benchmarks
 * ContainersAndAlgorithms test fails at `EXPECT_EQ(it, std::prev(const_zip.end()));` for std::list
+* Consider checked access that returns an optional reference
+* List tools required for dev or create devcontainer
 * Test
     * 100% coverage
     * Finish tests

@@ -39,28 +39,35 @@ class zip_iterator {
         return *this;
     }
 
-    zip_iterator operator+(const std::size_t offset) noexcept
+    zip_iterator operator+(const std::size_t offset) const noexcept
     {
-        zip_iterator it = *this;
-        it.advance(std::index_sequence_for<Iterators...>{}, offset);
-        return it;
+        auto iterator = *this;
+        iterator.advance(std::index_sequence_for<Iterators...>{}, offset);
+        return iterator;
+    }
+
+    zip_iterator operator-(const int offset) const noexcept
+    {
+        auto iterator = *this;
+        iterator.advance(std::index_sequence_for<Iterators...>{}, -offset);
+        return iterator;
     }
 
    private:
     template <std::size_t... I>
-    value_type dereference(std::index_sequence<I...> /*unused*/) const
+    value_type dereference(std::index_sequence<I...>) const
     {
         return std::tie(*std::get<I>(iterators_)...);
     }
 
     template <std::size_t... I>
-    bool equal(std::index_sequence<I...> /*unused*/, const zip_iterator& other) const
+    bool equal(std::index_sequence<I...>, const zip_iterator& other) const
     {
         return ((std::get<I>(iterators_) == std::get<I>(other.iterators_)) || ...);
     }
 
     template <std::size_t... I>
-    void advance(std::index_sequence<I...> /*unused*/, int offset)
+    void advance(std::index_sequence<I...>, int offset)
     {
         ((std::advance(std::get<I>(iterators_), offset)), ...);
     }
@@ -91,12 +98,11 @@ class zip {
 
     [[nodiscard]] bool empty() const noexcept { return begin() == end(); }
 
-    constexpr explicit operator bool() { return !empty(); }
     constexpr explicit operator bool() const { return !empty(); }
 
     value_type front()
     {
-        assert(!empty());
+        assert(!empty());  // LCOV_EXCL_LINE
         return *begin();
     }
 
@@ -108,17 +114,17 @@ class zip {
 
     value_type back()
     {
-        assert(!empty());
+        assert(!empty());  // LCOV_EXCL_LINE
         return *std::prev(begin() + size());
     }
 
     value_type back() const
     {
-        assert(!empty());
+        assert(!empty());  // LCOV_EXCL_LINE
         return *std::prev(begin() + size());
     }
 
-    constexpr value_type operator[](std::size_t offset)
+    constexpr value_type operator[](const std::size_t offset) const
     {
         assert(offset < size());
         return *std::next(begin(), offset);
@@ -126,21 +132,21 @@ class zip {
 
    private:
     template <std::size_t... I>
-    iterator begin_impl(std::index_sequence<I...> /*unused*/) const
+    iterator begin_impl(std::index_sequence<I...>) const
     {
         return iterator{std::get<I>(containers_).begin()...};
     }
 
     template <std::size_t... I>
-    iterator end_impl(std::index_sequence<I...> /*unused*/) const
+    iterator end_impl(std::index_sequence<I...>) const
     {
-        return iterator{std::get<I>(containers_).end()...};
+        return std::next(iterator{std::get<I>(containers_).begin()...}, size());
     }
 
     template <std::size_t... I>
-    std::size_t size_impl(std::index_sequence<I...> /*unused*/) const
+    std::size_t size_impl(std::index_sequence<I...>) const
     {
-        return std::min({std::get<I>(containers_).size()...});
+        return std::min({std::distance(std::get<I>(containers_).begin(), std::get<I>(containers_).end())...});
     }
 
     std::tuple<Containers&...> containers_;

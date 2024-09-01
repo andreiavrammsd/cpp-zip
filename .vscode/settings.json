@@ -2,7 +2,7 @@
     "cmake.configureArgs": [
         "-DENABLE_TESTS=ON",
         "-DENABLE_BENCHMARKS=OFF",
-        "-DENABLE_COVERAGE=ON",
+        "-DENABLE_COVERAGE=OFF",
         "-DENABLE_ASAN=OFF",
     ],
     "cmake.configureOnOpen": true,
@@ -17,7 +17,7 @@
     "editor.defaultFormatter": "xaver.clang-format",
     "files.insertFinalNewline": true,
     "files.trimFinalNewlines": true,
-    "coverage-gutters.coverageBaseDir": "**",
+    "coverage-gutters.coverageBaseDir": "build",
     "coverage-gutters.coverageFileNames": [
         "coverage.info",
         "lcov.info",
@@ -100,6 +100,7 @@
         "thread": "cpp",
         "cinttypes": "cpp",
         "typeinfo": "cpp",
-        "semaphore": "cpp"
+        "semaphore": "cpp",
+        "iostream": "cpp"
     }
 }

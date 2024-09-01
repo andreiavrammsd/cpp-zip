@@ -16,6 +16,10 @@ class data {
 
     data& operator=(const data& other)
     {
+        if (this == &other) {
+            return *this;
+        }
+
         ++copies_;
         num = other.num;
         return *this;
@@ -27,6 +31,8 @@ class data {
         num = other.num;
         return *this;
     }
+
+    ~data() = default;
 };
 
 #endif  // MSD_ZIP_TESTS_DATA_HPP

@@ -26,6 +26,22 @@ function(package_add_test TESTNAME)
     if (ENABLE_COVERAGE)
         target_link_libraries(${TESTNAME} -lgcov -lubsan)
         target_compile_options(${TESTNAME} PRIVATE --coverage -fsanitize=undefined)
+
+        add_custom_target(
+            run_tests
+            COMMAND ctest -C Debug --verbose
+            DEPENDS tests
+            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+        )
+
+        add_custom_target(
+            coverage
+            COMMAND lcov --directory . --capture --output-file coverage.info
+                    && lcov --remove coverage.info '/usr/*' '*/tests/*' '*/external/*' '*gtest*' '*gmock*' --output-file coverage_filtered.info
+                    && genhtml coverage_filtered.info --output-directory coverage_html
+            DEPENDS run_tests
+            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+        )
     endif ()
 
     if (ENABLE_ASAN)
@@ -41,7 +57,7 @@ endfunction()
 add_custom_target(tests)
 
 # Tests
-package_add_test(zip_test zip_test.cpp)
+package_add_test(zip_test zip_test.cpp zip_iterator_test.cpp zip_integration_test.cpp)
 
 # Benchmark
 if (ENABLE_BENCHMARKS)
