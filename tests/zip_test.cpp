@@ -217,7 +217,7 @@ TEST_F(ZipTest, OperatorSubscript)
 
 TEST_F(ZipTest, OperatorSubscriptWithIndexOutOfRange) { EXPECT_DEBUG_DEATH(zip_[99], ""); }
 
-TEST_F(ZipTest, NoCopiesAndMoves)
+TEST_F(ZipTest, NoCopiesAndMovesOfContainersWhileIterating)
 {
     std::vector<data> items;
     items.reserve(5);
@@ -238,4 +238,13 @@ TEST_F(ZipTest, NoCopiesAndMoves)
     EXPECT_EQ(data::constructs_, 5);
     EXPECT_EQ(data::copies_, 0);
     EXPECT_EQ(data::moves_, 0);
+}
+
+TEST_F(ZipTest, CopyAndMoveZip)
+{
+    auto copy = zip_;
+    EXPECT_EQ(copy.size(), 2);
+
+    const auto move = std::move(copy);
+    EXPECT_EQ(move.size(), 2);
 }
