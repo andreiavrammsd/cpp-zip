@@ -27,16 +27,20 @@ cwd=$PWD
 mkdir -p ${build_path}
 cd ${build_path}
 
-echo cmake ${workspace} \
+cmake ${workspace} \
     -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
     -DCMAKE_C_COMPILER=clang \
     -DCMAKE_CXX_COMPILER=clang++ \
     -DCMAKE_BUILD_TYPE=${build_type} \
     -DENABLE_TESTS=ON
-echo cmake --build . --config ${build_type} --target ${build_target}
+cmake --build . --config ${build_type} --target ${build_target}
 
 cd ${cwd}
 
+ls
+git status
+
+exit
 # Find files
 files=$(if [ $event == "pull_request" ]; then
     git diff --name-only origin/$default_branch...HEAD
