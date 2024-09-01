@@ -37,10 +37,6 @@ cmake --build . --config ${build_type} --target ${build_target}
 
 cd ${cwd}
 
-ls
-git status
-
-exit
 # Find files
 files=$(if [ $event == "pull_request" ]; then
     git diff --name-only origin/$default_branch...HEAD
