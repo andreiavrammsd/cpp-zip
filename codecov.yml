@@ -7,13 +7,5 @@ coverage:
     patch: true
     changes: true
 
-parsers:
-  gcov:
-    branch_detection:
-      conditional: yes
-      loop: yes
-      method: yes
-      macro: yes
-
 ignore:
   - 'tests/*'

@@ -102,7 +102,7 @@ class zip {
 
     value_type front()
     {
-        assert(!empty());  // GCOVR_EXCL_LINE
+        assert(!empty());  // LCOV_EXCL_LINE
         return *begin();
     }
 
@@ -114,13 +114,13 @@ class zip {
 
     value_type back()
     {
-        assert(!empty());  // GCOVR_EXCL_LINE
+        assert(!empty());  // LCOV_EXCL_LINE
         return *std::prev(begin() + size());
     }
 
     value_type back() const
     {
-        assert(!empty());  // GCOVR_EXCL_LINE
+        assert(!empty());  // LCOV_EXCL_LINE
         return *std::prev(begin() + size());
     }
 
