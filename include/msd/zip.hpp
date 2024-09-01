@@ -140,13 +140,13 @@ class zip {
     template <std::size_t... I>
     iterator end_impl(std::index_sequence<I...>) const
     {
-        return iterator{std::get<I>(containers_).begin() + size()...};
+        return std::next(iterator{std::get<I>(containers_).begin()...}, size());
     }
 
     template <std::size_t... I>
     std::size_t size_impl(std::index_sequence<I...>) const
     {
-        return std::min({std::get<I>(containers_).size()...});
+        return std::min({std::distance(std::get<I>(containers_).begin(), std::get<I>(containers_).end())...});
     }
 
     std::tuple<Containers&...> containers_;

@@ -57,7 +57,7 @@ endfunction()
 add_custom_target(tests)
 
 # Tests
-package_add_test(zip_test zip_test.cpp zip_iterator_test.cpp)
+package_add_test(zip_test zip_test.cpp zip_iterator_test.cpp zip_integration_test.cpp)
 
 # Benchmark
 if (ENABLE_BENCHMARKS)
