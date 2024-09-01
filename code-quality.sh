@@ -16,7 +16,6 @@ fi
 cwd=$PWD
 
 # Build with clang for compilation database used by clang-tidy
-rm -rf ${build_path}
 mkdir ${build_path}
 cd ${build_path}
 
@@ -50,5 +49,3 @@ else
     echo "No files changed"
 fi
 
-# Clean
-rm -rf ${build_path}
