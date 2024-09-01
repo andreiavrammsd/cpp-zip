@@ -25,12 +25,17 @@ TEST(ZipIntegrationTest, ContainersAndAlgorithms)
     std::vector<int> multiset = {1, 2, 3, 4, 5, 6};
     std::map<int, int> map = {{1, 1}, {2, 2}, {3, 3}, {4, 4}, {5, 5}, {6, 6}};
     std::multimap<int, int> multimap = {{1, 1}, {2, 2}, {3, 3}, {4, 4}, {5, 5}, {6, 6}};
-
-    auto zip = msd::zip(vector, deque, list, forward_list, array, string, set, multiset, map, multimap);
+    const auto zip = msd::zip(vector, deque, list, forward_list, array, string, set, multiset, map, multimap);
 
     const int sum = std::accumulate(zip.begin(), zip.end(), 0, [](int acc, auto&& tuple) {
-        auto [vec, deq, li, fwd, arr, str, s, mset, mp, mm /*, uset, umset, umap, umm*/] = tuple;
+        auto [vec, deq, li, fwd, arr, str, s, mset, mp, mm] = tuple;
         return acc + vec + deq + li + fwd + arr + str + s + mset + mp.second + mm.second;
     });
     EXPECT_EQ(sum, 124);
+
+    const auto iterator_find = std::find_if(zip.cbegin(), zip.cend(), [](auto tuple) {
+        auto [vec, deq, li, fwd, arr, str, s, mset, mp, mm] = tuple;
+        return li == 4;
+    });
+    EXPECT_EQ(iterator_find, zip.cend());
 }
