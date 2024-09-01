@@ -40,10 +40,10 @@ cd ${cwd}
 
 # Find files
 files=$(if [ $event == "pull_request" ]; then
-    git diff --name-only origin/$default_branch...HEAD
+    git diff --name-only origin/"${default_branch}"...HEAD include
 else
-    git ls-files
-fi | grep '\.*pp$')
+    git ls-files --directory include
+fi | grep '\.*pp$' || true)
 
 # Run tools
 echo
@@ -60,5 +60,5 @@ if [ ! -z "${files}" ]; then
     echo "Tidy ${file_count} file(s)"
     clang-tidy -p ${build_path} $files
 else
-    echo "No files changed"
+    echo "No files for code quality"
 fi
