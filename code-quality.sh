@@ -54,6 +54,7 @@ if [ ! -z "${files}" ]; then
     clang-format -i $files
     
     git diff --exit-code
+    echo
     
     echo "Tidy ${file_count} file(s)"
     clang-tidy -p ${build_path} $files
