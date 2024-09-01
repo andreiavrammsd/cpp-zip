@@ -27,8 +27,11 @@
         "coverage.cobertura.xml"
     ],
     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+    "C_Cpp.codeAnalysis.clangTidy.enabled": true,
     "C_Cpp.codeAnalysis.clangTidy.useBuildPath": true,
-    "clang-tidy.buildPath": "build",
+    "C_Cpp.codeAnalysis.clangTidy.args": [
+        "-p=build"
+    ],
     "files.associations": {
         "array": "cpp",
         "*.tcc": "cpp",

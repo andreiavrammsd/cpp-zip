@@ -7,7 +7,7 @@
             "command": "mkdir -p build",
             "group": {
                 "kind": "build",
-                "isDefault": true
+                "isDefault": false
             },
             "options": {
                 "cwd": "${workspaceFolder}"
@@ -21,7 +21,7 @@
             "dependsOn": "Create build directory",
             "group": {
                 "kind": "build",
-                "isDefault": true
+                "isDefault": false
             },
             "options": {
                 "cwd": "${workspaceFolder}/build"
@@ -41,6 +41,16 @@
                 "cwd": "${workspaceFolder}/build"
             },
             "problemMatcher": []
-        }
+        },
+        {
+            "label": "Run clang-tidy on current file",
+            "type": "shell",
+            "command": "clang-tidy",
+            "args": [
+              "${file}",
+              "-p=build"
+            ],
+            "problemMatcher": ["$gcc"]
+          }
     ]
 }

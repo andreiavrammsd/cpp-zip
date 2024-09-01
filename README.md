@@ -47,20 +47,35 @@ int main() {
 
 ```
 
-See [tests](tests/zip_test.cpp).
+See [tests](tests/).
+
+## Development
+
+### Tools
+* [SSH keys for GitHub](https://help.ubuntu.com/community/SSH/OpenSSH/Keys) (~/.ssh)
+* [VS Code](https://code.visualstudio.com/) (see [.vscode/extensions.json](.vscode/extensions.json))
+* [Docker](https://docs.docker.com/engine/install/ubuntu/)
+
+### Actions
+* Debug: F5
+* Coverage: Ctrl + Shift + P -> Run Task -> Generate Coverage Report
+* Show coverage inline: Ctrl + Shift + 7 OR Ctrl + Shift + P -> Coverage Gutters: Display Coverage
+* Coverage as HTML: See build/coverage_html/index.html
 
 ## TODO
 
-* Write size() as end() - begin()
 * Exception guarantees
 * constexpr
 * const correctness
 * Write benchmarks
 * ContainersAndAlgorithms test fails at `EXPECT_EQ(it, std::prev(const_zip.end()));` for std::list
+    * Can the zip iterator really be bidirectional?
+    * Document or conditionaly set the iterator tag by the containers types
 * Consider checked access that returns an optional reference
-* List tools required for dev or create devcontainer
+* Do not allow to mix begin/end with cbegin/cend
+* Run clang-tidy, clang-format in CI/file save
 * Test
-    * 100% coverage
+    * Analyze if LCOV_EXCL_LINE is needed
     * Finish tests
     * With std algorithms
     * Entire API in non-const and const context

@@ -19,23 +19,23 @@ class zip_iterator {
     using pointer = std::tuple<typename std::iterator_traits<Iterators>::pointer...>;
     using reference = std::tuple<typename std::iterator_traits<Iterators>::reference...>;
 
-    explicit zip_iterator(Iterators... iterators) : iterators_{iterators...} {}
+    explicit zip_iterator(Iterators... iterators) noexcept : iterators_{iterators...} {}
 
-    value_type operator*() const { return dereference(std::index_sequence_for<Iterators...>{}); }
+    value_type operator*() const noexcept { return dereference(std::index_sequence_for<Iterators...>{}); }
 
-    bool operator==(const zip_iterator& other) const { return equal(std::index_sequence_for<Iterators...>{}, other); }
+    bool operator==(const zip_iterator& other) const noexcept
+    {
+        return equal(std::index_sequence_for<Iterators...>{}, other);
+    }
 
-    bool operator!=(const zip_iterator& other) const { return !equal(std::index_sequence_for<Iterators...>{}, other); }
+    bool operator!=(const zip_iterator& other) const noexcept
+    {
+        return !equal(std::index_sequence_for<Iterators...>{}, other);
+    }
 
     zip_iterator& operator++() noexcept
     {
         advance(std::index_sequence_for<Iterators...>{}, 1);
-        return *this;
-    }
-
-    zip_iterator& operator--() noexcept
-    {
-        advance(std::index_sequence_for<Iterators...>{}, -1);
         return *this;
     }
 
@@ -46,6 +46,20 @@ class zip_iterator {
         return iterator;
     }
 
+    zip_iterator operator+(const zip_iterator& other) const noexcept
+    {
+        auto iterator = *this;
+        const auto distance = std::distance(iterator, other);
+        iterator.advance(std::index_sequence_for<Iterators...>{}, distance);
+        return iterator;
+    }
+
+    zip_iterator& operator--() noexcept
+    {
+        advance(std::index_sequence_for<Iterators...>{}, -1);
+        return *this;
+    }
+
     zip_iterator operator-(const int offset) const noexcept
     {
         auto iterator = *this;
@@ -53,21 +67,29 @@ class zip_iterator {
         return iterator;
     }
 
+    zip_iterator operator-(const zip_iterator& other) const noexcept
+    {
+        auto iterator = *this;
+        const auto distance = std::distance(other, iterator);
+        iterator.advance(std::index_sequence_for<Iterators...>{}, -distance);
+        return iterator;
+    }
+
    private:
     template <std::size_t... I>
-    value_type dereference(std::index_sequence<I...>) const
+    value_type dereference(std::index_sequence<I...>) const noexcept
     {
         return std::tie(*std::get<I>(iterators_)...);
     }
 
     template <std::size_t... I>
-    bool equal(std::index_sequence<I...>, const zip_iterator& other) const
+    bool equal(std::index_sequence<I...>, const zip_iterator& other) const noexcept
     {
         return ((std::get<I>(iterators_) == std::get<I>(other.iterators_)) || ...);
     }
 
     template <std::size_t... I>
-    void advance(std::index_sequence<I...>, int offset)
+    void advance(std::index_sequence<I...>, const int offset) noexcept
     {
         ((std::advance(std::get<I>(iterators_), offset)), ...);
     }
@@ -86,7 +108,7 @@ class zip {
 
     using value_type = typename iterator::value_type;
 
-    explicit zip(Containers&... containers) : containers_{containers...} {}
+    explicit zip(Containers&... containers) noexcept : containers_{containers...} {}
 
     iterator begin() const { return begin_impl(std::index_sequence_for<Containers...>{}); }
     iterator end() const { return end_impl(std::index_sequence_for<Containers...>{}); }
@@ -108,7 +130,7 @@ class zip {
 
     value_type front() const
     {
-        assert(!empty());
+        assert(!empty());  // LCOV_EXCL_LINE
         return *begin();
     }
 
@@ -132,13 +154,13 @@ class zip {
 
    private:
     template <std::size_t... I>
-    iterator begin_impl(std::index_sequence<I...>) const
+    iterator begin_impl(std::index_sequence<I...>) const noexcept
     {
         return iterator{std::get<I>(containers_).begin()...};
     }
 
     template <std::size_t... I>
-    iterator end_impl(std::index_sequence<I...>) const
+    iterator end_impl(std::index_sequence<I...>) const noexcept
     {
         return std::next(iterator{std::get<I>(containers_).begin()...}, size());
     }

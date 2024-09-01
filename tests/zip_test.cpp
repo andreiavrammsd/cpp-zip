@@ -169,9 +169,12 @@ TEST_F(ZipTest, FrontWhenZipIsEmpty)
 {
     const std::array<int, 5> non_empty{1, 2, 3};
     std::vector<int> empty{};
-    msd::zip zip(non_empty, empty);
 
+    msd::zip zip(non_empty, empty);
     EXPECT_DEBUG_DEATH(zip.front(), "");
+
+    const msd::zip const_zip = zip;
+    EXPECT_DEBUG_DEATH(const_zip.front(), "");
 }
 
 TEST_F(ZipTest, Back)
@@ -215,7 +218,11 @@ TEST_F(ZipTest, OperatorSubscript)
     EXPECT_EQ(std::get<2>(value), 6);
 }
 
-TEST_F(ZipTest, OperatorSubscriptWithIndexOutOfRange) { EXPECT_DEBUG_DEATH(zip_[99], ""); }
+TEST_F(ZipTest, OperatorSubscriptWithIndexOutOfRange)
+{
+    EXPECT_DEBUG_DEATH(zip_[99], "");
+    EXPECT_DEBUG_DEATH(const_zip_[99], "");
+}
 
 TEST_F(ZipTest, NoCopiesAndMovesOfContainersWhileIterating)
 {
