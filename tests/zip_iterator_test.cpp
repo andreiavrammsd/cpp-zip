@@ -65,9 +65,14 @@ TEST_F(ZipIteratorTest, OperatorEqual)
 {
     const auto copy = begin_iterator_;
     EXPECT_EQ(copy, begin_iterator_);
+    EXPECT_EQ(std::prev(end_iterator_), std::next(begin_iterator_));
 }
 
-TEST_F(ZipIteratorTest, OperatorNotEqual) { EXPECT_NE(end_iterator_, begin_iterator_); }
+TEST_F(ZipIteratorTest, OperatorNotEqual)
+{
+    EXPECT_NE(end_iterator_, begin_iterator_);
+    EXPECT_NE(std::prev(end_iterator_), begin_iterator_);
+}
 
 TEST_F(ZipIteratorTest, OperatorPreIncrement)
 {
@@ -109,6 +114,11 @@ TEST_F(ZipIteratorTest, OperatorPlus)
     EXPECT_EQ(end, end_iterator_);
 }
 
+TEST_F(ZipIteratorTest, OperatorPlusIterator)
+{
+    EXPECT_EQ(begin_iterator_ + std::next(begin_iterator_, 2), end_iterator_);
+}
+
 TEST_F(ZipIteratorTest, OperatorMinus)
 {
     const auto iterator = end_iterator_ - 1;
@@ -121,3 +131,21 @@ TEST_F(ZipIteratorTest, OperatorMinus)
     const auto begin = end_iterator_ - 2;
     EXPECT_EQ(begin, begin_iterator_);
 }
+
+TEST_F(ZipIteratorTest, OperatorMinusIterator)
+{
+    EXPECT_EQ(end_iterator_ - std::prev(end_iterator_, 2), begin_iterator_);
+}
+
+TEST_F(ZipIteratorTest, Prev) { EXPECT_EQ(std::prev(end_iterator_), end_iterator_ - 1); }
+
+TEST_F(ZipIteratorTest, Next) { EXPECT_EQ(std::next(begin_iterator_), begin_iterator_ + 1); }
+
+TEST_F(ZipIteratorTest, Advance)
+{
+    std::advance(begin_iterator_, 2);
+    std::advance(end_iterator_, -1);
+    EXPECT_EQ(begin_iterator_, end_iterator_);
+}
+
+TEST_F(ZipIteratorTest, Distance) { EXPECT_EQ(std::distance(begin_iterator_, end_iterator_), 2); }

@@ -33,12 +33,6 @@ class zip_iterator {
         return *this;
     }
 
-    zip_iterator& operator--() noexcept
-    {
-        advance(std::index_sequence_for<Iterators...>{}, -1);
-        return *this;
-    }
-
     zip_iterator operator+(const std::size_t offset) const noexcept
     {
         auto iterator = *this;
@@ -46,10 +40,32 @@ class zip_iterator {
         return iterator;
     }
 
+    zip_iterator operator+(const zip_iterator& other) const noexcept
+    {
+        auto iterator = *this;
+        const auto distance = std::distance(iterator, other);
+        iterator.advance(std::index_sequence_for<Iterators...>{}, distance);
+        return iterator;
+    }
+
+    zip_iterator& operator--() noexcept
+    {
+        advance(std::index_sequence_for<Iterators...>{}, -1);
+        return *this;
+    }
+
     zip_iterator operator-(const int offset) const noexcept
     {
         auto iterator = *this;
         iterator.advance(std::index_sequence_for<Iterators...>{}, -offset);
+        return iterator;
+    }
+
+    zip_iterator operator-(const zip_iterator& other) const noexcept
+    {
+        auto iterator = *this;
+        const auto distance = std::distance(other, iterator);
+        iterator.advance(std::index_sequence_for<Iterators...>{}, -distance);
         return iterator;
     }
 
@@ -67,7 +83,7 @@ class zip_iterator {
     }
 
     template <std::size_t... I>
-    void advance(std::index_sequence<I...>, int offset)
+    void advance(std::index_sequence<I...>, const int offset)
     {
         ((std::advance(std::get<I>(iterators_), offset)), ...);
     }

@@ -57,9 +57,32 @@ TEST(ZipIntegrationTest, ContainersAndAlgorithms)
             auto&& [current_l, current_f] = current;
             auto&& [next_l, next_f] = next;
 
-            std::cout << current_l << ", " << current_f << " vs " << next_l << ", " << next_f << "\n\n";
-
             return current_l + current_f + next_l + next_f == 6;
         });
     EXPECT_EQ(adjacent_iterator, adjacent_zip.begin());
+
+    msd::zip zip2(list, set);
+    auto iter = zip2.begin();
+
+    std::size_t iterations = 0;
+    while (iter != zip2.end()) {  // NOLINT(altera-id-dependent-backward-branch)
+        auto [a, b] = *iter;
+        EXPECT_EQ(a, b);
+        ++iterations;
+        ++iter;
+    }
+    EXPECT_EQ(iterations, 3);
+
+    iterations = 0;
+    for (auto it = zip2.cbegin(); it != zip2.cend(); ++it) {  // NOLINT(altera-id-dependent-backward-branch)
+        ++iterations;
+    }
+    EXPECT_EQ(iterations, 3);
+
+    iterations = 0;
+    // NOLINTNEXTLINE(altera-id-dependent-backward-branch)
+    for (auto it = std::next(zip2.begin()); it != std::prev(zip2.end()); ++it) {
+        ++iterations;
+    }
+    EXPECT_EQ(iterations, 1);
 }

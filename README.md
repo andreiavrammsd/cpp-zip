@@ -51,7 +51,6 @@ See [tests](tests/zip_test.cpp).
 
 ## TODO
 
-* Write size() as end() - begin()
 * Exception guarantees
 * constexpr
 * const correctness
@@ -59,8 +58,10 @@ See [tests](tests/zip_test.cpp).
 * ContainersAndAlgorithms test fails at `EXPECT_EQ(it, std::prev(const_zip.end()));` for std::list
 * Consider checked access that returns an optional reference
 * List tools required for dev or create devcontainer
+    * g++, clang-tidy, clang-format, clangd?, lcov, cmake
+* Do not allow to mix begin/end with cbegin/cend
 * Test
-    * 100% coverage
+    * Analyze if LCOV_EXCL_LINE is needed
     * Finish tests
     * With std algorithms
     * Entire API in non-const and const context
