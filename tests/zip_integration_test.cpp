@@ -6,7 +6,10 @@
 #include <forward_list>
 #include <iterator>
 #include <list>
+#include <map>
 #include <numeric>
+#include <set>
+#include <string>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
@@ -19,7 +22,7 @@ TEST(ZipIntegrationTest, ContainersAndAlgorithms)
     std::deque<int> deque{1, 2};
     std::list<int> list{1, 2, 3};
     std::forward_list<int> forward_list{1, 2, 3, 4};
-    std::array<int, 5> array{1, 2, 3, 4, 5};
+    const std::array<int, 5> array{1, 2, 3, 4, 5};
     std::string string{"123456"};
     std::set<int> set{1, 2, 3, 4, 5, 6};
     std::multiset<int> multiset{1, 2, 3, 4, 5, 6};

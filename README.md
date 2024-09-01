@@ -69,6 +69,8 @@ See [tests](tests/).
 * const correctness
 * Write benchmarks
 * ContainersAndAlgorithms test fails at `EXPECT_EQ(it, std::prev(const_zip.end()));` for std::list
+    * Can the zip iterator be bidirectional?
+    * Document or conditionaly set the iterator tag by the containers types
 * Consider checked access that returns an optional reference
 * Do not allow to mix begin/end with cbegin/cend
 * Run clang-tidy, clang-format in CI/file save
