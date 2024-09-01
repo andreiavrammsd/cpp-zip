@@ -72,7 +72,7 @@ jobs:
 
       - name: Code Quality
         run: |
-          ./code-quality.sh ${{ github.event.repository.default_branch }} ${{github.workspace}} \
+          ./code-quality.sh $GITHUB_REF ${{github.workspace}} \
             ${{github.workspace}}/build-code-quality refs/heads/${{ matrix.config.build_type }} tests
         if: matrix.config.code_quality == true
 
