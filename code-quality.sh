@@ -46,12 +46,9 @@ fi | grep '\.*pp$')
 
 # Run tools
 if [ ! -z "${files}" ]; then
-    echo clang-format -i $files
+    echo Format and tidy $(echo "${files}" | wc -w) files
     clang-format -i $files
-
     git diff --exit-code
-
-    echo clang-tidy -p ${build_path} $files
     clang-tidy -p ${build_path} $files
 else
     echo "No files changed"
