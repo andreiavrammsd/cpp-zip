@@ -3,10 +3,18 @@
 set -e
 
 default_branch=$1 # master
-workspace=$2 # ..
-build_path=$3 # build
-build_type=$4 # Debug
-build_target=$5 # tests
+pr=$2 # refs/pull/1/merge
+workspace=$3 # ..
+build_path=$4 # build
+build_type=$5 # Debug
+build_target=$6 # tests
+
+echo $default_branch
+echo $pr
+echo $workspace
+echo $build_path=$4
+echo $build_type=$5
+echo $build_target=$6
 
 if [ -z ${default_branch} ]; then
     echo "Branch is missing"
@@ -16,7 +24,7 @@ fi
 cwd=$PWD
 
 # Build with clang for compilation database used by clang-tidy
-mkdir ${build_path}
+mkdir -p ${build_path}
 cd ${build_path}
 
 cmake ${workspace} \
@@ -30,10 +38,10 @@ cmake --build . --config ${build_type} --target ${build_target}
 cd ${cwd}
 
 # Find files
-files=$(if [ "$(git rev-parse --abbrev-ref HEAD)" = ${default_branch} ]; then
-    git ls-files
+files=$(if [ ! -z $pr ]; then
+    git diff --name-only $default_branch...$pr
 else
-    git diff --name-only ${default_branch}
+    git ls-files
 fi | grep '\.*pp$')
 
 # Run tools
@@ -48,4 +56,3 @@ if [ ! -z "${files}" ]; then
 else
     echo "No files changed"
 fi
-
