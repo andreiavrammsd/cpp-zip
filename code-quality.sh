@@ -9,15 +9,15 @@ build_path=$4 # build-dir
 build_type=$5 # Debug
 build_target=$6 # tests
 
-echo $default_branch
-echo $event
-echo $workspace
-echo $build_path
-echo $build_type
-echo $build_target
+echo default_branch=$default_branch
+echo event=$event
+echo workspace=$workspace
+echo build_path=$build_path
+echo build_type=$build_type
+echo build_target=$build_target
 
 if [ -z ${default_branch} ]; then
-    echo "Branch is missing"
+    echo "Default branch is missing"
     exit 1
 fi
 
@@ -36,15 +36,6 @@ cmake ${workspace} \
 cmake --build . --config ${build_type} --target ${build_target}
 
 cd ${cwd}
-
-if [ $event == "pull_request" ]; then
-    echo git diff --name-only origin/$default_branch...HEAD
-    git diff --name-only origin/$default_branch...HEAD
-else
-    echo git ls-files
-    git ls-files
-fi
-exit
 
 # Find files
 files=$(if [ $event == "pull_request" ]; then
