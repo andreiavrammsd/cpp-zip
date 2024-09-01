@@ -8,6 +8,7 @@
     "cmake.configureOnOpen": true,
     "cmake.sourceDirectory": "${workspaceFolder}",
     "cmake.buildDirectory": "${workspaceFolder}/build",
+    "cmake.options.statusBarVisibility": "visible",
     "editor.codeActionsOnSave": {
         "source.fixAll": "explicit"
     },
@@ -26,6 +27,8 @@
         "jacoco.xml",
         "coverage.cobertura.xml"
     ],
+    "clang-tidy-on-active-file.autoRunOnSave": true,
+    "clang-tidy-on-active-file.configPath": "/workspace/.clang-tidy",
     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
     "C_Cpp.codeAnalysis.clangTidy.enabled": true,
     "C_Cpp.codeAnalysis.clangTidy.useBuildPath": true,
