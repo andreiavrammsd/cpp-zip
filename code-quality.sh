@@ -12,9 +12,9 @@ build_target=$6 # tests
 echo $default_branch
 echo $event
 echo $workspace
-echo $build_path=$4
-echo $build_type=$5
-echo $build_target=$6
+echo $build_path
+echo $build_type
+echo $build_target
 
 if [ -z ${default_branch} ]; then
     echo "Branch is missing"
