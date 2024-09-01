@@ -6,6 +6,8 @@
 #include <iterator>
 #include <vector>
 
+#include "data.hpp"
+
 class ZipTest : public testing::Test {  // NOLINT(readability-identifier-naming)
    protected:
     const std::array<int, 5> arr_three_{1, 2, 3};
@@ -214,3 +216,26 @@ TEST_F(ZipTest, OperatorSubscript)
 }
 
 TEST_F(ZipTest, OperatorSubscriptWithIndexOutOfRange) { EXPECT_DEBUG_DEATH(zip_[99], ""); }
+
+TEST_F(ZipTest, NoCopiesAndMoves)
+{
+    std::vector<data> items;
+    items.reserve(5);
+    items.emplace_back(1);
+    items.emplace_back(2);
+    items.emplace_back(3);
+    items.emplace_back(4);
+    items.emplace_back(5);
+
+    std::size_t iterations = 0;
+    for (auto [a, b] : msd::zip(vector_four_, items)) {
+        static_assert(std::is_same_v<decltype(a), const int&>);
+        static_assert(std::is_same_v<decltype(b), data&>);
+        ++iterations;
+    }
+
+    EXPECT_EQ(iterations, 4);
+    EXPECT_EQ(data::constructs_, 5);
+    EXPECT_EQ(data::copies_, 0);
+    EXPECT_EQ(data::moves_, 0);
+}
