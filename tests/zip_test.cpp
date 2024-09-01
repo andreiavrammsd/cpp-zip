@@ -11,7 +11,7 @@
 
 #include "data.hpp"
 
-class ZipTest : public testing::Test {  // NOLINT(readability-identifier-naming)
+class ZipTest : public testing::Test {
    protected:
     const std::array<int, 5> arr_three_{1, 2, 3};
     std::vector<int> vector_two_{4, 5};
@@ -174,11 +174,9 @@ TEST_F(ZipTest, FrontWhenZipIsEmpty)
     std::vector<int> empty{};
 
     msd::zip zip(non_empty, empty);
-    // NOLINTNEXTLINE(hicpp-vararg,cppcoreguidelines-avoid-goto,cppcoreguidelines-pro-type-vararg,hicpp-avoid-goto)
     EXPECT_DEBUG_DEATH(zip.front(), "");
 
     const msd::zip const_zip = zip;
-    // NOLINTNEXTLINE(hicpp-vararg,cppcoreguidelines-avoid-goto,cppcoreguidelines-pro-type-vararg,hicpp-avoid-goto)
     EXPECT_DEBUG_DEATH(const_zip.front(), "");
 }
 
@@ -204,10 +202,7 @@ TEST_F(ZipTest, BackWhenZipIsEmpty)
     msd::zip zip(non_empty, empty);
     const msd::zip const_zip(non_empty, empty);
 
-    // NOLINTNEXTLINE(hicpp-vararg,cppcoreguidelines-avoid-goto,cppcoreguidelines-pro-type-vararg,hicpp-avoid-goto)
     EXPECT_DEBUG_DEATH(zip.back(), "");
-
-    // NOLINTNEXTLINE(hicpp-vararg,cppcoreguidelines-avoid-goto,cppcoreguidelines-pro-type-vararg,hicpp-avoid-goto)
     EXPECT_DEBUG_DEATH(const_zip.back(), "");
 }
 
@@ -228,10 +223,7 @@ TEST_F(ZipTest, OperatorSubscript)
 
 TEST_F(ZipTest, OperatorSubscriptWithIndexOutOfRange)
 {
-    // NOLINTNEXTLINE(hicpp-vararg,cppcoreguidelines-avoid-goto,cppcoreguidelines-pro-type-vararg,hicpp-avoid-goto)
     EXPECT_DEBUG_DEATH(zip_[99], "");
-
-    // NOLINTNEXTLINE(hicpp-vararg,cppcoreguidelines-avoid-goto,cppcoreguidelines-pro-type-vararg,hicpp-avoid-goto)
     EXPECT_DEBUG_DEATH(const_zip_[99], "");
 }
 

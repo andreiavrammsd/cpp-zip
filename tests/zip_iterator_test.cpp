@@ -7,7 +7,7 @@
 
 #include "msd/zip.hpp"
 
-class ZipIteratorTest : public testing::Test {  // NOLINT(readability-identifier-naming)
+class ZipIteratorTest : public testing::Test {
    protected:
     const std::array<int, 3> arr_three_{1, 2, 3};
     std::vector<int> vector_two_{4, 5};

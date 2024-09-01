@@ -68,7 +68,7 @@ TEST(ZipIntegrationTest, ContainersAndAlgorithms)
     auto iter = zip2.begin();
 
     std::size_t iterations = 0;
-    while (iter != zip2.end()) {  // NOLINT(altera-id-dependent-backward-branch)
+    while (iter != zip2.end()) {
         auto [a, b] = *iter;
         EXPECT_EQ(a, b);
         ++iterations;
@@ -77,13 +77,12 @@ TEST(ZipIntegrationTest, ContainersAndAlgorithms)
     EXPECT_EQ(iterations, 3);
 
     iterations = 0;
-    for (auto it = zip2.cbegin(); it != zip2.cend(); ++it) {  // NOLINT(altera-id-dependent-backward-branch)
+    for (auto it = zip2.cbegin(); it != zip2.cend(); ++it) {
         ++iterations;
     }
     EXPECT_EQ(iterations, 3);
 
     iterations = 0;
-    // NOLINTNEXTLINE(altera-id-dependent-backward-branch)
     for (auto it = std::next(zip2.begin()); it != std::prev(zip2.end()); ++it) {
         ++iterations;
     }
