@@ -68,6 +68,9 @@ See [tests](tests/).
 * constexpr
 * const correctness
 * Write benchmarks
+* Ignore google headers from clang-tidy
+    * Remove from clangtidy: -fuchsia-statically-constructed-objects, -cert-err58-cpp, -cppcoreguidelines-owning-memory,
+    * Remove other exceptions from tests
 * ContainersAndAlgorithms test fails at `EXPECT_EQ(it, std::prev(const_zip.end()));` for std::list
     * Can the zip iterator really be bidirectional?
     * Document or conditionaly set the iterator tag by the containers types

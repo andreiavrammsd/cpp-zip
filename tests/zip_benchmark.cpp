@@ -6,8 +6,9 @@
     Results on release build...
  */
 
-static void BM_Zip(benchmark::State& state) { (void)state; }
+static void BM_Zip(benchmark::State&) {}  // NOLINT(google-runtime-references)
 
-BENCHMARK(BM_Zip);
+BENCHMARK(BM_Zip);  // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
 
-BENCHMARK_MAIN();
+// NOLINTNEXTLINE(modernize-avoid-c-arrays,hicpp-no-array-decay,cppcoreguidelines-pro-bounds-array-to-pointer-decay,hicpp-avoid-c-arrays)
+BENCHMARK_MAIN();  // NOLINT(cppcoreguidelines-avoid-c-arrays)
