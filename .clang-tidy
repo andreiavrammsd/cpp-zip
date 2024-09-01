@@ -3,6 +3,7 @@ Checks: >
   -llvmlibc-restrict-system-libc-headers,
   -llvmlibc-implementation-in-namespace,
   -llvmlibc-callee-namespace,
+  -llvmlibc-inline-function-decl,
   -llvm-header-guard,
   -fuchsia-overloaded-operator,
   -modernize-use-trailing-return-type,
