@@ -3,7 +3,10 @@
 #include <gtest/gtest.h>
 
 #include <array>
+#include <cstddef>
 #include <iterator>
+#include <type_traits>
+#include <utility>
 #include <vector>
 
 #include "data.hpp"
@@ -171,9 +174,11 @@ TEST_F(ZipTest, FrontWhenZipIsEmpty)
     std::vector<int> empty{};
 
     msd::zip zip(non_empty, empty);
+    // NOLINTNEXTLINE(hicpp-vararg,cppcoreguidelines-avoid-goto,cppcoreguidelines-pro-type-vararg,hicpp-avoid-goto)
     EXPECT_DEBUG_DEATH(zip.front(), "");
 
     const msd::zip const_zip = zip;
+    // NOLINTNEXTLINE(hicpp-vararg,cppcoreguidelines-avoid-goto,cppcoreguidelines-pro-type-vararg,hicpp-avoid-goto)
     EXPECT_DEBUG_DEATH(const_zip.front(), "");
 }
 
@@ -199,7 +204,10 @@ TEST_F(ZipTest, BackWhenZipIsEmpty)
     msd::zip zip(non_empty, empty);
     const msd::zip const_zip(non_empty, empty);
 
+    // NOLINTNEXTLINE(hicpp-vararg,cppcoreguidelines-avoid-goto,cppcoreguidelines-pro-type-vararg,hicpp-avoid-goto)
     EXPECT_DEBUG_DEATH(zip.back(), "");
+
+    // NOLINTNEXTLINE(hicpp-vararg,cppcoreguidelines-avoid-goto,cppcoreguidelines-pro-type-vararg,hicpp-avoid-goto)
     EXPECT_DEBUG_DEATH(const_zip.back(), "");
 }
 
@@ -220,7 +228,10 @@ TEST_F(ZipTest, OperatorSubscript)
 
 TEST_F(ZipTest, OperatorSubscriptWithIndexOutOfRange)
 {
+    // NOLINTNEXTLINE(hicpp-vararg,cppcoreguidelines-avoid-goto,cppcoreguidelines-pro-type-vararg,hicpp-avoid-goto)
     EXPECT_DEBUG_DEATH(zip_[99], "");
+
+    // NOLINTNEXTLINE(hicpp-vararg,cppcoreguidelines-avoid-goto,cppcoreguidelines-pro-type-vararg,hicpp-avoid-goto)
     EXPECT_DEBUG_DEATH(const_zip_[99], "");
 }
 
@@ -236,6 +247,8 @@ TEST_F(ZipTest, NoCopiesAndMovesOfContainersWhileIterating)
 
     std::size_t iterations = 0;
     for (auto [a, b] : msd::zip(vector_four_, items)) {
+        std::ignore = a;
+        std::ignore = b;
         static_assert(std::is_same_v<decltype(a), const int&>);
         static_assert(std::is_same_v<decltype(b), data&>);
         ++iterations;

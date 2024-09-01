@@ -3,10 +3,10 @@
 
 class data {
    public:
-    inline static int constructs_ = 0;
-    inline static int copies_ = 0;
-    inline static int moves_ = 0;
-    int num = 0;
+    inline static int constructs_ = 0;  // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
+    inline static int copies_ = 0;      // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
+    inline static int moves_ = 0;       // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
+    int num = 0;                        // NOLINT(misc-non-private-member-variables-in-classes)
 
     explicit data(int n) : num{n} { ++constructs_; }
 
