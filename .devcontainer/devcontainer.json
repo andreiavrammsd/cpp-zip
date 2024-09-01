@@ -11,8 +11,8 @@
                 "twxs.cmake",
                 "fredericbonnet.cmake-test-adapter",
                 "ms-vscode.cmake-tools",
-                "notskm.clang-tidy",
-                "ryanluker.vscode-coverage-gutters",
+                "AndreasNonslidHvardsen.clang-tidy-on-active-file",
+                "ryanluker.vscode-coverage-gutters"
             ]
         }
     },
