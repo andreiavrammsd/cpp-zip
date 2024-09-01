@@ -47,7 +47,7 @@ int main() {
 
 ```
 
-See [tests](tests/zip_test.cpp).
+See [tests](tests/).
 
 ## Development
 
@@ -70,8 +70,6 @@ See [tests](tests/zip_test.cpp).
 * Write benchmarks
 * ContainersAndAlgorithms test fails at `EXPECT_EQ(it, std::prev(const_zip.end()));` for std::list
 * Consider checked access that returns an optional reference
-* List tools required for dev or create devcontainer
-    * g++, clang-tidy, clang-format, clangd?, lcov, cmake
 * Do not allow to mix begin/end with cbegin/cend
 * Run clang-tidy, clang-format in CI/file save
 * Test

@@ -124,7 +124,7 @@ class zip {
 
     value_type front() const
     {
-        assert(!empty());
+        assert(!empty());  // LCOV_EXCL_LINE
         return *begin();
     }
 
