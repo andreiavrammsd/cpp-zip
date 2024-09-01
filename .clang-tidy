@@ -8,7 +8,11 @@ Checks: >
   -fuchsia-overloaded-operator,
   -modernize-use-trailing-return-type,
   -hicpp-named-parameter,
-  
+  -readability-named-parameter,
+  -altera-unroll-loops,
+  -fuchsia-default-arguments-calls,
+  -cppcoreguidelines-avoid-magic-numbers,
+  -readability-magic-numbers,
 
 WarningsAsErrors: "*"
 
