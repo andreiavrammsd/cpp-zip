@@ -3,14 +3,14 @@
 set -e
 
 default_branch=$1 # master
-pr=$2 # refs/pull/1/merge
+event=$2 # pull_request|push
 workspace=$3 # ..
-build_path=$4 # build
+build_path=$4 # build-dir
 build_type=$5 # Debug
 build_target=$6 # tests
 
 echo $default_branch
-echo $pr
+echo $event
 echo $workspace
 echo $build_path=$4
 echo $build_type=$5
@@ -27,19 +27,19 @@ cwd=$PWD
 mkdir -p ${build_path}
 cd ${build_path}
 
-cmake ${workspace} \
+echo cmake ${workspace} \
     -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
     -DCMAKE_C_COMPILER=clang \
     -DCMAKE_CXX_COMPILER=clang++ \
     -DCMAKE_BUILD_TYPE=${build_type} \
     -DENABLE_TESTS=ON
-cmake --build . --config ${build_type} --target ${build_target}
+echo cmake --build . --config ${build_type} --target ${build_target}
 
 cd ${cwd}
 
 # Find files
-files=$(if [ ! -z $pr ]; then
-    git diff --name-only $default_branch...$pr
+files=$(if [ $event == "pull_request" ]; then
+    git diff --name-only origin/$default_branch...HEAD
 else
     git ls-files
 fi | grep '\.*pp$')
