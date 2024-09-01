@@ -49,9 +49,13 @@ echo
 
 if [ ! -z "${files}" ]; then
     file_count=$(echo "${files}" | wc -w)
-    echo "Format and tidy ${file_count} file(s)"
+    
+    echo "Format ${file_count} file(s)"
     clang-format -i $files
+    
     git diff --exit-code
+    
+    echo "Tidy ${file_count} file(s)"
     clang-tidy -p ${build_path} $files
 else
     echo "No files changed"
