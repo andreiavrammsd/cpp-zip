@@ -48,7 +48,7 @@ TEST(ZipIntegrationTest, ContainersAndAlgorithms)
     std::unordered_multimap<int, int> unordered_multimap{{1, 1}, {2, 2}, {3, 3}, {4, 4}};
 
     const msd::zip unordered_zip(unordered_set, unordered_multiset, unordered_map, unordered_multimap);
-    const bool any_is_negative = std::any_of(unordered_zip.begin(), unordered_zip.cend(), [](auto tuple) {
+    const bool any_is_negative = std::any_of(unordered_zip.cbegin(), unordered_zip.cend(), [](auto tuple) {
         auto [uset, umset, umap, umm] = tuple;
         return uset < 0 || umset < 0 || umap.second < 0 || umm.second < 0;
     });
@@ -83,7 +83,7 @@ TEST(ZipIntegrationTest, ContainersAndAlgorithms)
     EXPECT_EQ(iterations, 3);
 
     iterations = 0;
-    for (auto it = std::next(zip2.begin()); it != std::prev(zip2.end()); ++it) {
+    for (auto it = std::next(zip2.cbegin()); it != std::prev(zip2.cend()); ++it) {
         ++iterations;
     }
     EXPECT_EQ(iterations, 1);

@@ -107,15 +107,17 @@ class zip {
         zip_iterator<typename std::conditional_t<std::is_const_v<Containers>, typename Containers::const_iterator,
                                                  typename Containers::iterator>...>;
 
+    using const_iterator = zip_iterator<typename Containers::const_iterator...>;
+
     using value_type = typename iterator::value_type;
 
     explicit zip(Containers&... containers) noexcept : containers_{containers...} {}
 
-    iterator begin() const { return begin_impl(std::index_sequence_for<Containers...>{}); }
-    iterator end() const { return end_impl(std::index_sequence_for<Containers...>{}); }
+    iterator begin() const { return begin_impl<iterator>(std::index_sequence_for<Containers...>{}); }
+    iterator end() const { return end_impl<iterator>(std::index_sequence_for<Containers...>{}); }
 
-    iterator cbegin() const { return begin_impl(std::index_sequence_for<Containers...>{}); }
-    iterator cend() const { return end_impl(std::index_sequence_for<Containers...>{}); }
+    const_iterator cbegin() const { return begin_impl<const_iterator>(std::index_sequence_for<Containers...>{}); }
+    const_iterator cend() const { return end_impl<const_iterator>(std::index_sequence_for<Containers...>{}); }
 
     [[nodiscard]] std::size_t size() const { return size_impl(std::index_sequence_for<Containers...>{}); }
 
@@ -154,16 +156,16 @@ class zip {
     }
 
    private:
-    template <std::size_t... I>
-    iterator begin_impl(std::index_sequence<I...>) const noexcept
+    template <typename Iterator, std::size_t... I>
+    Iterator begin_impl(std::index_sequence<I...>) const noexcept
     {
-        return iterator{std::get<I>(containers_).begin()...};
+        return Iterator{std::get<I>(containers_).begin()...};
     }
 
-    template <std::size_t... I>
-    iterator end_impl(std::index_sequence<I...>) const noexcept
+    template <typename Iterator, std::size_t... I>
+    Iterator end_impl(std::index_sequence<I...>) const noexcept
     {
-        return std::next(iterator{std::get<I>(containers_).begin()...}, size());
+        return std::next(Iterator{std::get<I>(containers_).begin()...}, size());
     }
 
     template <std::size_t... I>
