@@ -20,7 +20,7 @@ In development. Needs proper testing.
 
 Integrate with CMake or just copy the [header file](https://github.com/andreiavrammsd/cpp-zip/tree/master/include/msd/zip.hpp).
 
-## Use
+## Usage and Documentation
 
 ```c++
 #include <msd/zip.hpp>
@@ -47,7 +47,7 @@ int main() {
 
 ```
 
-See [tests](https://github.com/andreiavrammsd/cpp-zip/blob/master/tests).
+For more, see [tests](https://github.com/andreiavrammsd/cpp-zip/blob/master/tests) and [documentation](https://andreiavrammsd.github.io/cpp-zip/).
 
 ## Known issues
 
