@@ -12,11 +12,9 @@
 namespace msd {
 
 /**
- * @brief Iterator over multiple iterators simultaneously.
- *        Provides bidirectional iteration over the zipped sequence of iterators.
+ * @brief Bidirectional iterator over multiple iterators simultaneously.
  *
- * @tparam Iterators Variadic template parameter representing the types of the iterators to be zipped.
- *                   Each iterator should support bidirectional iteration
+ * @tparam Iterators Types of the iterators to be zipped. Each iterator should support bidirectional iteration
  *                   (i.e., it should support `++`, `--`, and dereferencing).
  */
 template <typename... Iterators>

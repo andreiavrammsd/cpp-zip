@@ -95,7 +95,7 @@ But it does not work with the mentioned containers.
   * Show coverage inline: Ctrl + Shift + 7 OR Ctrl + Shift + P -> Coverage Gutters: Display Coverage
   * Coverage as HTML: See build/coverage_html/index.html
 * Clang tidy: Ctrl + Shift + P -> Run Task -> Run clang-tidy on current file
-* Documentation: Ctrl + Shift + P -> Run Task -> Generate documentation
+* Documentation: Ctrl + Shift + P -> Run Task -> Generate Documentation
 
 ## TODO
 
