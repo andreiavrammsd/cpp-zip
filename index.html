@@ -116,7 +116,7 @@ Calling &lt;tt&gt;std::prev&lt;/tt&gt; on an &lt;tt&gt;msd::zip&lt;/tt&gt; compi
 <li>unordered_map</li>
 <li>unordered_multimap</li>
 </ul>
-<p>The <code><a class="el" href="classmsd_1_1zip.html" title="A template class that provides an iterator over multiple containers simultaneously....">msd::zip</a></code> iterator is bidirectional to better control when you want to stop iterating.</p>
+<p>The <code><a class="el" href="classmsd_1_1zip.html" title="A view over multiple containers simultaneously. It allows iterating through multiple containers at on...">msd::zip</a></code> iterator is bidirectional to better control when you want to stop iterating.</p>
 <p>To get only some of the elements from a C++23 zip, you can use <code>std::views::take</code>: </p><div class="fragment"><div class="line"> {c++}</div>
 <div class="line">std::forward_list&lt;int&gt; first_list{1, 2, 3, 4, 5};</div>
 <div class="line">std::forward_list&lt;int&gt; second_list{1, 2, 3, 4};</div>
@@ -125,7 +125,7 @@ Calling &lt;tt&gt;std::prev&lt;/tt&gt; on an &lt;tt&gt;msd::zip&lt;/tt&gt; compi
 <div class="line">for (auto [a, b] : forward_zip | std::views::take(3)) {</div>
 <div class="line">    std::cout &lt;&lt; a &lt;&lt; &quot;, &quot; &lt;&lt; b &lt;&lt; &quot;\n&quot;;</div>
 <div class="line">}</div>
-</div><!-- fragment --><p>With <code><a class="el" href="classmsd_1_1zip.html" title="A template class that provides an iterator over multiple containers simultaneously....">msd::zip</a></code>, you can write: </p><div class="fragment"><div class="line"> {c++}</div>
+</div><!-- fragment --><p>With <code><a class="el" href="classmsd_1_1zip.html" title="A view over multiple containers simultaneously. It allows iterating through multiple containers at on...">msd::zip</a></code>, you can write: </p><div class="fragment"><div class="line"> {c++}</div>
 <div class="line">for (auto it = forward_zip.begin(); it != std::prev(forward_zip.end()); ++it) {</div>
 <div class="line">    auto [a, b] = *it;</div>
 <div class="line">    std::cout &lt;&lt; a &lt;&lt; &quot;, &quot; &lt;&lt; b &lt;&lt; &quot;\n&quot;;</div>
@@ -144,9 +144,13 @@ Tools</h2>
 Actions</h2>
 <ul>
 <li>Debug: F5</li>
-<li>Coverage: Ctrl + Shift + P -&gt; Run Task -&gt; Generate Coverage Report</li>
+<li>Coverage: Ctrl + Shift + P -&gt; Run Task -&gt; Generate Coverage Report<ul>
 <li>Show coverage inline: Ctrl + Shift + 7 OR Ctrl + Shift + P -&gt; Coverage Gutters: Display Coverage</li>
 <li>Coverage as HTML: See build/coverage_html/index.html</li>
+</ul>
+</li>
+<li>Clang tidy: Ctrl + Shift + P -&gt; Run Task -&gt; Run clang-tidy on current file</li>
+<li>Documentation: Ctrl + Shift + P -&gt; Run Task -&gt; Generate Documentation</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md11"></a>
 TODO</h1>

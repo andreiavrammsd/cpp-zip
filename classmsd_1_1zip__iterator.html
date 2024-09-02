@@ -73,60 +73,431 @@ $(function() {
 <div class="title">msd::zip_iterator&lt; Iterators &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Bidirectional iterator over multiple iterators simultaneously.  
+ <a href="classmsd_1_1zip__iterator.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="zip_8hpp_source.html">zip.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:a4d859a711185473864daa1fcd3496f79"><td class="memItemLeft" align="right" valign="top"><a id="a4d859a711185473864daa1fcd3496f79"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>iterator_category</b> = std::bidirectional_iterator_tag</td></tr>
+using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmsd_1_1zip__iterator.html#a4d859a711185473864daa1fcd3496f79">iterator_category</a> = std::bidirectional_iterator_tag</td></tr>
+<tr class="memdesc:a4d859a711185473864daa1fcd3496f79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Supports bidirectional traversal. <br /></td></tr>
 <tr class="separator:a4d859a711185473864daa1fcd3496f79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c61a63ff8d4563f26864a890d751a95"><td class="memItemLeft" align="right" valign="top"><a id="a7c61a63ff8d4563f26864a890d751a95"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>difference_type</b> = std::ptrdiff_t</td></tr>
+using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmsd_1_1zip__iterator.html#a7c61a63ff8d4563f26864a890d751a95">difference_type</a> = std::ptrdiff_t</td></tr>
+<tr class="memdesc:a7c61a63ff8d4563f26864a890d751a95"><td class="mdescLeft">&#160;</td><td class="mdescRight">The difference between two iterators. <br /></td></tr>
 <tr class="separator:a7c61a63ff8d4563f26864a890d751a95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a52979b924a4d9022acb8f69a5117e592"><td class="memItemLeft" align="right" valign="top"><a id="a52979b924a4d9022acb8f69a5117e592"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>value_type</b> = std::tuple&lt; typename std::iterator_traits&lt; Iterators &gt;::reference... &gt;</td></tr>
+using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmsd_1_1zip__iterator.html#a52979b924a4d9022acb8f69a5117e592">value_type</a> = std::tuple&lt; typename std::iterator_traits&lt; Iterators &gt;::reference... &gt;</td></tr>
+<tr class="memdesc:a52979b924a4d9022acb8f69a5117e592"><td class="mdescLeft">&#160;</td><td class="mdescRight">A tuple of references from each of the zipped iterators. <br /></td></tr>
 <tr class="separator:a52979b924a4d9022acb8f69a5117e592"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad1af78ca6c07c49e8850f72d94021bc9"><td class="memItemLeft" align="right" valign="top"><a id="ad1af78ca6c07c49e8850f72d94021bc9"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>pointer</b> = std::tuple&lt; typename std::iterator_traits&lt; Iterators &gt;::pointer... &gt;</td></tr>
+using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmsd_1_1zip__iterator.html#ad1af78ca6c07c49e8850f72d94021bc9">pointer</a> = std::tuple&lt; typename std::iterator_traits&lt; Iterators &gt;::pointer... &gt;</td></tr>
+<tr class="memdesc:ad1af78ca6c07c49e8850f72d94021bc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">A tuple of pointers from each of the zipped iterators. <br /></td></tr>
 <tr class="separator:ad1af78ca6c07c49e8850f72d94021bc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af9ad51921ccbabd2463b70a2b4624e83"><td class="memItemLeft" align="right" valign="top"><a id="af9ad51921ccbabd2463b70a2b4624e83"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>reference</b> = std::tuple&lt; typename std::iterator_traits&lt; Iterators &gt;::reference... &gt;</td></tr>
+using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmsd_1_1zip__iterator.html#af9ad51921ccbabd2463b70a2b4624e83">reference</a> = std::tuple&lt; typename std::iterator_traits&lt; Iterators &gt;::reference... &gt;</td></tr>
+<tr class="memdesc:af9ad51921ccbabd2463b70a2b4624e83"><td class="mdescLeft">&#160;</td><td class="mdescRight">A tuple of references from each of the zipped iterators. <br /></td></tr>
 <tr class="separator:af9ad51921ccbabd2463b70a2b4624e83"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a78e31851f413428eb0cd7d998d8ee17c"><td class="memItemLeft" align="right" valign="top"><a id="a78e31851f413428eb0cd7d998d8ee17c"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>zip_iterator</b> (Iterators... iterators) noexcept</td></tr>
+<tr class="memitem:a78e31851f413428eb0cd7d998d8ee17c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmsd_1_1zip__iterator.html#a78e31851f413428eb0cd7d998d8ee17c">zip_iterator</a> (Iterators... iterators) noexcept</td></tr>
+<tr class="memdesc:a78e31851f413428eb0cd7d998d8ee17c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <code><a class="el" href="classmsd_1_1zip__iterator.html" title="Bidirectional iterator over multiple iterators simultaneously.">zip_iterator</a></code> from the provided iterators.  <a href="classmsd_1_1zip__iterator.html#a78e31851f413428eb0cd7d998d8ee17c">More...</a><br /></td></tr>
 <tr class="separator:a78e31851f413428eb0cd7d998d8ee17c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3d500398a458adb9d768c651555f41ab"><td class="memItemLeft" align="right" valign="top"><a id="a3d500398a458adb9d768c651555f41ab"></a>
-value_type&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> () const noexcept</td></tr>
+<tr class="memitem:a3d500398a458adb9d768c651555f41ab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmsd_1_1zip__iterator.html#a52979b924a4d9022acb8f69a5117e592">value_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmsd_1_1zip__iterator.html#a3d500398a458adb9d768c651555f41ab">operator*</a> () const noexcept</td></tr>
+<tr class="memdesc:a3d500398a458adb9d768c651555f41ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dereferences the <code><a class="el" href="classmsd_1_1zip__iterator.html" title="Bidirectional iterator over multiple iterators simultaneously.">zip_iterator</a></code> to obtain a tuple of references from each iterator.  <a href="classmsd_1_1zip__iterator.html#a3d500398a458adb9d768c651555f41ab">More...</a><br /></td></tr>
 <tr class="separator:a3d500398a458adb9d768c651555f41ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a609dcb5d2228e7d26346caa1cf068879"><td class="memItemLeft" align="right" valign="top"><a id="a609dcb5d2228e7d26346caa1cf068879"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (const <a class="el" href="classmsd_1_1zip__iterator.html">zip_iterator</a> &amp;other) const noexcept</td></tr>
+<tr class="memitem:a609dcb5d2228e7d26346caa1cf068879"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmsd_1_1zip__iterator.html#a609dcb5d2228e7d26346caa1cf068879">operator==</a> (const <a class="el" href="classmsd_1_1zip__iterator.html">zip_iterator</a> &amp;other) const noexcept</td></tr>
+<tr class="memdesc:a609dcb5d2228e7d26346caa1cf068879"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if two <code><a class="el" href="classmsd_1_1zip__iterator.html" title="Bidirectional iterator over multiple iterators simultaneously.">zip_iterator</a></code> instances are equal.  <a href="classmsd_1_1zip__iterator.html#a609dcb5d2228e7d26346caa1cf068879">More...</a><br /></td></tr>
 <tr class="separator:a609dcb5d2228e7d26346caa1cf068879"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae37453ec4ecb44708fab6e58a5277d05"><td class="memItemLeft" align="right" valign="top"><a id="ae37453ec4ecb44708fab6e58a5277d05"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (const <a class="el" href="classmsd_1_1zip__iterator.html">zip_iterator</a> &amp;other) const noexcept</td></tr>
+<tr class="memitem:ae37453ec4ecb44708fab6e58a5277d05"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmsd_1_1zip__iterator.html#ae37453ec4ecb44708fab6e58a5277d05">operator!=</a> (const <a class="el" href="classmsd_1_1zip__iterator.html">zip_iterator</a> &amp;other) const noexcept</td></tr>
+<tr class="memdesc:ae37453ec4ecb44708fab6e58a5277d05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if two <code><a class="el" href="classmsd_1_1zip__iterator.html" title="Bidirectional iterator over multiple iterators simultaneously.">zip_iterator</a></code> instances are not equal.  <a href="classmsd_1_1zip__iterator.html#ae37453ec4ecb44708fab6e58a5277d05">More...</a><br /></td></tr>
 <tr class="separator:ae37453ec4ecb44708fab6e58a5277d05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8f58fae8ee5cde874db0cdf6f1efe76"><td class="memItemLeft" align="right" valign="top"><a id="aa8f58fae8ee5cde874db0cdf6f1efe76"></a>
-<a class="el" href="classmsd_1_1zip__iterator.html">zip_iterator</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator++</b> () noexcept</td></tr>
+<tr class="memitem:aa8f58fae8ee5cde874db0cdf6f1efe76"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmsd_1_1zip__iterator.html">zip_iterator</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmsd_1_1zip__iterator.html#aa8f58fae8ee5cde874db0cdf6f1efe76">operator++</a> () noexcept</td></tr>
+<tr class="memdesc:aa8f58fae8ee5cde874db0cdf6f1efe76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Advances the <code><a class="el" href="classmsd_1_1zip__iterator.html" title="Bidirectional iterator over multiple iterators simultaneously.">zip_iterator</a></code> by one position.  <a href="classmsd_1_1zip__iterator.html#aa8f58fae8ee5cde874db0cdf6f1efe76">More...</a><br /></td></tr>
 <tr class="separator:aa8f58fae8ee5cde874db0cdf6f1efe76"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a873666fbb53525dc1d2a1a921488f482"><td class="memItemLeft" align="right" valign="top"><a id="a873666fbb53525dc1d2a1a921488f482"></a>
-<a class="el" href="classmsd_1_1zip__iterator.html">zip_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator+</b> (const std::size_t offset) const noexcept</td></tr>
+<tr class="memitem:a873666fbb53525dc1d2a1a921488f482"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmsd_1_1zip__iterator.html">zip_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmsd_1_1zip__iterator.html#a873666fbb53525dc1d2a1a921488f482">operator+</a> (const std::size_t offset) const noexcept</td></tr>
+<tr class="memdesc:a873666fbb53525dc1d2a1a921488f482"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a new <code><a class="el" href="classmsd_1_1zip__iterator.html" title="Bidirectional iterator over multiple iterators simultaneously.">zip_iterator</a></code> advanced by a specified offset.  <a href="classmsd_1_1zip__iterator.html#a873666fbb53525dc1d2a1a921488f482">More...</a><br /></td></tr>
 <tr class="separator:a873666fbb53525dc1d2a1a921488f482"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e8832a58a8136cf07c2e69dff18e99f"><td class="memItemLeft" align="right" valign="top"><a id="a4e8832a58a8136cf07c2e69dff18e99f"></a>
-<a class="el" href="classmsd_1_1zip__iterator.html">zip_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator+</b> (const <a class="el" href="classmsd_1_1zip__iterator.html">zip_iterator</a> &amp;other) const noexcept</td></tr>
+<tr class="memitem:a4e8832a58a8136cf07c2e69dff18e99f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmsd_1_1zip__iterator.html">zip_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmsd_1_1zip__iterator.html#a4e8832a58a8136cf07c2e69dff18e99f">operator+</a> (const <a class="el" href="classmsd_1_1zip__iterator.html">zip_iterator</a> &amp;other) const noexcept</td></tr>
+<tr class="memdesc:a4e8832a58a8136cf07c2e69dff18e99f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a new <code><a class="el" href="classmsd_1_1zip__iterator.html" title="Bidirectional iterator over multiple iterators simultaneously.">zip_iterator</a></code> advanced by the distance between two iterators.  <a href="classmsd_1_1zip__iterator.html#a4e8832a58a8136cf07c2e69dff18e99f">More...</a><br /></td></tr>
 <tr class="separator:a4e8832a58a8136cf07c2e69dff18e99f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a500c3783ea5ff1db7e0687b302f3b033"><td class="memItemLeft" align="right" valign="top"><a id="a500c3783ea5ff1db7e0687b302f3b033"></a>
-<a class="el" href="classmsd_1_1zip__iterator.html">zip_iterator</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator--</b> () noexcept</td></tr>
+<tr class="memitem:a500c3783ea5ff1db7e0687b302f3b033"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmsd_1_1zip__iterator.html">zip_iterator</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmsd_1_1zip__iterator.html#a500c3783ea5ff1db7e0687b302f3b033">operator--</a> () noexcept</td></tr>
+<tr class="memdesc:a500c3783ea5ff1db7e0687b302f3b033"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves the <code><a class="el" href="classmsd_1_1zip__iterator.html" title="Bidirectional iterator over multiple iterators simultaneously.">zip_iterator</a></code> back by one position.  <a href="classmsd_1_1zip__iterator.html#a500c3783ea5ff1db7e0687b302f3b033">More...</a><br /></td></tr>
 <tr class="separator:a500c3783ea5ff1db7e0687b302f3b033"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13227a74bc72aa98e285a360a6e08b8e"><td class="memItemLeft" align="right" valign="top"><a id="a13227a74bc72aa98e285a360a6e08b8e"></a>
-<a class="el" href="classmsd_1_1zip__iterator.html">zip_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator-</b> (const int offset) const noexcept</td></tr>
+<tr class="memitem:a13227a74bc72aa98e285a360a6e08b8e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmsd_1_1zip__iterator.html">zip_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmsd_1_1zip__iterator.html#a13227a74bc72aa98e285a360a6e08b8e">operator-</a> (const int offset) const noexcept</td></tr>
+<tr class="memdesc:a13227a74bc72aa98e285a360a6e08b8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a new <code><a class="el" href="classmsd_1_1zip__iterator.html" title="Bidirectional iterator over multiple iterators simultaneously.">zip_iterator</a></code> moved back by a specified offset.  <a href="classmsd_1_1zip__iterator.html#a13227a74bc72aa98e285a360a6e08b8e">More...</a><br /></td></tr>
 <tr class="separator:a13227a74bc72aa98e285a360a6e08b8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a920a1e82e2b96213180a66924f363954"><td class="memItemLeft" align="right" valign="top"><a id="a920a1e82e2b96213180a66924f363954"></a>
-<a class="el" href="classmsd_1_1zip__iterator.html">zip_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator-</b> (const <a class="el" href="classmsd_1_1zip__iterator.html">zip_iterator</a> &amp;other) const noexcept</td></tr>
+<tr class="memitem:a920a1e82e2b96213180a66924f363954"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmsd_1_1zip__iterator.html">zip_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmsd_1_1zip__iterator.html#a920a1e82e2b96213180a66924f363954">operator-</a> (const <a class="el" href="classmsd_1_1zip__iterator.html">zip_iterator</a> &amp;other) const noexcept</td></tr>
+<tr class="memdesc:a920a1e82e2b96213180a66924f363954"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the distance between two <code><a class="el" href="classmsd_1_1zip__iterator.html" title="Bidirectional iterator over multiple iterators simultaneously.">zip_iterator</a></code> instances.  <a href="classmsd_1_1zip__iterator.html#a920a1e82e2b96213180a66924f363954">More...</a><br /></td></tr>
 <tr class="separator:a920a1e82e2b96213180a66924f363954"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><h3>template&lt;typename... Iterators&gt;<br />
+class msd::zip_iterator&lt; Iterators &gt;</h3>
+
+<p>Bidirectional iterator over multiple iterators simultaneously. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Iterators</td><td>Types of the iterators to be zipped. Each iterator should support bidirectional iteration (i.e., it should support <code>++</code>, <code>--</code>, and dereferencing). </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a78e31851f413428eb0cd7d998d8ee17c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78e31851f413428eb0cd7d998d8ee17c">&#9670;&nbsp;</a></span>zip_iterator()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Iterators&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmsd_1_1zip__iterator.html">msd::zip_iterator</a>&lt; Iterators &gt;::<a class="el" href="classmsd_1_1zip__iterator.html">zip_iterator</a> </td>
+          <td>(</td>
+          <td class="paramtype">Iterators...&#160;</td>
+          <td class="paramname"><em>iterators</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructs a <code><a class="el" href="classmsd_1_1zip__iterator.html" title="Bidirectional iterator over multiple iterators simultaneously.">zip_iterator</a></code> from the provided iterators. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">iterators</td><td>The iterators to be zipped together. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="ae37453ec4ecb44708fab6e58a5277d05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae37453ec4ecb44708fab6e58a5277d05">&#9670;&nbsp;</a></span>operator!=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Iterators&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classmsd_1_1zip__iterator.html">msd::zip_iterator</a>&lt; Iterators &gt;::operator!= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classmsd_1_1zip__iterator.html">zip_iterator</a>&lt; Iterators &gt; &amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if two <code><a class="el" href="classmsd_1_1zip__iterator.html" title="Bidirectional iterator over multiple iterators simultaneously.">zip_iterator</a></code> instances are not equal. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>The other <code><a class="el" href="classmsd_1_1zip__iterator.html" title="Bidirectional iterator over multiple iterators simultaneously.">zip_iterator</a></code> to compare with. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the iterators are not equal, <code>false</code> otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a3d500398a458adb9d768c651555f41ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d500398a458adb9d768c651555f41ab">&#9670;&nbsp;</a></span>operator*()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Iterators&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmsd_1_1zip__iterator.html#a52979b924a4d9022acb8f69a5117e592">value_type</a> <a class="el" href="classmsd_1_1zip__iterator.html">msd::zip_iterator</a>&lt; Iterators &gt;::operator* </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Dereferences the <code><a class="el" href="classmsd_1_1zip__iterator.html" title="Bidirectional iterator over multiple iterators simultaneously.">zip_iterator</a></code> to obtain a tuple of references from each iterator. </p>
+<dl class="section return"><dt>Returns</dt><dd>A tuple containing the values pointed to by each iterator. </dd></dl>
+
+</div>
+</div>
+<a id="a873666fbb53525dc1d2a1a921488f482"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a873666fbb53525dc1d2a1a921488f482">&#9670;&nbsp;</a></span>operator+() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Iterators&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmsd_1_1zip__iterator.html">zip_iterator</a> <a class="el" href="classmsd_1_1zip__iterator.html">msd::zip_iterator</a>&lt; Iterators &gt;::operator+ </td>
+          <td>(</td>
+          <td class="paramtype">const std::size_t&#160;</td>
+          <td class="paramname"><em>offset</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns a new <code><a class="el" href="classmsd_1_1zip__iterator.html" title="Bidirectional iterator over multiple iterators simultaneously.">zip_iterator</a></code> advanced by a specified offset. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">offset</td><td>The number of positions to advance. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A new <code><a class="el" href="classmsd_1_1zip__iterator.html" title="Bidirectional iterator over multiple iterators simultaneously.">zip_iterator</a></code> advanced by the specified offset. </dd></dl>
+
+</div>
+</div>
+<a id="a4e8832a58a8136cf07c2e69dff18e99f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e8832a58a8136cf07c2e69dff18e99f">&#9670;&nbsp;</a></span>operator+() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Iterators&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmsd_1_1zip__iterator.html">zip_iterator</a> <a class="el" href="classmsd_1_1zip__iterator.html">msd::zip_iterator</a>&lt; Iterators &gt;::operator+ </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classmsd_1_1zip__iterator.html">zip_iterator</a>&lt; Iterators &gt; &amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns a new <code><a class="el" href="classmsd_1_1zip__iterator.html" title="Bidirectional iterator over multiple iterators simultaneously.">zip_iterator</a></code> advanced by the distance between two iterators. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>The <code><a class="el" href="classmsd_1_1zip__iterator.html" title="Bidirectional iterator over multiple iterators simultaneously.">zip_iterator</a></code> to measure the distance to. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A new <code><a class="el" href="classmsd_1_1zip__iterator.html" title="Bidirectional iterator over multiple iterators simultaneously.">zip_iterator</a></code> advanced by the distance to the specified iterator. </dd></dl>
+
+</div>
+</div>
+<a id="aa8f58fae8ee5cde874db0cdf6f1efe76"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa8f58fae8ee5cde874db0cdf6f1efe76">&#9670;&nbsp;</a></span>operator++()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Iterators&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmsd_1_1zip__iterator.html">zip_iterator</a>&amp; <a class="el" href="classmsd_1_1zip__iterator.html">msd::zip_iterator</a>&lt; Iterators &gt;::operator++ </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Advances the <code><a class="el" href="classmsd_1_1zip__iterator.html" title="Bidirectional iterator over multiple iterators simultaneously.">zip_iterator</a></code> by one position. </p>
+<dl class="section return"><dt>Returns</dt><dd>A reference to the updated <code><a class="el" href="classmsd_1_1zip__iterator.html" title="Bidirectional iterator over multiple iterators simultaneously.">zip_iterator</a></code>. </dd></dl>
+
+</div>
+</div>
+<a id="a13227a74bc72aa98e285a360a6e08b8e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a13227a74bc72aa98e285a360a6e08b8e">&#9670;&nbsp;</a></span>operator-() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Iterators&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmsd_1_1zip__iterator.html">zip_iterator</a> <a class="el" href="classmsd_1_1zip__iterator.html">msd::zip_iterator</a>&lt; Iterators &gt;::operator- </td>
+          <td>(</td>
+          <td class="paramtype">const int&#160;</td>
+          <td class="paramname"><em>offset</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns a new <code><a class="el" href="classmsd_1_1zip__iterator.html" title="Bidirectional iterator over multiple iterators simultaneously.">zip_iterator</a></code> moved back by a specified offset. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">offset</td><td>The number of positions to move back. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A new <code><a class="el" href="classmsd_1_1zip__iterator.html" title="Bidirectional iterator over multiple iterators simultaneously.">zip_iterator</a></code> moved back by the specified offset. </dd></dl>
+
+</div>
+</div>
+<a id="a920a1e82e2b96213180a66924f363954"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a920a1e82e2b96213180a66924f363954">&#9670;&nbsp;</a></span>operator-() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Iterators&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmsd_1_1zip__iterator.html">zip_iterator</a> <a class="el" href="classmsd_1_1zip__iterator.html">msd::zip_iterator</a>&lt; Iterators &gt;::operator- </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classmsd_1_1zip__iterator.html">zip_iterator</a>&lt; Iterators &gt; &amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the distance between two <code><a class="el" href="classmsd_1_1zip__iterator.html" title="Bidirectional iterator over multiple iterators simultaneously.">zip_iterator</a></code> instances. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>The <code><a class="el" href="classmsd_1_1zip__iterator.html" title="Bidirectional iterator over multiple iterators simultaneously.">zip_iterator</a></code> to measure the distance from. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A new <code><a class="el" href="classmsd_1_1zip__iterator.html" title="Bidirectional iterator over multiple iterators simultaneously.">zip_iterator</a></code> moved back by the distance to the specified iterator. </dd></dl>
+
+</div>
+</div>
+<a id="a500c3783ea5ff1db7e0687b302f3b033"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a500c3783ea5ff1db7e0687b302f3b033">&#9670;&nbsp;</a></span>operator--()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Iterators&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmsd_1_1zip__iterator.html">zip_iterator</a>&amp; <a class="el" href="classmsd_1_1zip__iterator.html">msd::zip_iterator</a>&lt; Iterators &gt;::operator-- </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Moves the <code><a class="el" href="classmsd_1_1zip__iterator.html" title="Bidirectional iterator over multiple iterators simultaneously.">zip_iterator</a></code> back by one position. </p>
+<dl class="section return"><dt>Returns</dt><dd>A reference to the updated <code><a class="el" href="classmsd_1_1zip__iterator.html" title="Bidirectional iterator over multiple iterators simultaneously.">zip_iterator</a></code>. </dd></dl>
+
+</div>
+</div>
+<a id="a609dcb5d2228e7d26346caa1cf068879"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a609dcb5d2228e7d26346caa1cf068879">&#9670;&nbsp;</a></span>operator==()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Iterators&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classmsd_1_1zip__iterator.html">msd::zip_iterator</a>&lt; Iterators &gt;::operator== </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classmsd_1_1zip__iterator.html">zip_iterator</a>&lt; Iterators &gt; &amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if two <code><a class="el" href="classmsd_1_1zip__iterator.html" title="Bidirectional iterator over multiple iterators simultaneously.">zip_iterator</a></code> instances are equal. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>The other <code><a class="el" href="classmsd_1_1zip__iterator.html" title="Bidirectional iterator over multiple iterators simultaneously.">zip_iterator</a></code> to compare with. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the iterators are equal, <code>false</code> otherwise. </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>include/msd/<a class="el" href="">zip.hpp</a></li>
+<li>include/msd/<a class="el" href="zip_8hpp_source.html">zip.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

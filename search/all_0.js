@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['zip_0',['ZIP',['../index.html',1,'']]],
-  ['zip_1',['zip',['../classmsd_1_1zip.html',1,'msd::zip&lt; Containers &gt;'],['../classmsd_1_1zip.html#a6e00bbf66c2d1e73d7a2e6588285926a',1,'msd::zip::zip()']]],
-  ['zip_5fiterator_2',['zip_iterator',['../classmsd_1_1zip__iterator.html',1,'msd']]]
+  ['back_0',['back',['../classmsd_1_1zip.html#a939cd92656d60f393b6e1583d538bcde',1,'msd::zip::back()'],['../classmsd_1_1zip.html#a0db3d44fd96fb193ee723273369bb682',1,'msd::zip::back() const']]],
+  ['begin_1',['begin',['../classmsd_1_1zip.html#a82d511286de263772d4a380fd6b16aa3',1,'msd::zip']]]
 ];
