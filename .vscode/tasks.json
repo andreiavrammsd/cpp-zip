@@ -40,13 +40,25 @@
             }
         },
         {
+            "label": "Generate Compilation Database",
+            "type": "shell",
+            "command": "./generate-compilation-database.sh",
+            "args": [
+              "${workspaceFolder}",
+              "${workspaceFolder}/build-code-quality",
+              "Debug",
+              "tests"
+            ]
+          },
+        {
             "label": "Run clang-tidy on current file",
             "type": "shell",
             "command": "clang-tidy",
             "args": [
               "${file}",
-              "-p=build"
-            ]
+              "-p=${workspaceFolder}/build-code-quality"
+            ],
+            "dependsOn": "Generate Compilation Database",
           },
           {
             "label": "Generate Documentation",
