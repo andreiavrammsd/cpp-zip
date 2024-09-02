@@ -1,5 +1,5 @@
 # Use the official Ubuntu base image
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 # Avoid interactive package installation
 ENV DEBIAN_FRONTEND=noninteractive
@@ -23,6 +23,8 @@ RUN apt update && apt install -y \
     llvm \
     nano \
     software-properties-common \
+    doxygen \
+    graphviz \
     && rm -rf /var/lib/apt/lists/*
 
 # Create a non-root user

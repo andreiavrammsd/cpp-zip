@@ -13,7 +13,8 @@
                 "ms-vscode.cmake-tools",
                 "AndreasNonslidHvardsen.clang-tidy-on-active-file",
                 "ryanluker.vscode-coverage-gutters",
-                "streetsidesoftware.code-spell-checker"
+                "streetsidesoftware.code-spell-checker",
+                "cschlosser.doxdocgen"
             ]
         }
     },

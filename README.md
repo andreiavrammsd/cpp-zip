@@ -18,9 +18,9 @@ In development. Needs proper testing.
 
 ## Install
 
-Integrate with CMake or just copy the [header file](include/msd/zip.hpp).
+Integrate with CMake or just copy the [header file](https://github.com/andreiavrammsd/cpp-zip/tree/master/include/msd/zip.hpp).
 
-## Use
+## Usage and Documentation
 
 ```c++
 #include <msd/zip.hpp>
@@ -47,11 +47,11 @@ int main() {
 
 ```
 
-See [tests](tests/).
+For more, see [tests](https://github.com/andreiavrammsd/cpp-zip/blob/master/tests) and [documentation](https://andreiavrammsd.github.io/cpp-zip/).
 
 ## Known issues
 
-### Calling `std::prev` on an `msd::zip` compiles, but fails at runtime on some std containers.
+### Calling std::prev on an msd::zip object compiles, but fails at runtime on some std containers.
 
 * list
 * forward_list
@@ -86,17 +86,20 @@ But it does not work with the mentioned containers.
 
 ### Tools
 * [SSH keys for GitHub](https://help.ubuntu.com/community/SSH/OpenSSH/Keys) (~/.ssh)
-* [VS Code](https://code.visualstudio.com/) (see [.vscode/extensions.json](.vscode/extensions.json))
+* [VS Code](https://code.visualstudio.com/) (see [.vscode/extensions.json](https://github.com/andreiavrammsd/cpp-zip/blob/master/.vscode/extensions.json))
 * [Docker](https://docs.docker.com/engine/install/ubuntu/)
 
 ### Actions
 * Debug: F5
 * Coverage: Ctrl + Shift + P -> Run Task -> Generate Coverage Report
-* Show coverage inline: Ctrl + Shift + 7 OR Ctrl + Shift + P -> Coverage Gutters: Display Coverage
-* Coverage as HTML: See build/coverage_html/index.html
+  * Show coverage inline: Ctrl + Shift + 7 OR Ctrl + Shift + P -> Coverage Gutters: Display Coverage
+  * Coverage as HTML: See build/coverage_html/index.html
+* Clang tidy: Ctrl + Shift + P -> Run Task -> Run clang-tidy on current file
+* Documentation: Ctrl + Shift + P -> Run Task -> Generate Documentation
 
 ## TODO
 
+* Set up cache for release workflow (apt cache)
 * Exception guarantees
 * constexpr
 * const correctness
