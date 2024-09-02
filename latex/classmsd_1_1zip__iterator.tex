@@ -1,0 +1,58 @@
+\hypertarget{classmsd_1_1zip__iterator}{}\doxysection{msd\+::zip\+\_\+iterator$<$ Iterators $>$ Class Template Reference}
+\label{classmsd_1_1zip__iterator}\index{msd::zip\_iterator$<$ Iterators $>$@{msd::zip\_iterator$<$ Iterators $>$}}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classmsd_1_1zip__iterator_a4d859a711185473864daa1fcd3496f79}\label{classmsd_1_1zip__iterator_a4d859a711185473864daa1fcd3496f79}} 
+using {\bfseries iterator\+\_\+category} = std\+::bidirectional\+\_\+iterator\+\_\+tag
+\item 
+\mbox{\Hypertarget{classmsd_1_1zip__iterator_a7c61a63ff8d4563f26864a890d751a95}\label{classmsd_1_1zip__iterator_a7c61a63ff8d4563f26864a890d751a95}} 
+using {\bfseries difference\+\_\+type} = std\+::ptrdiff\+\_\+t
+\item 
+\mbox{\Hypertarget{classmsd_1_1zip__iterator_a52979b924a4d9022acb8f69a5117e592}\label{classmsd_1_1zip__iterator_a52979b924a4d9022acb8f69a5117e592}} 
+using {\bfseries value\+\_\+type} = std\+::tuple$<$ typename std\+::iterator\+\_\+traits$<$ Iterators $>$\+::reference... $>$
+\item 
+\mbox{\Hypertarget{classmsd_1_1zip__iterator_ad1af78ca6c07c49e8850f72d94021bc9}\label{classmsd_1_1zip__iterator_ad1af78ca6c07c49e8850f72d94021bc9}} 
+using {\bfseries pointer} = std\+::tuple$<$ typename std\+::iterator\+\_\+traits$<$ Iterators $>$\+::pointer... $>$
+\item 
+\mbox{\Hypertarget{classmsd_1_1zip__iterator_af9ad51921ccbabd2463b70a2b4624e83}\label{classmsd_1_1zip__iterator_af9ad51921ccbabd2463b70a2b4624e83}} 
+using {\bfseries reference} = std\+::tuple$<$ typename std\+::iterator\+\_\+traits$<$ Iterators $>$\+::reference... $>$
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classmsd_1_1zip__iterator_a78e31851f413428eb0cd7d998d8ee17c}\label{classmsd_1_1zip__iterator_a78e31851f413428eb0cd7d998d8ee17c}} 
+{\bfseries zip\+\_\+iterator} (Iterators... iterators) noexcept
+\item 
+\mbox{\Hypertarget{classmsd_1_1zip__iterator_a3d500398a458adb9d768c651555f41ab}\label{classmsd_1_1zip__iterator_a3d500398a458adb9d768c651555f41ab}} 
+value\+\_\+type {\bfseries operator$\ast$} () const noexcept
+\item 
+\mbox{\Hypertarget{classmsd_1_1zip__iterator_a609dcb5d2228e7d26346caa1cf068879}\label{classmsd_1_1zip__iterator_a609dcb5d2228e7d26346caa1cf068879}} 
+bool {\bfseries operator==} (const \mbox{\hyperlink{classmsd_1_1zip__iterator}{zip\+\_\+iterator}} \&other) const noexcept
+\item 
+\mbox{\Hypertarget{classmsd_1_1zip__iterator_ae37453ec4ecb44708fab6e58a5277d05}\label{classmsd_1_1zip__iterator_ae37453ec4ecb44708fab6e58a5277d05}} 
+bool {\bfseries operator!=} (const \mbox{\hyperlink{classmsd_1_1zip__iterator}{zip\+\_\+iterator}} \&other) const noexcept
+\item 
+\mbox{\Hypertarget{classmsd_1_1zip__iterator_aa8f58fae8ee5cde874db0cdf6f1efe76}\label{classmsd_1_1zip__iterator_aa8f58fae8ee5cde874db0cdf6f1efe76}} 
+\mbox{\hyperlink{classmsd_1_1zip__iterator}{zip\+\_\+iterator}} \& {\bfseries operator++} () noexcept
+\item 
+\mbox{\Hypertarget{classmsd_1_1zip__iterator_a873666fbb53525dc1d2a1a921488f482}\label{classmsd_1_1zip__iterator_a873666fbb53525dc1d2a1a921488f482}} 
+\mbox{\hyperlink{classmsd_1_1zip__iterator}{zip\+\_\+iterator}} {\bfseries operator+} (const std\+::size\+\_\+t offset) const noexcept
+\item 
+\mbox{\Hypertarget{classmsd_1_1zip__iterator_a4e8832a58a8136cf07c2e69dff18e99f}\label{classmsd_1_1zip__iterator_a4e8832a58a8136cf07c2e69dff18e99f}} 
+\mbox{\hyperlink{classmsd_1_1zip__iterator}{zip\+\_\+iterator}} {\bfseries operator+} (const \mbox{\hyperlink{classmsd_1_1zip__iterator}{zip\+\_\+iterator}} \&other) const noexcept
+\item 
+\mbox{\Hypertarget{classmsd_1_1zip__iterator_a500c3783ea5ff1db7e0687b302f3b033}\label{classmsd_1_1zip__iterator_a500c3783ea5ff1db7e0687b302f3b033}} 
+\mbox{\hyperlink{classmsd_1_1zip__iterator}{zip\+\_\+iterator}} \& {\bfseries operator-\/-\/} () noexcept
+\item 
+\mbox{\Hypertarget{classmsd_1_1zip__iterator_a13227a74bc72aa98e285a360a6e08b8e}\label{classmsd_1_1zip__iterator_a13227a74bc72aa98e285a360a6e08b8e}} 
+\mbox{\hyperlink{classmsd_1_1zip__iterator}{zip\+\_\+iterator}} {\bfseries operator-\/} (const int offset) const noexcept
+\item 
+\mbox{\Hypertarget{classmsd_1_1zip__iterator_a920a1e82e2b96213180a66924f363954}\label{classmsd_1_1zip__iterator_a920a1e82e2b96213180a66924f363954}} 
+\mbox{\hyperlink{classmsd_1_1zip__iterator}{zip\+\_\+iterator}} {\bfseries operator-\/} (const \mbox{\hyperlink{classmsd_1_1zip__iterator}{zip\+\_\+iterator}} \&other) const noexcept
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/msd/zip.\+hpp\end{DoxyCompactItemize}

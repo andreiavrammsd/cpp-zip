@@ -1,0 +1,114 @@
+\label{index_md_README}%
+\Hypertarget{index_md_README}%
+ \href{https://github.com/andreiavrammsd/cpp-zip/actions}{\texttt{ }}
+
+\href{https://codecov.io/github/andreiavrammsd/cpp-zip}{\texttt{ }}\hypertarget{index_autotoc_md1}{}\doxysection{What}\label{index_autotoc_md1}
+An implementation of \href{https://en.cppreference.com/w/cpp/ranges/zip_view}{\texttt{ zip}} for C++17. Single header file.\hypertarget{index_autotoc_md2}{}\doxysection{Why}\label{index_autotoc_md2}
+Learning purposes.\hypertarget{index_autotoc_md3}{}\doxysection{Status}\label{index_autotoc_md3}
+In development. Needs proper testing.\hypertarget{index_autotoc_md4}{}\doxysection{Install}\label{index_autotoc_md4}
+Integrate with CMake or just copy the \href{include/msd/zip.hpp}{\texttt{ header file}}.\hypertarget{index_autotoc_md5}{}\doxysection{Use}\label{index_autotoc_md5}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{ \{c++\}}
+\DoxyCodeLine{\#include <msd/zip.hpp>}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#include <algorithm>}
+\DoxyCodeLine{\#include <cassert>}
+\DoxyCodeLine{\#include <vector>}
+\DoxyCodeLine{}
+\DoxyCodeLine{int main() \{}
+\DoxyCodeLine{    std::vector actual\_numbers = \{1, 2, 3\};}
+\DoxyCodeLine{    std::vector expected\_numbers = \{1, 2, 3\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{    const std::size\_t size = std::min(actual\_numbers.size(), expected\_numbers.size());}
+\DoxyCodeLine{    for (std::size\_t i = 0; i < size; ++i) \{}
+\DoxyCodeLine{        assert(actual\_numbers[i] == expected\_numbers[i]);}
+\DoxyCodeLine{    \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{    // vs}
+\DoxyCodeLine{}
+\DoxyCodeLine{    for (auto [actual, expected] : msd::zip(actual\_numbers, expected\_numbers)) \{}
+\DoxyCodeLine{        assert(actual == expected);}
+\DoxyCodeLine{    \}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+See \href{tests/}{\texttt{ tests}}.\hypertarget{index_autotoc_md6}{}\doxysection{Known issues}\label{index_autotoc_md6}
+\hypertarget{index_autotoc_md7}{}\doxysubsection{Calling $<$tt$>$std\+::prev$<$/tt$>$ on an $<$tt$>$msd\+::zip$<$/tt$>$ compiles, but fails at runtime on some std containers.}\label{index_autotoc_md7}
+
+\begin{DoxyItemize}
+\item list
+\item forward\+\_\+list
+\item unordered\+\_\+set
+\item unordered\+\_\+multiset
+\item unordered\+\_\+map
+\item unordered\+\_\+multimap
+\end{DoxyItemize}
+
+The {\ttfamily \mbox{\hyperlink{classmsd_1_1zip}{msd\+::zip}}} iterator is bidirectional to better control when you want to stop iterating.
+
+To get only some of the elements from a C++23 zip, you can use {\ttfamily std\+::views\+::take}\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{ \{c++\}}
+\DoxyCodeLine{std::forward\_list<int> first\_list\{1, 2, 3, 4, 5\};}
+\DoxyCodeLine{std::forward\_list<int> second\_list\{1, 2, 3, 4\};}
+\DoxyCodeLine{auto forward\_zip = std::views::zip(first\_list, second\_list);}
+\DoxyCodeLine{}
+\DoxyCodeLine{for (auto [a, b] : forward\_zip | std::views::take(3)) \{}
+\DoxyCodeLine{    std::cout << a << "{}, "{} << b << "{}\(\backslash\)n"{};}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+With {\ttfamily \mbox{\hyperlink{classmsd_1_1zip}{msd\+::zip}}}, you can write\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{ \{c++\}}
+\DoxyCodeLine{for (auto it = forward\_zip.begin(); it != std::prev(forward\_zip.end()); ++it) \{}
+\DoxyCodeLine{    auto [a, b] = *it;}
+\DoxyCodeLine{    std::cout << a << "{}, "{} << b << "{}\(\backslash\)n"{};}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ But it does not work with the mentioned containers.\hypertarget{index_autotoc_md8}{}\doxysection{Development}\label{index_autotoc_md8}
+\hypertarget{index_autotoc_md9}{}\doxysubsection{Tools}\label{index_autotoc_md9}
+
+\begin{DoxyItemize}
+\item \href{https://help.ubuntu.com/community/SSH/OpenSSH/Keys}{\texttt{ SSH keys for Git\+Hub}} ($\sim$/.ssh)
+\item \href{https://code.visualstudio.com/}{\texttt{ VS Code}} (see \href{.vscode/extensions.json}{\texttt{ .vscode/extensions.\+json}})
+\item \href{https://docs.docker.com/engine/install/ubuntu/}{\texttt{ Docker}}
+\end{DoxyItemize}\hypertarget{index_autotoc_md10}{}\doxysubsection{Actions}\label{index_autotoc_md10}
+
+\begin{DoxyItemize}
+\item Debug\+: F5
+\item Coverage\+: Ctrl + Shift + P -\/$>$ Run Task -\/$>$ Generate Coverage Report
+\item Show coverage inline\+: Ctrl + Shift + 7 OR Ctrl + Shift + P -\/$>$ Coverage Gutters\+: Display Coverage
+\item Coverage as HTML\+: See build/coverage\+\_\+html/index.\+html
+\end{DoxyItemize}\hypertarget{index_autotoc_md11}{}\doxysection{TODO}\label{index_autotoc_md11}
+
+\begin{DoxyItemize}
+\item Exception guarantees
+\item constexpr
+\item const correctness
+\item Write benchmarks
+\item Ignore google headers from clang-\/tidy
+\item Consider checked access that returns an optional reference
+\item Run clang-\/tidy on file save
+\item Cancel running jobs on new commit
+\item Test
+\begin{DoxyItemize}
+\item Analyze if LCOV\+\_\+\+EXCL\+\_\+\+LINE is needed
+\item Finish tests
+\item With std algorithms
+\item Entire API in non-\/const and const context
+\item iterator operations\+: +, -\/, +=, -\/=, ++ pre/post, --pre/post, std\+::prev/next/advance, begin() + size() -\/ begin(), etc.
+\item Empty container
+\item Two arrays of different sizes
+\item Two vectors of different sizes
+\item One array and one empty vector
+\item copy, move operations
+\item Improve tests with unordered containers 
+\end{DoxyItemize}
+\end{DoxyItemize}

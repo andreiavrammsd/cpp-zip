@@ -1,0 +1,109 @@
+\hypertarget{classmsd_1_1zip}{}\doxysection{msd\+::zip$<$ Containers $>$ Class Template Reference}
+\label{classmsd_1_1zip}\index{msd::zip$<$ Containers $>$@{msd::zip$<$ Containers $>$}}
+
+
+A template class that provides an iterator over multiple containers simultaneously. It allows iterating through multiple containers in parallel, stopping at the shortest container.  
+
+
+
+
+{\ttfamily \#include $<$zip.\+hpp$>$}
+
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classmsd_1_1zip_a60ac939b054061030918ee93edc663c2}\label{classmsd_1_1zip_a60ac939b054061030918ee93edc663c2}} 
+using {\bfseries iterator} = \mbox{\hyperlink{classmsd_1_1zip__iterator}{zip\+\_\+iterator}}$<$ typename std\+::conditional\+\_\+t$<$ std\+::is\+\_\+const\+\_\+v$<$ Containers $>$, typename Containers\+::const\+\_\+iterator, typename Containers\+::iterator $>$... $>$
+\item 
+\mbox{\Hypertarget{classmsd_1_1zip_a33cd89b54018ded77f11f17d5bc1f455}\label{classmsd_1_1zip_a33cd89b54018ded77f11f17d5bc1f455}} 
+using {\bfseries const\+\_\+iterator} = \mbox{\hyperlink{classmsd_1_1zip__iterator}{zip\+\_\+iterator}}$<$ typename Containers\+::const\+\_\+iterator... $>$
+\item 
+\mbox{\Hypertarget{classmsd_1_1zip_afb2f7e2d0de7d05062e9f07fb746c832}\label{classmsd_1_1zip_afb2f7e2d0de7d05062e9f07fb746c832}} 
+using {\bfseries value\+\_\+type} = typename iterator\+::value\+\_\+type
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmsd_1_1zip_a6e00bbf66c2d1e73d7a2e6588285926a}{zip}} (Containers \&... containers) noexcept
+\begin{DoxyCompactList}\small\item\em Constructs a {\ttfamily zip} object from the provided containers. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmsd_1_1zip_a82d511286de263772d4a380fd6b16aa3}\label{classmsd_1_1zip_a82d511286de263772d4a380fd6b16aa3}} 
+\mbox{\hyperlink{classmsd_1_1zip__iterator}{iterator}} {\bfseries begin} () const
+\item 
+\mbox{\Hypertarget{classmsd_1_1zip_afc1b36493da5e8008ab41efd9b2daea8}\label{classmsd_1_1zip_afc1b36493da5e8008ab41efd9b2daea8}} 
+\mbox{\hyperlink{classmsd_1_1zip__iterator}{iterator}} {\bfseries end} () const
+\item 
+\mbox{\Hypertarget{classmsd_1_1zip_a0dad5d46dc749360959df76bb78b7be9}\label{classmsd_1_1zip_a0dad5d46dc749360959df76bb78b7be9}} 
+\mbox{\hyperlink{classmsd_1_1zip__iterator}{const\+\_\+iterator}} {\bfseries cbegin} () const
+\item 
+\mbox{\Hypertarget{classmsd_1_1zip_a3c6f1d7cdab85a6d7d4264a7283d4628}\label{classmsd_1_1zip_a3c6f1d7cdab85a6d7d4264a7283d4628}} 
+\mbox{\hyperlink{classmsd_1_1zip__iterator}{const\+\_\+iterator}} {\bfseries cend} () const
+\item 
+\mbox{\Hypertarget{classmsd_1_1zip_af4652a1e1b1dcf3dbcd699b50198e63b}\label{classmsd_1_1zip_af4652a1e1b1dcf3dbcd699b50198e63b}} 
+std\+::size\+\_\+t {\bfseries size} () const
+\item 
+\mbox{\Hypertarget{classmsd_1_1zip_afed72388a04dd28b9e970059ba7748d0}\label{classmsd_1_1zip_afed72388a04dd28b9e970059ba7748d0}} 
+bool {\bfseries empty} () const noexcept
+\item 
+\mbox{\Hypertarget{classmsd_1_1zip_a6ed9b7a7579f77031f40ad8e40e2fe46}\label{classmsd_1_1zip_a6ed9b7a7579f77031f40ad8e40e2fe46}} 
+constexpr {\bfseries operator bool} () const
+\item 
+\mbox{\Hypertarget{classmsd_1_1zip_a0f1827782718909cd179f4d1fa73fa37}\label{classmsd_1_1zip_a0f1827782718909cd179f4d1fa73fa37}} 
+value\+\_\+type {\bfseries front} ()
+\item 
+\mbox{\Hypertarget{classmsd_1_1zip_a8611eaccf5f615d021ca99c2036c7763}\label{classmsd_1_1zip_a8611eaccf5f615d021ca99c2036c7763}} 
+value\+\_\+type {\bfseries front} () const
+\item 
+\mbox{\Hypertarget{classmsd_1_1zip_a939cd92656d60f393b6e1583d538bcde}\label{classmsd_1_1zip_a939cd92656d60f393b6e1583d538bcde}} 
+value\+\_\+type {\bfseries back} ()
+\item 
+\mbox{\Hypertarget{classmsd_1_1zip_a0db3d44fd96fb193ee723273369bb682}\label{classmsd_1_1zip_a0db3d44fd96fb193ee723273369bb682}} 
+value\+\_\+type {\bfseries back} () const
+\item 
+\mbox{\Hypertarget{classmsd_1_1zip_af30d4bb04f8cbec080270bc455ed04a4}\label{classmsd_1_1zip_af30d4bb04f8cbec080270bc455ed04a4}} 
+constexpr value\+\_\+type {\bfseries operator\mbox{[}$\,$\mbox{]}} (const std\+::size\+\_\+t offset) const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename... Containers$>$\newline
+class msd\+::zip$<$ Containers $>$}
+
+A template class that provides an iterator over multiple containers simultaneously. It allows iterating through multiple containers in parallel, stopping at the shortest container. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Containers} & Variadic template parameter representing the types of the containers to be zipped. Each container should support standard iteration (i.\+e., it should have {\ttfamily begin()} and {\ttfamily end()} methods). \\
+\hline
+\end{DoxyTemplParams}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmsd_1_1zip_a6e00bbf66c2d1e73d7a2e6588285926a}\label{classmsd_1_1zip_a6e00bbf66c2d1e73d7a2e6588285926a}} 
+\index{msd::zip$<$ Containers $>$@{msd::zip$<$ Containers $>$}!zip@{zip}}
+\index{zip@{zip}!msd::zip$<$ Containers $>$@{msd::zip$<$ Containers $>$}}
+\doxysubsubsection{\texorpdfstring{zip()}{zip()}}
+{\footnotesize\ttfamily template$<$typename... Containers$>$ \\
+\mbox{\hyperlink{classmsd_1_1zip}{msd\+::zip}}$<$ Containers $>$\+::\mbox{\hyperlink{classmsd_1_1zip}{zip}} (\begin{DoxyParamCaption}\item[{Containers \&...}]{containers }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}, {\ttfamily [noexcept]}}
+
+
+
+Constructs a {\ttfamily zip} object from the provided containers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em containers} & References to the containers to be zipped together. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+At least two containers must be provided. 
+\end{DoxyPrecond}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em exception} & safety \\
+\hline
+\end{DoxyExceptions}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/msd/zip.\+hpp\end{DoxyCompactItemize}
