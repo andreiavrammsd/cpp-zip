@@ -51,7 +51,7 @@ For more, see [tests](https://github.com/andreiavrammsd/cpp-zip/blob/master/test
 
 ## Known issues
 
-### Calling std::prev on an msd::zip compiles, but fails at runtime on some std containers.
+### Calling std::prev on an msd::zip object compiles, but fails at runtime on some std containers.
 
 * list
 * forward_list
