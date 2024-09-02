@@ -98,6 +98,14 @@ class zip_iterator {
     std::tuple<Iterators...> iterators_;
 };
 
+/**
+ * @brief A template class that provides an iterator over multiple containers simultaneously.
+ *        It allows iterating through multiple containers in parallel, stopping at the shortest container.
+ *
+ * @tparam Containers Variadic template parameter representing the types of the containers to be zipped.
+ *                    Each container should support standard iteration (i.e., it should have `begin()` and `end()`
+ * methods).
+ */
 template <typename... Containers>
 class zip {
    public:
@@ -111,6 +119,13 @@ class zip {
 
     using value_type = typename iterator::value_type;
 
+    /**
+     * @brief Constructs a `zip` object from the provided containers.
+     *
+     * @param containers References to the containers to be zipped together.
+     * @pre At least two containers must be provided.
+     * @throws exception safety
+     */
     explicit zip(Containers&... containers) noexcept : containers_{containers...} {}
 
     iterator begin() const { return begin_impl<iterator>(std::index_sequence_for<Containers...>{}); }

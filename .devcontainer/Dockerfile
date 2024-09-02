@@ -23,6 +23,8 @@ RUN apt update && apt install -y \
     llvm \
     nano \
     software-properties-common \
+    doxygen \
+    graphviz \
     && rm -rf /var/lib/apt/lists/*
 
 # Create a non-root user

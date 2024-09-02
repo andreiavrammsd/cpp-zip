@@ -1,0 +1,59 @@
+name: release
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {
+            name: "Ubuntu 22.04",
+            os: ubuntu-22.04,
+          }
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate apt cache key
+        id: apt-cache-key
+        run: |
+          DATE=$(date +%Y-%m)
+          echo "APT_CACHE_KEY=${DATE}" >> $GITHUB_ENV
+
+      - name: Set up Cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            /var/lib/apt/lists
+          key: apt-cache-${{ env.APT_CACHE_KEY }}
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y doxygen graphviz
+
+      - name: Generate documentation
+        run: |
+          doxygen
+
+      - name: Deploy documentation
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+        #if: github.ref == 'refs/heads/main'
