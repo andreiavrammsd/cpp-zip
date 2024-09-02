@@ -22,7 +22,6 @@ if [ -z ${default_branch} ]; then
 fi
 
 ./tools/generate-compilation-database.sh ${workspace} ${build_path} ${build_type} ${build_target}
-exit
 
 # Find files
 files=$(if [ $event == "pull_request" ]; then
