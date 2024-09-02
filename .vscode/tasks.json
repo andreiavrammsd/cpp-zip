@@ -11,7 +11,8 @@
             },
             "options": {
                 "cwd": "${workspaceFolder}"
-            }
+            },
+            "problemMatcher": []
         },
         {
             "label": "CMake",
@@ -24,7 +25,8 @@
             },
             "options": {
                 "cwd": "${workspaceFolder}/build"
-            }
+            },
+            "problemMatcher": []
         },
         {
             "label": "Generate Coverage Report",
@@ -37,7 +39,8 @@
             },
             "options": {
                 "cwd": "${workspaceFolder}/build"
-            }
+            },
+            "problemMatcher": []
         },
         {
             "label": "Generate Compilation Database",
@@ -48,7 +51,8 @@
               "${workspaceFolder}/build-code-quality",
               "Debug",
               "tests"
-            ]
+            ],
+            "problemMatcher": []
           },
         {
             "label": "Run clang-tidy on current file",
@@ -59,11 +63,13 @@
               "-p=${workspaceFolder}/build-code-quality"
             ],
             "dependsOn": "Generate Compilation Database",
+            "problemMatcher": []
           },
           {
             "label": "Generate Documentation",
             "type": "shell",
-            "command": "doxygen"
+            "command": "doxygen",
+            "problemMatcher": []
           }
     ]
 }

@@ -26,21 +26,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Generate apt cache key
-        id: apt-cache-key
-        run: |
-          DATE=$(date +%Y-%m)
-          echo "APT_CACHE_KEY=${DATE}" >> $GITHUB_ENV
-
-      - name: Set up Cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            /var/cache/apt/archives
-          key: apt-cache-${{ env.APT_CACHE_KEY }}
 
       - name: Install dependencies
         run: |

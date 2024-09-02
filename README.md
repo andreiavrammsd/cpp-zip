@@ -51,7 +51,7 @@ See [tests](https://github.com/andreiavrammsd/cpp-zip/blob/master/tests).
 
 ## Known issues
 
-### Calling `std::prev` on an `msd::zip` compiles, but fails at runtime on some std containers.
+### Calling std::prev on an msd::zip compiles, but fails at runtime on some std containers.
 
 * list
 * forward_list
@@ -99,6 +99,7 @@ But it does not work with the mentioned containers.
 
 ## TODO
 
+* Set up cache for release workflow (apt cache)
 * Exception guarantees
 * constexpr
 * const correctness
