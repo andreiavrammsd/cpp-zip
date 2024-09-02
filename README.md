@@ -92,8 +92,10 @@ But it does not work with the mentioned containers.
 ### Actions
 * Debug: F5
 * Coverage: Ctrl + Shift + P -> Run Task -> Generate Coverage Report
-* Show coverage inline: Ctrl + Shift + 7 OR Ctrl + Shift + P -> Coverage Gutters: Display Coverage
-* Coverage as HTML: See build/coverage_html/index.html
+  * Show coverage inline: Ctrl + Shift + 7 OR Ctrl + Shift + P -> Coverage Gutters: Display Coverage
+  * Coverage as HTML: See build/coverage_html/index.html
+* Clang tidy: Ctrl + Shift + P -> Run Task -> Run clang-tidy on current file
+* Documentation: Ctrl + Shift + P -> Run Task -> Generate documentation
 
 ## TODO
 
