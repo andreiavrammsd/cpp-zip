@@ -109,6 +109,7 @@ But it does not work with the mentioned containers.
 * Run clang-tidy on file save
 * Cancel running jobs on new commit
 * Test
+    * Split integration test into smaller ones
     * Analyze if LCOV_EXCL_LINE is needed
     * Finish tests
     * With std algorithms

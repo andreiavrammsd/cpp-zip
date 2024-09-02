@@ -25,6 +25,10 @@ class ZipTest : public testing::Test {
     const msd::zip<arr_three_type, vector_two_type, vector_four_type> const_zip_{arr_three_, vector_two_, vector_four_};
 };
 
+// GIVEN: A zip object is created with three containers of different sizes
+// WHEN: The begin() method is called and elements are accessed
+// THEN: The first elements of each container should be returned correctly, and modifying a non-const zip reflects in
+// subsequent const zip accesses
 TEST_F(ZipTest, Begin)
 {
     auto [a0, b0, c0] = *zip_.begin();
@@ -42,6 +46,10 @@ TEST_F(ZipTest, Begin)
     EXPECT_EQ(zip_.begin() + 2, zip_.end());
 }
 
+// GIVEN: A zip object is created with three containers of different sizes
+// WHEN: The end() method is called and the previous element is accessed
+// THEN: The last elements of each container should be returned correctly, and the iterator arithmetic should correctly
+// reflect the distance between begin() and end()
 TEST_F(ZipTest, End)
 {
     auto [a0, b0, c0] = *std::prev(zip_.end());
@@ -57,6 +65,10 @@ TEST_F(ZipTest, End)
     EXPECT_EQ(zip_.end() - 2, zip_.begin());
 }
 
+// GIVEN: A zip object is created with three containers of different sizes
+// WHEN: The cbegin() method is called and elements are accessed
+// THEN: The first elements of each container should be returned correctly in a const context, and the iterator
+// arithmetic should match that of begin()
 TEST_F(ZipTest, CBegin)
 {
     auto [a0, b0, c0] = *zip_.cbegin();
@@ -72,6 +84,10 @@ TEST_F(ZipTest, CBegin)
     EXPECT_EQ(zip_.cbegin() + 2, zip_.cend());
 }
 
+// GIVEN: A zip object is created with three containers of different sizes
+// WHEN: The cend() method is called and the previous element is accessed
+// THEN: The last elements of each container should be returned correctly in a const context, and the iterator
+// arithmetic should match that of end()
 TEST_F(ZipTest, CEnd)
 {
     auto [a0, b0, c0] = *std::prev(zip_.cend());
@@ -87,12 +103,18 @@ TEST_F(ZipTest, CEnd)
     EXPECT_EQ(zip_.cend() - 2, zip_.cbegin());
 }
 
+// GIVEN: A zip object is created with containers of varying sizes
+// WHEN: The size() method is called
+// THEN: The size should match the smallest container's size
 TEST_F(ZipTest, Size)
 {
     EXPECT_EQ(zip_.size(), 2);
     EXPECT_EQ(const_zip_.size(), 2);
 }
 
+// GIVEN: A zip object is created with one non-empty container and one empty container
+// WHEN: The size() method is called
+// THEN: The size should be zero as one of the containers is empty
 TEST_F(ZipTest, SizeWhenAContainerIsEmpty)
 {
     const std::array<int, 5> non_empty{1, 2, 3};
@@ -101,6 +123,9 @@ TEST_F(ZipTest, SizeWhenAContainerIsEmpty)
     EXPECT_EQ(msd::zip(non_empty, empty).size(), 0);
 }
 
+// GIVEN: A zip object is created with all containers being empty
+// WHEN: The size() method is called
+// THEN: The size should be zero
 TEST_F(ZipTest, SizeWhenAllContainersAreEmpty)
 {
     const std::vector<int> empty_1{};
@@ -109,6 +134,9 @@ TEST_F(ZipTest, SizeWhenAllContainersAreEmpty)
     EXPECT_EQ(msd::zip(empty_1, empty_2).size(), 0);
 }
 
+// GIVEN: A zip object is created with all containers having the same size
+// WHEN: The size() method is called
+// THEN: The size should match the common size of all containers
 TEST_F(ZipTest, SizeWhenAllContainersHaveTheSameSize)
 {
     const std::array<int, 5> array{1, 2, 3};
@@ -117,12 +145,18 @@ TEST_F(ZipTest, SizeWhenAllContainersHaveTheSameSize)
     EXPECT_EQ(msd::zip(array, vector).size(), 3);
 }
 
+// GIVEN: A zip object is created with non-empty containers
+// WHEN: The empty() method is called
+// THEN: The result should be false, indicating the zip is not empty
 TEST_F(ZipTest, Empty)
 {
     EXPECT_FALSE(zip_.empty());
     EXPECT_FALSE(const_zip_.empty());
 }
 
+// GIVEN: A zip object is created with one non-empty container and one empty container
+// WHEN: The empty() method is called and an attempt to iterate over the zip is made
+// THEN: The result should be true, and no iteration should occur
 TEST_F(ZipTest, EmptyWhenAContainerIsEmpty)
 {
     const std::array<int, 5> non_empty{1, 2, 3};
@@ -137,6 +171,9 @@ TEST_F(ZipTest, EmptyWhenAContainerIsEmpty)
     }
 }
 
+// GIVEN: A zip object is created with all containers being empty
+// WHEN: The empty() method is called
+// THEN: The result should be true, indicating the zip is empty
 TEST_F(ZipTest, EmptyWhenAllContainersAreEmpty)
 {
     const std::vector<int> empty_1{};
@@ -145,6 +182,9 @@ TEST_F(ZipTest, EmptyWhenAllContainersAreEmpty)
     EXPECT_TRUE(msd::zip(empty_1, empty_2).empty());
 }
 
+// GIVEN: A zip object is created with non-empty containers
+// WHEN: The operator bool() is used to check the zip object
+// THEN: The result should be true, indicating the zip is valid
 TEST_F(ZipTest, OperatorBool)
 {
     if (!zip_) {
@@ -155,6 +195,10 @@ TEST_F(ZipTest, OperatorBool)
     EXPECT_TRUE(const_zip_);
 }
 
+// GIVEN: A zip object is created with non-empty containers
+// WHEN: The front() method is called and elements are accessed
+// THEN: The first elements of each container should be returned correctly, and modifying one element should reflect in
+// subsequent const accesses
 TEST_F(ZipTest, Front)
 {
     auto [a, b, c] = zip_.front();
@@ -170,6 +214,9 @@ TEST_F(ZipTest, Front)
     EXPECT_EQ(cc, 6);
 }
 
+// GIVEN: A zip object is created with one non-empty container and one empty container
+// WHEN: The front() method is called
+// THEN: The method should trigger a debug assertion failure due to the zip being empty
 TEST_F(ZipTest, FrontWhenZipIsEmpty)
 {
     const std::array<int, 5> non_empty{1, 2, 3};
@@ -182,6 +229,10 @@ TEST_F(ZipTest, FrontWhenZipIsEmpty)
     EXPECT_DEBUG_DEATH(const_zip.front(), "");
 }
 
+// GIVEN: A zip object is created with non-empty containers
+// WHEN: The back() method is called and elements are accessed
+// THEN: The last elements of each container should be returned correctly, and modifying one element should reflect in
+// subsequent const accesses
 TEST_F(ZipTest, Back)
 {
     auto [a, b, c] = zip_.back();
@@ -197,6 +248,9 @@ TEST_F(ZipTest, Back)
     EXPECT_EQ(cc, 7);
 }
 
+// GIVEN: A zip object is created with one non-empty container and one empty container
+// WHEN: The back() method is called
+// THEN: The method should trigger a debug assertion failure due to the zip being empty
 TEST_F(ZipTest, BackWhenZipIsEmpty)
 {
     const std::array<int, 5> non_empty{1, 2, 3};
@@ -208,6 +262,10 @@ TEST_F(ZipTest, BackWhenZipIsEmpty)
     EXPECT_DEBUG_DEATH(const_zip.back(), "");
 }
 
+// GIVEN: A zip object is created with non-empty containers
+// WHEN: The operator[] is used with an index greater than the zip's size
+// THEN: The elements at the specified index should be returned correctly, and modifying one element should reflect in
+// subsequent const accesses
 TEST_F(ZipTest, OperatorSubscript)
 {
     auto [a, b, c] = zip_[0];
@@ -223,12 +281,18 @@ TEST_F(ZipTest, OperatorSubscript)
     EXPECT_EQ(std::get<2>(value), 6);
 }
 
+// GIVEN: A zip object is created with non-empty containers
+// WHEN: The operator[] is used with an index greater than the zip's size
+// THEN: The method should trigger a debug assertion failure due to the out-of-range access
 TEST_F(ZipTest, OperatorSubscriptWithIndexOutOfRange)
 {
     EXPECT_DEBUG_DEATH(zip_[99], "");
     EXPECT_DEBUG_DEATH(const_zip_[99], "");
 }
 
+// GIVEN: A zip object is created with containers holding custom data types
+// WHEN: Iterating over the zip object
+// THEN: No copies or moves of the contained objects should occur
 TEST_F(ZipTest, NoCopiesAndMovesOfContainersWhileIterating)
 {
     std::vector<data> items;
@@ -254,11 +318,30 @@ TEST_F(ZipTest, NoCopiesAndMovesOfContainersWhileIterating)
     EXPECT_EQ(data::moves_, 0);
 }
 
+// GIVEN: A zip object is created and then copied and moved
+// WHEN: The size is checked after copying and moving
+// THEN: The elements should remain consistent, reflecting the original zip's state
 TEST_F(ZipTest, CopyAndMoveZip)
 {
     auto copy = zip_;
     EXPECT_EQ(copy.size(), 2);
+    for (std::size_t i = 0; i < zip_.size(); ++i) {
+        auto [expected_a, expected_b, expected_c] = zip_[i];
+        auto [actual_a, actual_b, actual_c] = copy[i];
+
+        EXPECT_EQ(actual_a, expected_a);
+        EXPECT_EQ(actual_b, expected_b);
+        EXPECT_EQ(actual_c, expected_c);
+    }
 
     const auto move = std::move(copy);
     EXPECT_EQ(move.size(), 2);
+    for (std::size_t i = 0; i < zip_.size(); ++i) {
+        auto [expected_a, expected_b, expected_c] = zip_[i];
+        auto [actual_a, actual_b, actual_c] = move[i];
+
+        EXPECT_EQ(actual_a, expected_a);
+        EXPECT_EQ(actual_b, expected_b);
+        EXPECT_EQ(actual_c, expected_c);
+    }
 }
