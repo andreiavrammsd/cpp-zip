@@ -62,7 +62,7 @@ See [tests](tests/).
 
 The `msd::zip` iterator is bidirectional to better control when you want to stop iterating.
 
-To get only some of the elements from a zip, in C++23 you can use `std::views::take`:
+To get only some of the elements from a C++23 zip, you can use `std::views::take`:
 ```c++
 std::forward_list<int> first_list{1, 2, 3, 4, 5};
 std::forward_list<int> second_list{1, 2, 3, 4};
