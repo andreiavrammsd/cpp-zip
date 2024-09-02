@@ -32,9 +32,11 @@ TEST_F(ZipTest, Begin)
     EXPECT_EQ(b0, 4);
     EXPECT_EQ(c0, 6);
 
+    b0 = 2;
+
     auto [ca0, cb0, cc0] = *const_zip_.begin();
     EXPECT_EQ(ca0, 1);
-    EXPECT_EQ(cb0, 4);
+    EXPECT_EQ(cb0, 2);
     EXPECT_EQ(cc0, 6);
 
     EXPECT_EQ(zip_.begin() + 2, zip_.end());

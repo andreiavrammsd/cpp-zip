@@ -49,6 +49,39 @@ int main() {
 
 See [tests](tests/).
 
+## Known issues
+
+### Calling `std::prev` on an `msd::zip` compiles, but fails at runtime on some std containers.
+
+* list
+* forward_list
+* unordered_set
+* unordered_multiset
+* unordered_map
+* unordered_multimap
+
+The `msd::zip` iterator is bidirectional to better control when you want to stop iterating.
+
+To get only some of the elements from a C++23 zip, you can use `std::views::take`:
+```c++
+std::forward_list<int> first_list{1, 2, 3, 4, 5};
+std::forward_list<int> second_list{1, 2, 3, 4};
+auto forward_zip = std::views::zip(first_list, second_list);
+
+for (auto [a, b] : forward_zip | std::views::take(3)) {
+    std::cout << a << ", " << b << "\n";
+}
+```
+
+With `msd::zip`, you can write:
+```c++
+for (auto it = forward_zip.begin(); it != std::prev(forward_zip.end()); ++it) {
+    auto [a, b] = *it;
+    std::cout << a << ", " << b << "\n";
+}
+```
+But it does not work with the mentioned containers.
+
 ## Development
 
 ### Tools
@@ -69,12 +102,9 @@ See [tests](tests/).
 * const correctness
 * Write benchmarks
 * Ignore google headers from clang-tidy
-* ContainersAndAlgorithms test fails at `EXPECT_EQ(it, std::prev(const_zip.end()));` for std::list
-    * Can the zip iterator really be bidirectional?
-    * Document or conditionaly set the iterator tag by the containers types
 * Consider checked access that returns an optional reference
-* Do not allow to mix begin/end with cbegin/cend
-* Run clang-tidy, clang-format in CI/file save
+* Run clang-tidy on file save
+* Cancel running jobs on new commit
 * Test
     * Analyze if LCOV_EXCL_LINE is needed
     * Finish tests
