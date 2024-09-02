@@ -21,7 +21,8 @@ if [ -z ${default_branch} ]; then
     exit 1
 fi
 
-./generate-compilation-database.sh ${workspace} ${build_path} ${build_type} ${build_target}
+./tools/generate-compilation-database.sh ${workspace} ${build_path} ${build_type} ${build_target}
+exit
 
 # Find files
 files=$(if [ $event == "pull_request" ]; then

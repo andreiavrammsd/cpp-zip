@@ -45,7 +45,7 @@
         {
             "label": "Generate Compilation Database",
             "type": "shell",
-            "command": "./generate-compilation-database.sh",
+            "command": "./tools/generate-compilation-database.sh",
             "args": [
               "${workspaceFolder}",
               "${workspaceFolder}/build-code-quality",
