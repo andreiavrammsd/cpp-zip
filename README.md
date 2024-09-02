@@ -18,7 +18,7 @@ In development. Needs proper testing.
 
 ## Install
 
-Integrate with CMake or just copy the [header file](include/msd/zip.hpp).
+Integrate with CMake or just copy the [header file](https://github.com/andreiavrammsd/cpp-zip/tree/master/include/msd/zip.hpp).
 
 ## Use
 
@@ -47,7 +47,7 @@ int main() {
 
 ```
 
-See [tests](tests/).
+See [tests](https://github.com/andreiavrammsd/cpp-zip/blob/master/tests).
 
 ## Known issues
 
@@ -86,7 +86,7 @@ But it does not work with the mentioned containers.
 
 ### Tools
 * [SSH keys for GitHub](https://help.ubuntu.com/community/SSH/OpenSSH/Keys) (~/.ssh)
-* [VS Code](https://code.visualstudio.com/) (see [.vscode/extensions.json](.vscode/extensions.json))
+* [VS Code](https://code.visualstudio.com/) (see [.vscode/extensions.json](https://github.com/andreiavrammsd/cpp-zip/blob/master/.vscode/extensions.json))
 * [Docker](https://docs.docker.com/engine/install/ubuntu/)
 
 ### Actions
