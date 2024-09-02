@@ -12,7 +12,8 @@
                 "fredericbonnet.cmake-test-adapter",
                 "ms-vscode.cmake-tools",
                 "AndreasNonslidHvardsen.clang-tidy-on-active-file",
-                "ryanluker.vscode-coverage-gutters"
+                "ryanluker.vscode-coverage-gutters",
+                "streetsidesoftware.code-spell-checker"
             ]
         }
     },
