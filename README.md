@@ -105,6 +105,7 @@ But it does not work with the mentioned containers.
 * Consider checked access that returns an optional reference
 * Do not allow to mix begin/end with cbegin/cend
 * Run clang-tidy, clang-format in CI/file save
+* Cancel running jobs on new commit
 * Test
     * Analyze if LCOV_EXCL_LINE is needed
     * Finish tests
