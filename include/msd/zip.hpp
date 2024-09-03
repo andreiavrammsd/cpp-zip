@@ -295,7 +295,7 @@ class zip {
      *
      * @return `true` if the zipped sequence is non-empty, `false` otherwise.
      */
-    constexpr explicit operator bool() const { return !empty(); }
+    explicit operator bool() const { return !empty(); }
 
     /**
      * @brief Returns the first element in the zipped sequence.
@@ -352,7 +352,7 @@ class zip {
      * @pre The offset must be less than the size of the zipped sequence.
      * @return Reference to the element at the specified offset.
      */
-    constexpr value_type operator[](const std::size_t offset) const
+    value_type operator[](const std::size_t offset) const
     {
         assert(offset < size());
         return *std::next(begin(), offset);

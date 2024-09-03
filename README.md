@@ -110,9 +110,8 @@ for (auto it = zip.begin(); it != zip.end(); it++) {}
 ## TODO
 
 * Set up cache for release workflow (apt cache)
-* Exception guarantees
+* Exception guarantees: set and document
 * constexpr
-* const correctness
 * Write benchmarks
 * Ignore google headers from clang-tidy
 * Consider checked access that returns an optional reference
