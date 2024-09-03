@@ -24,6 +24,10 @@ class ZipIteratorTest : public testing::Test {
         end_iterator_{arr_three_.end(), vector_two_.end(), vector_four_.end()};
 };
 
+// GIVEN: A zip_iterator object is created with the beginning of three containers
+// WHEN: Iterator traits are verified
+// THEN: The traits should match the expected values for a bidirectional iterator with the appropriate types for value,
+// pointer, and reference
 TEST_F(ZipIteratorTest, IteratorTraits)
 {
     using iterator_type = decltype(begin_iterator_);
@@ -41,6 +45,9 @@ TEST_F(ZipIteratorTest, IteratorTraits)
                                                             vector_four_type::const_reference>>);
 }
 
+// GIVEN: A zip_iterator object is created with the beginning of three containers
+// WHEN: The dereference operator (*) is used to access the elements
+// THEN: The values of the elements should match the expected values, and modifications should be reflected correctly
 TEST_F(ZipIteratorTest, OperatorDereference)
 {
     std::tuple<const int&, int&, const int&> value = *begin_iterator_;
@@ -61,6 +68,9 @@ TEST_F(ZipIteratorTest, OperatorDereference)
     EXPECT_EQ(std::get<2>(const_update_value), 6);
 }
 
+// GIVEN: Two zip_iterator objects pointing to the same container positions
+// WHEN: The equality operator (==) is used
+// THEN: The iterators should be equal, and iterators pointing to the same position should be comparable
 TEST_F(ZipIteratorTest, OperatorEqual)
 {
     const auto copy = begin_iterator_;
@@ -68,12 +78,18 @@ TEST_F(ZipIteratorTest, OperatorEqual)
     EXPECT_EQ(std::prev(end_iterator_), std::next(begin_iterator_));
 }
 
+// GIVEN: Two zip_iterator objects pointing to different container positions
+// WHEN: The inequality operator (!=) is used
+// THEN: The iterators should not be equal if they are pointing to different positions
 TEST_F(ZipIteratorTest, OperatorNotEqual)
 {
     EXPECT_NE(end_iterator_, begin_iterator_);
     EXPECT_NE(std::prev(end_iterator_), begin_iterator_);
 }
 
+// GIVEN: A zip_iterator object pointing to the beginning of the containers
+// WHEN: The pre-increment operator (++) is used
+// THEN: The iterator should advance to the end position
 TEST_F(ZipIteratorTest, OperatorPreIncrement)
 {
     ++begin_iterator_;
@@ -82,6 +98,9 @@ TEST_F(ZipIteratorTest, OperatorPreIncrement)
     EXPECT_EQ(begin_iterator_, end_iterator_);
 }
 
+// GIVEN: A zip_iterator object pointing to the end of the containers
+// WHEN: The pre-decrement operator (--) is used to move the iterator backwards
+// THEN: The iterator should correctly point to the beginning, and the elements should match the expected values
 TEST_F(ZipIteratorTest, OperatorPreDecrement)
 {
     auto iterator = std::prev(end_iterator_, 2);
@@ -94,6 +113,10 @@ TEST_F(ZipIteratorTest, OperatorPreDecrement)
     EXPECT_EQ(c, 8);
 }
 
+// GIVEN: A zip_iterator object pointing to the beginning of the containers
+// WHEN: The addition operator (+) is used with an offset
+// THEN: The iterator should advance by the specified offset, and moving it by the length of the containers should reach
+// the end iterator
 TEST_F(ZipIteratorTest, OperatorPlusOffset)
 {
     const auto end = std::next(begin_iterator_, 2);
@@ -101,6 +124,10 @@ TEST_F(ZipIteratorTest, OperatorPlusOffset)
     EXPECT_EQ(end, end_iterator_);
 }
 
+// GIVEN: A zip_iterator object pointing to the beginning of the containers
+// WHEN: The addition operator (+) is used with an integer
+// THEN: The iterator should advance by the specified integer offset, and the resulting iterator should match the
+// expected value
 TEST_F(ZipIteratorTest, OperatorPlus)
 {
     const auto iterator = begin_iterator_ + 1;
@@ -114,11 +141,18 @@ TEST_F(ZipIteratorTest, OperatorPlus)
     EXPECT_EQ(end, end_iterator_);
 }
 
+// GIVEN: A zip_iterator object and an offset
+// WHEN: The iterator plus another iterator (as offset) is computed
+// THEN: The result should match the end iterator if the offset covers the entire length
 TEST_F(ZipIteratorTest, OperatorPlusIterator)
 {
     EXPECT_EQ(begin_iterator_ + std::next(begin_iterator_, 2), end_iterator_);
 }
 
+// GIVEN: A zip_iterator object pointing to the end of the containers
+// WHEN: The subtraction operator (-) is used with an integer
+// THEN: The iterator should move backwards by the specified integer offset, and moving it by the length of the
+// containers should reach the beginning iterator
 TEST_F(ZipIteratorTest, OperatorMinus)
 {
     const auto iterator = end_iterator_ - 1;
@@ -132,15 +166,27 @@ TEST_F(ZipIteratorTest, OperatorMinus)
     EXPECT_EQ(begin, begin_iterator_);
 }
 
+// GIVEN: A zip_iterator object and another iterator (as offset)
+// WHEN: The iterator minus another iterator is computed
+// THEN: The result should match the beginning iterator if the offset covers the entire length
 TEST_F(ZipIteratorTest, OperatorMinusIterator)
 {
     EXPECT_EQ(end_iterator_ - std::prev(end_iterator_, 2), begin_iterator_);
 }
 
+// GIVEN: A zip_iterator object pointing to the end of the containers
+// WHEN: std::prev is used to move the iterator backwards by one position
+// THEN: The resulting iterator should match the end iterator minus one position
 TEST_F(ZipIteratorTest, Prev) { EXPECT_EQ(std::prev(end_iterator_), end_iterator_ - 1); }
 
+// GIVEN: A zip_iterator object pointing to the beginning of the containers
+// WHEN: std::next is used to move the iterator forwards by one position
+// THEN: The resulting iterator should match the beginning iterator plus one position
 TEST_F(ZipIteratorTest, Next) { EXPECT_EQ(std::next(begin_iterator_), begin_iterator_ + 1); }
 
+// GIVEN: A zip_iterator object pointing to the beginning of the containers and the end iterator
+// WHEN: std::advance is used to move the iterator forward and backward by the same amount
+// THEN: The iterators should match after the advance operations
 TEST_F(ZipIteratorTest, Advance)
 {
     std::advance(begin_iterator_, 2);
@@ -148,4 +194,7 @@ TEST_F(ZipIteratorTest, Advance)
     EXPECT_EQ(begin_iterator_, end_iterator_);
 }
 
+// GIVEN: A zip_iterator object pointing to the beginning of the containers and the end iterator
+// WHEN: std::distance is used to compute the distance between the two iterators
+// THEN: The distance should match the expected number of elements between the iterators
 TEST_F(ZipIteratorTest, Distance) { EXPECT_EQ(std::distance(begin_iterator_, end_iterator_), 2); }
