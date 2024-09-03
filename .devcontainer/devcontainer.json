@@ -30,5 +30,5 @@
         "seccomp=unconfined"
     ],
     "remoteUser": "vscode",
-    "postStartCommand": "./tools/generate-compilation-database.sh $PWD build-code-quality Debug tests"
+    "postStartCommand": "./tools/qa compilationdb --build-path=build-code-quality"
 }

@@ -1,0 +1,150 @@
+#!/usr/bin/env python3
+
+import subprocess
+import argparse
+
+files_pattern = ".*pp"
+
+
+def generate_clang_compilation_database(workspace, build_path, build_type):
+    subprocess.run(
+        [
+            "cmake",
+            workspace,
+            "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+            "-DCMAKE_C_COMPILER=clang",
+            "-DCMAKE_CXX_COMPILER=clang++",
+            "-DCMAKE_BUILD_TYPE=" + build_type,
+            "-DENABLE_TESTS=ON",
+            "-B",
+            build_path,
+        ],
+        check=True,
+    )
+
+
+def code_quality(src, default_branch, event, workspace, build_path, build_type):
+    generate_clang_compilation_database(workspace, build_path, build_type)
+
+    # Find files
+    if event == "pull_request":
+        diff_command = f"git diff --name-only origin/{default_branch}...HEAD {src} | grep '\{files_pattern}$'"
+    else:
+        diff_command = f"git ls-files --directory {src} | grep '\{files_pattern}$'"
+
+    files = subprocess.run(
+        diff_command, shell=True, capture_output=True, text=True
+    ).stdout.strip()
+    files = [f for f in files.split("\n")]
+
+    # Run tools
+    if files:
+        file_count = len(files)
+        print(f"Format {file_count} file(s)")
+        subprocess.run(["clang-format", "-i"] + files, check=True)
+
+        subprocess.run(["git", "diff", "--exit-code"], check=True)
+        print()
+
+        print(f"Tidy {file_count} file(s)")
+        subprocess.run(["clang-tidy", "-p", build_path] + files, check=True)
+    else:
+        print("No files for code quality")
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Code quality")
+
+    # Add subcommands
+    subparsers = parser.add_subparsers(
+        dest="command", help="Subcommands: generate or quality"
+    )
+
+    # Subcommand: generate
+    parser_generate = subparsers.add_parser(
+        "compilationdb", help="Generate the compilation database"
+    )
+    parser_generate.add_argument(
+        "--workspace",
+        required=False,
+        help="Path to the workspace, e.g., ..",
+        default=".",
+    )
+    parser_generate.add_argument(
+        "--build-path",
+        required=True,
+        help="Path to the build directory, e.g., build-dir",
+    )
+    parser_generate.add_argument(
+        "--build-type",
+        choices=["Debug", "Release"],
+        required=False,
+        help="Build type",
+        default="Debug",
+    )
+
+    # Subcommand: quality
+    parser_quality = subparsers.add_parser("quality", help="Run code quality checks")
+    parser_quality.add_argument(
+        "--src",
+        required=True,
+        help="Source code directory",
+    )
+    parser_quality.add_argument(
+        "--default-branch",
+        required=False,
+        help="Default branch name, e.g., master",
+        default="master",
+    )
+    parser_quality.add_argument(
+        "--event",
+        choices=["pull_request", "push"],
+        required=False,
+        help="Event type",
+        default="push",
+    )
+    parser_quality.add_argument(
+        "--workspace",
+        required=False,
+        help="Path to the workspace, e.g., ..",
+        default=".",
+    )
+    parser_quality.add_argument(
+        "--build-path",
+        required=True,
+        help="Path to the build directory, e.g., build-dir",
+    )
+    parser_quality.add_argument(
+        "--build-type",
+        choices=["Debug", "Release"],
+        required=False,
+        help="Build type",
+        default="Debug",
+    )
+
+    args = parser.parse_args()
+
+    # Dispatch to the appropriate function based on the command
+    if args.command == "compilationdb":
+        generate_clang_compilation_database(
+            workspace=args.workspace,
+            build_path=args.build_path,
+            build_type=args.build_type,
+        )
+    elif args.command == "quality":
+        print(f"default_branch={args.default_branch}")
+        print(f"event={args.event}")
+        print(f"workspace={args.workspace}")
+        print(f"build_path={args.build_path}")
+        print(f"build_type={args.build_type}")
+
+        code_quality(
+            src=args.src,
+            default_branch=args.default_branch,
+            event=args.event,
+            workspace=args.workspace,
+            build_path=args.build_path,
+            build_type=args.build_type,
+        )
+    else:
+        parser.print_help()
