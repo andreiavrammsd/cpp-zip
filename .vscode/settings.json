@@ -29,6 +29,7 @@
     ],
     "clang-tidy-on-active-file.autoRunOnSave": true,
     "clang-tidy-on-active-file.configPath": "/workspace/.clang-tidy",
+    "clang-tidy-on-active-file.optionalArgs": "-p=build-code-quality",
     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
     "C_Cpp.codeAnalysis.clangTidy.enabled": true,
     "C_Cpp.codeAnalysis.clangTidy.useBuildPath": true,
@@ -117,5 +118,5 @@
         "typeinfo": "cpp",
         "semaphore": "cpp",
         "iostream": "cpp"
-    },
+    }
 }

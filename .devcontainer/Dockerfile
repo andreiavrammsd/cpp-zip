@@ -46,7 +46,10 @@ RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhisto
     && chown -R $USERNAME /commandhistory \
     && echo "$SNIPPET" >> "/home/$USERNAME/.bashrc"
 
-    # Set the user to vscode
+# Git completion
+RUN echo ". /usr/share/bash-completion/completions/git" >> "/home/$USERNAME/.bashrc"
+
+# Set the user to vscode
 USER $USERNAME
 
 # Set the workspace directory
