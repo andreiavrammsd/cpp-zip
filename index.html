@@ -65,8 +65,7 @@ $(function() {
 <div class="title">ZIP </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_README"></a> <a href="https://github.com/andreiavrammsd/cpp-zip/actions"><img src="https://github.com/andreiavrammsd/cpp-zip/workflows/build/badge.svg" alt="build" style="pointer-events: none;" class="inline"/></a></p>
-<p><a href="https://codecov.io/github/andreiavrammsd/cpp-zip"><img src="https://codecov.io/github/andreiavrammsd/cpp-zip/graph/badge.svg?token=TBV8ID8QK0" alt="codecov" style="pointer-events: none;" class="inline"/></a></p>
+<div class="textblock"><p><a class="anchor" id="md_README"></a> <a href="https://github.com/andreiavrammsd/cpp-zip/actions"><img src="https://github.com/andreiavrammsd/cpp-zip/workflows/build/badge.svg" alt="build" style="pointer-events: none;" class="inline"/></a> &#160;&#160;<a href="https://codecov.io/github/andreiavrammsd/cpp-zip"><img src="https://codecov.io/github/andreiavrammsd/cpp-zip/graph/badge.svg?token=TBV8ID8QK0" alt="codecov" style="pointer-events: none;" class="inline"/></a> &#160;&#160;<a href="https://andreiavrammsd.github.io/cpp-zip/"><img src="https://img.shields.io/badge/msd::zip-Documentation-4EC820?labelColor=5E5E5E" alt="documentation" class="inline"/></a></p>
 <h1><a class="anchor" id="autotoc_md1"></a>
 What</h1>
 <p>An implementation of <a href="https://en.cppreference.com/w/cpp/ranges/zip_view">zip</a> for C++17. Single header file.</p>
@@ -131,16 +130,24 @@ Calling std::prev on an msd::zip object compiles, but fails at runtime on some s
 <div class="line">    std::cout &lt;&lt; a &lt;&lt; &quot;, &quot; &lt;&lt; b &lt;&lt; &quot;\n&quot;;</div>
 <div class="line">}</div>
 </div><!-- fragment --><p> But it does not work with the mentioned containers.</p>
-<h1><a class="anchor" id="autotoc_md8"></a>
+<h2><a class="anchor" id="autotoc_md8"></a>
+Post-increment operator missing</h2>
+<div class="fragment"><div class="line"> {c++}</div>
+<div class="line">// Working</div>
+<div class="line">for (auto it = zip.begin(); it != zip.end(); ++it) {}</div>
+<div class="line"> </div>
+<div class="line">// Not working</div>
+<div class="line">for (auto it = zip.begin(); it != zip.end(); it++) {}</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md9"></a>
 Development</h1>
-<h2><a class="anchor" id="autotoc_md9"></a>
+<h2><a class="anchor" id="autotoc_md10"></a>
 Tools</h2>
 <ul>
 <li><a href="https://help.ubuntu.com/community/SSH/OpenSSH/Keys">SSH keys for GitHub</a> (~/.ssh)</li>
 <li><a href="https://code.visualstudio.com/">VS Code</a> (see <a href="https://github.com/andreiavrammsd/cpp-zip/blob/master/.vscode/extensions.json">.vscode/extensions.json</a>)</li>
 <li><a href="https://docs.docker.com/engine/install/ubuntu/">Docker</a></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md10"></a>
+<h2><a class="anchor" id="autotoc_md11"></a>
 Actions</h2>
 <ul>
 <li>Debug: F5</li>
@@ -152,13 +159,12 @@ Actions</h2>
 <li>Clang tidy: Ctrl + Shift + P -&gt; Run Task -&gt; Run clang-tidy on current file</li>
 <li>Documentation: Ctrl + Shift + P -&gt; Run Task -&gt; Generate Documentation</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md11"></a>
+<h1><a class="anchor" id="autotoc_md12"></a>
 TODO</h1>
 <ul>
 <li>Set up cache for release workflow (apt cache)</li>
-<li>Exception guarantees</li>
+<li>Exception guarantees: set and document</li>
 <li>constexpr</li>
-<li>const correctness</li>
 <li>Write benchmarks</li>
 <li>Ignore google headers from clang-tidy</li>
 <li>Consider checked access that returns an optional reference</li>
