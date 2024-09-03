@@ -82,7 +82,7 @@ for (auto it = forward_zip.begin(); it != std::prev(forward_zip.end()); ++it) {
 ```
 But it does not work with the mentioned containers.
 
-### Post increment operator missing
+### Post-increment operator missing
 
 ```c++
 // Working
