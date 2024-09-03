@@ -23,6 +23,12 @@ fi
 
 ./tools/generate-compilation-database.sh ${workspace} ${build_path} ${build_type} ${build_target}
 
+# Build
+cwd=$PWD
+cd ${build_path}
+cmake --build . --config ${build_type} --target ${build_target}
+cd ${cwd}
+
 # Find files
 files=$(if [ $event == "pull_request" ]; then
     git diff --name-only origin/"${default_branch}"...HEAD include

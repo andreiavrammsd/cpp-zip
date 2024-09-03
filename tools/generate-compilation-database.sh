@@ -19,6 +19,5 @@ cmake ${workspace} \
     -DCMAKE_BUILD_TYPE=${build_type} \
     -DENABLE_TESTS=ON \
     -DENABLE_BENCHMARKS=ON
-cmake --build . --config ${build_type} --target ${build_target}
 
 cd ${cwd}

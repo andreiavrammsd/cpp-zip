@@ -29,5 +29,6 @@
         "--security-opt",
         "seccomp=unconfined"
     ],
-   "remoteUser": "vscode"
+    "remoteUser": "vscode",
+    "postStartCommand": "./tools/generate-compilation-database.sh $PWD build-code-quality Debug tests"
 }
