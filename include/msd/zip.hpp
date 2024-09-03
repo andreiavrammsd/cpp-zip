@@ -50,14 +50,14 @@ class zip_iterator {
      *
      * @param iterators The iterators to be zipped together.
      */
-    explicit zip_iterator(Iterators... iterators) noexcept : iterators_{iterators...} {}
+    explicit zip_iterator(Iterators... iterators) : iterators_{iterators...} {}
 
     /**
      * @brief Dereferences the `zip_iterator` to obtain a tuple of references from each iterator.
      *
      * @return A tuple containing the values pointed to by each iterator.
      */
-    value_type operator*() const noexcept { return dereference(std::index_sequence_for<Iterators...>{}); }
+    value_type operator*() const { return dereference(std::index_sequence_for<Iterators...>{}); }
 
     /**
      * @brief Checks if two `zip_iterator` instances are equal.
@@ -65,10 +65,7 @@ class zip_iterator {
      * @param other The other `zip_iterator` to compare with.
      * @return `true` if the iterators are equal, `false` otherwise.
      */
-    bool operator==(const zip_iterator& other) const noexcept
-    {
-        return equal(std::index_sequence_for<Iterators...>{}, other);
-    }
+    bool operator==(const zip_iterator& other) const { return equal(std::index_sequence_for<Iterators...>{}, other); }
 
     /**
      * @brief Checks if two `zip_iterator` instances are not equal.
@@ -76,17 +73,14 @@ class zip_iterator {
      * @param other The other `zip_iterator` to compare with.
      * @return `true` if the iterators are not equal, `false` otherwise.
      */
-    bool operator!=(const zip_iterator& other) const noexcept
-    {
-        return !equal(std::index_sequence_for<Iterators...>{}, other);
-    }
+    bool operator!=(const zip_iterator& other) const { return !equal(std::index_sequence_for<Iterators...>{}, other); }
 
     /**
      * @brief Advances the `zip_iterator` by one position.
      *
      * @return A reference to the updated `zip_iterator`.
      */
-    zip_iterator& operator++() noexcept
+    zip_iterator& operator++()
     {
         advance(std::index_sequence_for<Iterators...>{}, 1);
         return *this;
@@ -98,7 +92,7 @@ class zip_iterator {
      * @param offset The number of positions to advance.
      * @return A new `zip_iterator` advanced by the specified offset.
      */
-    zip_iterator operator+(const std::size_t offset) const noexcept
+    zip_iterator operator+(const std::size_t offset) const
     {
         auto iterator = *this;
         iterator.advance(std::index_sequence_for<Iterators...>{}, offset);
@@ -111,7 +105,7 @@ class zip_iterator {
      * @param other The `zip_iterator` to measure the distance to.
      * @return A new `zip_iterator` advanced by the distance to the specified iterator.
      */
-    zip_iterator operator+(const zip_iterator& other) const noexcept
+    zip_iterator operator+(const zip_iterator& other) const
     {
         auto iterator = *this;
         const auto distance = std::distance(iterator, other);
@@ -124,7 +118,7 @@ class zip_iterator {
      *
      * @return A reference to the updated `zip_iterator`.
      */
-    zip_iterator& operator--() noexcept
+    zip_iterator& operator--()
     {
         advance(std::index_sequence_for<Iterators...>{}, -1);
         return *this;
@@ -136,7 +130,7 @@ class zip_iterator {
      * @param offset The number of positions to move back.
      * @return A new `zip_iterator` moved back by the specified offset.
      */
-    zip_iterator operator-(const int offset) const noexcept
+    zip_iterator operator-(const int offset) const
     {
         auto iterator = *this;
         iterator.advance(std::index_sequence_for<Iterators...>{}, -offset);
@@ -149,7 +143,7 @@ class zip_iterator {
      * @param other The `zip_iterator` to measure the distance from.
      * @return A new `zip_iterator` moved back by the distance to the specified iterator.
      */
-    zip_iterator operator-(const zip_iterator& other) const noexcept
+    zip_iterator operator-(const zip_iterator& other) const
     {
         auto iterator = *this;
         const auto distance = std::distance(other, iterator);
@@ -166,7 +160,7 @@ class zip_iterator {
      * @return A tuple containing the values pointed to by each iterator.
      */
     template <std::size_t... I>
-    value_type dereference(std::index_sequence<I...>) const noexcept
+    value_type dereference(std::index_sequence<I...>) const
     {
         return std::tie(*std::get<I>(iterators_)...);
     }
@@ -180,7 +174,7 @@ class zip_iterator {
      * @return `true` if all iterators are equal, `false` otherwise.
      */
     template <std::size_t... I>
-    bool equal(std::index_sequence<I...>, const zip_iterator& other) const noexcept
+    bool equal(std::index_sequence<I...>, const zip_iterator& other) const
     {
         return ((std::get<I>(iterators_) == std::get<I>(other.iterators_)) || ...);
     }
@@ -193,7 +187,7 @@ class zip_iterator {
      * @param offset The number of positions to advance.
      */
     template <std::size_t... I>
-    void advance(std::index_sequence<I...>, const int offset) noexcept
+    void advance(std::index_sequence<I...>, const int offset)
     {
         ((std::advance(std::get<I>(iterators_), offset)), ...);
     }
@@ -207,6 +201,8 @@ class zip_iterator {
 /**
  * @brief A view over multiple containers simultaneously.
  *        It allows iterating through multiple containers at once, stopping at the shortest container.
+ *
+ * @note The zip never throws explicitly any exception. It all depends on what the given containers throw.
  *
  * @tparam Containers The types of the containers to be zipped.
  *                    Each container must support standard iteration
@@ -245,7 +241,7 @@ class zip {
      * @param containers The containers to be zipped together.
      * @pre At least two containers must be provided.
      */
-    explicit zip(Containers&... containers) noexcept : containers_{containers...} {}
+    explicit zip(Containers&... containers) : containers_{containers...} {}
 
     /**
      * @brief Returns an iterator pointing to the beginning of the zipped containers.
@@ -287,7 +283,7 @@ class zip {
      *
      * @return `true` if the zipped sequence is empty, `false` otherwise.
      */
-    [[nodiscard]] bool empty() const noexcept { return begin() == end(); }
+    [[nodiscard]] bool empty() const { return begin() == end(); }
 
     /**
      * @brief Allows the `zip` object to be used in a boolean context, indicating whether the zipped sequence is
@@ -368,7 +364,7 @@ class zip {
      * @return An iterator to the beginning of the zipped sequence.
      */
     template <typename Iterator, std::size_t... I>
-    Iterator begin_impl(std::index_sequence<I...>) const noexcept
+    Iterator begin_impl(std::index_sequence<I...>) const
     {
         return Iterator{std::get<I>(containers_).begin()...};
     }
@@ -382,7 +378,7 @@ class zip {
      * @return An iterator to the end of the zipped sequence.
      */
     template <typename Iterator, std::size_t... I>
-    Iterator end_impl(std::index_sequence<I...>) const noexcept
+    Iterator end_impl(std::index_sequence<I...>) const
     {
         return std::next(Iterator{std::get<I>(containers_).begin()...}, size());
     }

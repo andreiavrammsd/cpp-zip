@@ -45,31 +45,29 @@
         {
             "label": "Generate Compilation Database",
             "type": "shell",
-            "command": "./tools/generate-compilation-database.sh",
+            "command": "./tools/qa",
             "args": [
-              "${workspaceFolder}",
-              "${workspaceFolder}/build-code-quality",
-              "Debug",
-              "tests"
+                "compilationdb",
+                "--build-path=${workspaceFolder}/build-code-quality"
             ],
             "problemMatcher": []
-          },
+        },
         {
             "label": "Run clang-tidy on current file",
             "type": "shell",
             "command": "clang-tidy",
             "args": [
-              "${file}",
-              "-p=${workspaceFolder}/build-code-quality"
+                "${file}",
+                "-p=${workspaceFolder}/build-code-quality"
             ],
             "dependsOn": "Generate Compilation Database",
             "problemMatcher": []
-          },
-          {
+        },
+        {
             "label": "Generate Documentation",
             "type": "shell",
             "command": "doxygen",
             "problemMatcher": []
-          }
+        }
     ]
 }

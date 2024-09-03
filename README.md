@@ -118,6 +118,7 @@ for (auto it = zip.begin(); it != zip.end(); it++) {}
 * Consider checked access that returns an optional reference
 * Run clang-tidy on file save
 * Cancel running jobs on new commit
+* Investigate possible documentation issue: [cp: no such file or directory](https://github.com/andreiavrammsd/cpp-zip/actions/runs/10673792787/job/29583324820)
 * Test
     * Analyze if LCOV_EXCL_LINE is needed
     * Finish tests
