@@ -36,10 +36,6 @@ jobs:
         run: |
           doxygen
 
-      - name: Debug - List Generated Files
-        run: |
-          ls -alh docs/
-      
       - name: Deploy documentation
         uses: peaceiris/actions-gh-pages@v4
         with:
