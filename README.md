@@ -82,6 +82,16 @@ for (auto it = forward_zip.begin(); it != std::prev(forward_zip.end()); ++it) {
 ```
 But it does not work with the mentioned containers.
 
+### Post increment operator missing
+
+```c++
+// Working
+for (auto it = zip.begin(); it != zip.end(); ++it) {}
+
+// Not working
+for (auto it = zip.begin(); it != zip.end(); it++) {}
+```
+
 ## Development
 
 ### Tools
@@ -109,7 +119,6 @@ But it does not work with the mentioned containers.
 * Run clang-tidy on file save
 * Cancel running jobs on new commit
 * Test
-    * Split integration test into smaller ones
     * Analyze if LCOV_EXCL_LINE is needed
     * Finish tests
     * With std algorithms

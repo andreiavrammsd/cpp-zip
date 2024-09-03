@@ -35,6 +35,15 @@
     "C_Cpp.codeAnalysis.clangTidy.args": [
         "-p=build"
     ],
+    "search.exclude": {
+        "**/build*": true,
+    },
+    "files.exclude": {
+        "**/build*": true,
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
     "files.associations": {
         "array": "cpp",
         "*.tcc": "cpp",
@@ -108,5 +117,5 @@
         "typeinfo": "cpp",
         "semaphore": "cpp",
         "iostream": "cpp"
-    }
+    },
 }
