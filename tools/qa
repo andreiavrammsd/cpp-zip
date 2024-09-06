@@ -28,18 +28,23 @@ def code_quality(src, default_branch, event, workspace, build_path, build_type):
 
     # Find files
     if event == "pull_request":
-        diff_command = f"git diff --name-only origin/{default_branch}...HEAD {src} | grep '\{files_pattern}$'"
+        diff_command = f"git diff --name-only origin/{default_branch}...HEAD {src} | grep '\{files_pattern}$' || true"
     else:
-        diff_command = f"git ls-files --directory {src} | grep '\{files_pattern}$'"
+        diff_command = f"git ls-files --directory {src} | grep '\{files_pattern}$' || true"
 
-    files = subprocess.run(
+    result = subprocess.run(
         diff_command, shell=True, capture_output=True, text=True
     ).stdout.strip()
-    files = [f for f in files.split("\n")]
+    
+    files = [f for f in result.split("\n")] if result != "" else []
+
+    if event == "push":
+        if len(files) == 0:
+            raise ValueError(f"No files matching pattern \"{files_pattern}\" found on push event. Impossible!")
 
     # Run tools
-    if files:
-        file_count = len(files)
+    file_count = len(files)
+    if file_count > 0:
         print(f"Format {file_count} file(s)")
         subprocess.run(["clang-format", "-i"] + files, check=True)
 
