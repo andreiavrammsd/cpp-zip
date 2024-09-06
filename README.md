@@ -1,7 +1,7 @@
 # ZIP
 
-[![build](https://github.com/andreiavrammsd/cpp-zip/workflows/build/badge.svg)](https://github.com/andreiavrammsd/cpp-zip/actions/workflows/test.yml)
-&nbsp;&nbsp;[![build](https://github.com/andreiavrammsd/cpp-zip/workflows/release/badge.svg)](https://github.com/andreiavrammsd/cpp-zip/actions/workflows/release.yml)
+[![test](https://github.com/andreiavrammsd/cpp-zip/workflows/test/badge.svg)](https://github.com/andreiavrammsd/cpp-zip/actions/workflows/test.yml)
+&nbsp;&nbsp;[![release](https://github.com/andreiavrammsd/cpp-zip/workflows/release/badge.svg)](https://github.com/andreiavrammsd/cpp-zip/actions/workflows/release.yml)
 &nbsp;&nbsp;[![codecov](https://codecov.io/github/andreiavrammsd/cpp-zip/graph/badge.svg?token=TBV8ID8QK0)](https://codecov.io/github/andreiavrammsd/cpp-zip)
 &nbsp;&nbsp;[![documentation](https://img.shields.io/badge/msd::zip-Documentation-4EC820?labelColor=5E5E5E)](https://andreiavrammsd.github.io/cpp-zip/)
 
