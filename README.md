@@ -121,13 +121,4 @@ for (auto it = zip.begin(); it != zip.end(); it++) {}
 * Investigate possible documentation issue: [cp: no such file or directory](https://github.com/andreiavrammsd/cpp-zip/actions/runs/10673792787/job/29583324820)
 * Test
     * Analyze if LCOV_EXCL_LINE is needed
-    * Finish tests
-    * With std algorithms
-    * Entire API in non-const and const context
-    * iterator operations: +, -, +=, -=, ++ pre/post, --pre/post, std::prev/next/advance, begin() + size() - begin(), etc.
-    * Empty container
-    * Two arrays of different sizes
-    * Two vectors of different sizes
-    * One array and one empty vector
-    * copy, move operations
-    * Improve tests with unordered containers
+    * Iterator operations: +, -, +=, -=, ++ pre/post, --pre/post, std::prev/next/advance, begin() + size() - begin(), etc.
