@@ -1,5 +1,5 @@
 {
-    "name": "C++ Development with CMake and Bazel",
+    "name": "C++ zip view",
     "dockerFile": "Dockerfile",
     "customizations": {
         "vscode": {
