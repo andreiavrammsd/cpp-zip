@@ -12,6 +12,8 @@ jobs:
   build:
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
+    env:
+      BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory
 
     strategy:
       fail-fast: false
@@ -25,6 +27,7 @@ jobs:
             enable_coverage: "OFF",
             enable_asan: "OFF",
             code_quality: false,
+            sonar: false,
           }
           - {
             name: "Ubuntu 22.04 GCC (Debug)",
@@ -34,6 +37,7 @@ jobs:
             enable_coverage: "ON",
             enable_asan: "ON",
             code_quality: true,
+            sonar: true,
           }
           - {
             name: "macOS Latest Clang (Release)",
@@ -43,6 +47,7 @@ jobs:
             enable_coverage: "OFF",
             enable_asan: "OFF",
             code_quality: false,
+            sonar: false,
           }
           - {
             name: "Windows Latest (Release)",
@@ -52,6 +57,7 @@ jobs:
             enable_coverage: "OFF",
             enable_asan: "OFF",
             code_quality: false,
+            sonar: false,
           }
 
     steps:
@@ -102,6 +108,25 @@ jobs:
         shell: bash
         # Execute the build.  You can specify a specific target with "--target <NAME>"
         run: cmake --build . --config ${{ matrix.config.build_type }} --target tests
+        if: matrix.config.sonar == false
+
+      - name: Install sonar-scanner and build-wrapper
+        uses: SonarSource/sonarcloud-github-c-cpp@v3
+        if: matrix.config.sonar == true
+
+      - name: Run build-wrapper
+        run: |
+          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} \
+            cmake $GITHUB_WORKSPACE \
+            -DCMAKE_BUILD_TYPE=${{ matrix.config.build_type }} \
+            -DENABLE_TESTS=${{ matrix.config.enable_tests }} \
+            -DENABLE_COVERAGE=${{ matrix.config.enable_coverage }} \
+            -DENABLE_ASAN=${{ matrix.config.enable_asan }}
+
+          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build . --config ${{ matrix.config.build_type }} --target tests \
+
+          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} ctest -C ${{ matrix.config.build_type }} --verbose -R zip_test
+        if: matrix.config.sonar == true
 
       - name: Test
         working-directory: ${{github.workspace}}/build
@@ -115,3 +140,11 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
         if: matrix.config.enable_coverage == 'ON'
+
+      - name: Run sonar-scanner
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          sonar-scanner --define sonar.cfamily.compile-commands="${{ env.BUILD_WRAPPER_OUT_DIR }}/compile_commands.json"
+        if: matrix.config.sonar == true
