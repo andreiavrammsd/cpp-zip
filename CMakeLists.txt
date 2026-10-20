@@ -2,16 +2,11 @@ cmake_minimum_required(VERSION 3.12)
 project(cpp_zip)
 set(PROJECT_VERSION 0.1.0)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED YES)
-set(CXX_EXTENSIONS NO)
-
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 include(warnings)
 
-include_directories(include)
-
 add_library(msd_zip INTERFACE)
+target_compile_features(msd_zip INTERFACE cxx_std_17)
 target_include_directories(msd_zip INTERFACE include)
 
 option(ENABLE_TESTS "Build tests" OFF)
@@ -23,3 +18,5 @@ if (ENABLE_TESTS)
     enable_testing()
     add_subdirectory(tests)
 endif()
+
+install(DIRECTORY include/ DESTINATION include)
