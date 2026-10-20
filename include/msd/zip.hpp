@@ -384,6 +384,14 @@ class zip {
         return Iterator{advance_iterator(std::get<I>(containers_).begin(), zip_size)...};
     }
 
+    /**
+     * @brief Advances an iterator by a non-negative offset.
+     *
+     * @tparam Iterator Type of the iterator to advance.
+     * @param iterator The iterator to advance.
+     * @param offset The number of positions to advance.
+     * @return The advanced iterator.
+     */
     template <typename Iterator>
     static Iterator advance_iterator(Iterator iterator, const std::size_t offset)
     {
