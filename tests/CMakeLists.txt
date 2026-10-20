@@ -19,9 +19,14 @@ endif ()
 # Test macro
 function(package_add_test TESTNAME)
     add_executable(${TESTNAME} ${ARGN})
+    set_target_properties(${TESTNAME} PROPERTIES
+        CXX_STANDARD 17
+        CXX_STANDARD_REQUIRED YES
+        CXX_EXTENSIONS NO
+    )
 
     set_target_warnings(${TESTNAME} PRIVATE)
-    target_link_libraries(${TESTNAME} gtest gtest_main gmock)
+    target_link_libraries(${TESTNAME} msd_zip gtest gtest_main gmock)
 
     if (ENABLE_COVERAGE)
         target_link_libraries(${TESTNAME} -lgcov -lubsan)
@@ -67,6 +72,11 @@ if (ENABLE_BENCHMARKS)
     endif ()
 
     add_executable(zip_benchmark zip_benchmark.cpp)
-    target_link_libraries(zip_benchmark benchmark)
+    set_target_properties(zip_benchmark PROPERTIES
+        CXX_STANDARD 17
+        CXX_STANDARD_REQUIRED YES
+        CXX_EXTENSIONS NO
+    )
+    target_link_libraries(zip_benchmark msd_zip benchmark)
     set_target_warnings(zip_benchmark PRIVATE)
 endif ()

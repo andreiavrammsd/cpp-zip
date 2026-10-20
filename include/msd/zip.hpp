@@ -92,7 +92,7 @@ class zip_iterator {
      * @param offset The number of positions to advance.
      * @return A new `zip_iterator` advanced by the specified offset.
      */
-    zip_iterator operator+(const std::size_t offset) const
+    zip_iterator operator+(const difference_type offset) const
     {
         auto iterator = *this;
         iterator.advance(std::index_sequence_for<Iterators...>{}, offset);
@@ -130,7 +130,7 @@ class zip_iterator {
      * @param offset The number of positions to move back.
      * @return A new `zip_iterator` moved back by the specified offset.
      */
-    zip_iterator operator-(const int offset) const
+    zip_iterator operator-(const difference_type offset) const
     {
         auto iterator = *this;
         iterator.advance(std::index_sequence_for<Iterators...>{}, -offset);
@@ -187,7 +187,7 @@ class zip_iterator {
      * @param offset The number of positions to advance.
      */
     template <std::size_t... I>
-    void advance(std::index_sequence<I...>, const int offset)
+    void advance(std::index_sequence<I...>, const difference_type offset)
     {
         ((std::advance(std::get<I>(iterators_), offset)), ...);
     }
@@ -326,7 +326,7 @@ class zip {
     value_type back()
     {
         assert(!empty());  // LCOV_EXCL_LINE
-        return *std::prev(begin() + size());
+        return *std::prev(begin() + static_cast<typename iterator::difference_type>(size()));
     }
 
     /**
@@ -338,7 +338,7 @@ class zip {
     value_type back() const
     {
         assert(!empty());  // LCOV_EXCL_LINE
-        return *std::prev(begin() + size());
+        return *std::prev(begin() + static_cast<typename const_iterator::difference_type>(size()));
     }
 
     /**
@@ -351,7 +351,7 @@ class zip {
     value_type operator[](const std::size_t offset) const
     {
         assert(offset < size());
-        return *std::next(begin(), offset);
+        return *std::next(begin(), static_cast<typename const_iterator::difference_type>(offset));
     }
 
    private:
@@ -380,7 +380,23 @@ class zip {
     template <typename Iterator, std::size_t... I>
     Iterator end_impl(std::index_sequence<I...>) const
     {
-        return std::next(Iterator{std::get<I>(containers_).begin()...}, size());
+        const auto zip_size = size();
+        return Iterator{advance_iterator(std::get<I>(containers_).begin(), zip_size)...};
+    }
+
+    /**
+     * @brief Advances an iterator by a non-negative offset.
+     *
+     * @tparam Iterator Type of the iterator to advance.
+     * @param iterator The iterator to advance.
+     * @param offset The number of positions to advance.
+     * @return The advanced iterator.
+     */
+    template <typename Iterator>
+    static Iterator advance_iterator(Iterator iterator, const std::size_t offset)
+    {
+        std::advance(iterator, static_cast<typename std::iterator_traits<Iterator>::difference_type>(offset));
+        return iterator;
     }
 
     /**
@@ -393,7 +409,8 @@ class zip {
     template <std::size_t... I>
     std::size_t size_impl(std::index_sequence<I...>) const
     {
-        return std::min({std::distance(std::get<I>(containers_).begin(), std::get<I>(containers_).end())...});
+        return static_cast<std::size_t>(
+            std::min({std::distance(std::get<I>(containers_).begin(), std::get<I>(containers_).end())...}));
     }
 
     /**
