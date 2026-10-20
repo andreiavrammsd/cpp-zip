@@ -1,5 +1,5 @@
 # Use the official Ubuntu base image
-FROM ubuntu:22.04
+FROM ubuntu:26.04
 
 # Avoid interactive package installation
 ENV DEBIAN_FRONTEND=noninteractive
@@ -18,6 +18,7 @@ RUN apt update && apt install -y \
     python3 \
     python3-pip \
     gdb \
+    lcov \
     lldb \
     clang \
     llvm \
@@ -25,19 +26,20 @@ RUN apt update && apt install -y \
     software-properties-common \
     doxygen \
     graphviz \
-    && rm -rf /var/lib/apt/lists/*
+    sudo \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Create a non-root user
 ARG USERNAME=vscode
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
-RUN groupadd -g $USER_GID $USERNAME || true \
-    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME -s /bin/bash \
-    && apt update \
-    && apt install -y sudo \
-    && echo $USERNAME ALL=\(ALL\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
-    && chmod 0440 /etc/sudoers.d/$USERNAME
+RUN usermod --login ${USERNAME} --home /home/${USERNAME} --move-home $(getent passwd ${USER_UID} | cut -d: -f1) \
+    && usermod --gid ${USER_GID} ${USERNAME} \
+    && passwd -d ${USERNAME} \
+    && printf '%s ALL=(ALL) NOPASSWD:ALL\n' "${USERNAME}" > "/etc/sudoers.d/${USERNAME}" \
+    && chmod 0440 "/etc/sudoers.d/${USERNAME}" \
+    && visudo -cf "/etc/sudoers.d/${USERNAME}"
 
 # History
 RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" \
