@@ -380,8 +380,15 @@ class zip {
     template <typename Iterator, std::size_t... I>
     Iterator end_impl(std::index_sequence<I...>) const
     {
-        return std::next(Iterator{std::get<I>(containers_).begin()...},
-                         static_cast<typename Iterator::difference_type>(size()));
+        const auto zip_size = size();
+        return Iterator{advance_iterator(std::get<I>(containers_).begin(), zip_size)...};
+    }
+
+    template <typename Iterator>
+    static Iterator advance_iterator(Iterator iterator, const std::size_t offset)
+    {
+        std::advance(iterator, static_cast<typename std::iterator_traits<Iterator>::difference_type>(offset));
+        return iterator;
     }
 
     /**
